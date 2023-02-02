@@ -16,5 +16,6 @@ abstract class  LocaleKeys {
   static const light = 'light';
   static const dark = 'dark';
   static const resolution_aware_img = 'resolution_aware_img';
+  static const google_map = 'google_map';
 
 }

@@ -24,14 +24,6 @@ Use the built-in continuous integration in GitLab.
 
 ***
 
-**5. Initialize empty folder with git**
-
-`git init`
-
-**6. Set remote url to your empty repository**
-
-`git remote add origin https://gitlab.extrawest.com/user.name/your_empty_repository.git`
-
 **7. Add all files to git**
 
 `git add .`

@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:volkhov_maps_app/common/app_bar_config.dart';
+import 'package:volkhov_maps_app/routes.dart';
 import 'package:volkhov_maps_app/theme/theme.dart';
 import 'package:volkhov_maps_app/view_models/home_view_model.dart';
 import 'package:volkhov_maps_app/view_models/posts_view_model.dart';
@@ -44,6 +45,12 @@ class _HomeScreenState extends State<HomeScreen> {
               await postsProvider.fetchPosts();
             },
             child: Text(tr(LocaleKeys.fetch_posts)),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              Navigator.pushReplacementNamed(context, mapScreenRoute);
+            },
+            child: Text(tr(LocaleKeys.google_map)),
           ),
           Text(
             plural(LocaleKeys.plural, homeProvider.counter),
