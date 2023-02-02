@@ -38,7 +38,7 @@ android {
 
     defaultConfig {
         applicationId "com.extrawest.volkhov_maps_app"
-        minSdkVersion 18
+        minSdkVersion 20
         targetSdkVersion 31
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
