@@ -18,9 +18,9 @@
     "other": "You have pushed the button {} times."
   },
   "fetch_posts": "Fetch posts",
-
   "auto": "auto",
   "light": "light",
   "dark": "dark",
-  "resolution_aware_img": "Example of resolution-aware image usage"
+  "resolution_aware_img": "Example of resolution-aware image usage",
+  "google_map": "Google Map"
 }
