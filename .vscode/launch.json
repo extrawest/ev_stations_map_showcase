@@ -9,6 +9,7 @@
             "request": "launch",
             "program": "lib/main.dart",
             "type": "dart",
+            // "flutterMode": "debug",
             "toolArgs": [
                 "--dart-define",
                 "ANDROID_KEY=AIzaSyDP_5WMYfCrOBb0tvdG3O19rUrarkrQcx4",
