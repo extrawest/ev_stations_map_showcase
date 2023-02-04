@@ -48,7 +48,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           ElevatedButton(
             onPressed: () async {
-              Navigator.pushReplacementNamed(context, mapScreenRoute);
+              Navigator.pushNamed(context, mapScreenRoute);
             },
             child: Text(tr(LocaleKeys.google_map)),
           ),

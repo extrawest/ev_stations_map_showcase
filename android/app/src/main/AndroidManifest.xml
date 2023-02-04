@@ -10,7 +10,8 @@
         android:label="volkhov_maps_app"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyAJp0Z76DAVmReKyN7ju0J_3qqiA2ihZko"/>
+            android:value="${DEFINE_ANDROID_KEY}"/>
+            <!-- android:value="@string/android_key"/> -->
         <activity
             android:exported="true"
             android:name=".MainActivity"

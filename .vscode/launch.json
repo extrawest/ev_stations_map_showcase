@@ -1,0 +1,50 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "android",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define",
+                "ANDROID_KEY=AIzaSyDP_5WMYfCrOBb0tvdG3O19rUrarkrQcx4",
+            ]
+        },
+        {
+            "name": "iOS",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define",
+                "IOS_KEY=AIzaSyDqFdvK1Ld2M5ASyz20M4OSw-ijfiii0o4",
+            ]
+        },
+        {
+            "name": "web",
+            "request": "launch",
+            "program": "lib/main.dart",
+            "type": "dart",
+            "toolArgs": [
+                "--dart-define",
+                "WEB_KEY=AIzaSyCxRvi4_4hyAw49PObPVtOq9iPqdvCFWKw",
+            ]
+        },
+        {
+            "name": "volkhov_maps_app (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
+        },
+        {
+            "name": "volkhov_maps_app (release mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        }
+    ]
+}

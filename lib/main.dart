@@ -9,6 +9,12 @@ import 'package:volkhov_maps_app/view_models/theme_view_model.dart';
 import 'utils/application_utils.dart';
 import 'utils/logger.dart';
 
+class EnvironmentConfig {
+  static const ANDROID_KEY = String.fromEnvironment('DEFINE_ANDROID_KEY');
+  static const IOS_KEY = String.fromEnvironment('DEFINE_IOS_KEY');
+  static const WEB_KEY = String.fromEnvironment('DEFINE_WEB_KEY');
+}
+
 const isProductionEnvKey = 'IS_PRODUCTION';
 const englishLocale = Locale('en', 'US');
 const ukrainianLocale = Locale('uk', 'UA');

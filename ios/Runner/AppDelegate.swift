@@ -9,7 +9,16 @@ import GoogleMaps
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     GeneratedPluginRegistrant.register(with: self)
-    GMSServices.provideAPIKey("AIzaSyAJp0Z76DAVmReKyN7ju0J_3qqiA2ihZko")
+    let dartDefinesString = Bundle.main.infoDictionary!["DART_DEFINES"] as! String
+    var dartDefinesDictionary = [String:String]()
+    for definedValue in dartDefinesString.components(separatedBy: ",") {
+        let decoded = String(data: Data(base64Encoded: definedValue)!, encoding: .utf8)!
+        let values = decoded.components(separatedBy: "=")
+        dartDefinesDictionary[values[0]] = values[1]
+    }
+    GMSServices.provideAPIKey(dartDefinesDictionary["DEFINE_IOS_KEY"]!)
+
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }
+  
 }
