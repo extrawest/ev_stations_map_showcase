@@ -68,8 +68,6 @@ android {
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resValue "string", "android_key", dartEnvironmentVariables.DEFINE_ANDROID_KEY
-        // resValue "string", "ios_key", dartEnvironmentVariables.DEFINE_IOS_KEY
-        // resValue "string", "web_key", dartEnvironmentVariables.DEFINE_WEB_KEY
         manifestPlaceholders = [DEFINE_ANDROID_KEY: dartEnvironmentVariables.DEFINE_ANDROID_KEY ]
     }
 
