@@ -16,7 +16,9 @@ import GoogleMaps
         let values = decoded.components(separatedBy: "=")
         dartDefinesDictionary[values[0]] = values[1]
     }
-    GMSServices.provideAPIKey(dartDefinesDictionary["DEFINE_IOS_KEY"]!)
+    if !(dartDefinesDictionary["DEFINE_IOS_KEY"] == nil){
+      GMSServices.provideAPIKey(dartDefinesDictionary["DEFINE_IOS_KEY"]!)
+    }
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
   }

@@ -9,11 +9,11 @@ import 'package:volkhov_maps_app/view_models/theme_view_model.dart';
 import 'utils/application_utils.dart';
 import 'utils/logger.dart';
 
-// class EnvironmentConfig {
-//   static const ANDROID_KEY = String.fromEnvironment('DEFINE_ANDROID_KEY');
-//   static const IOS_KEY = String.fromEnvironment('DEFINE_IOS_KEY');
-//   static const WEB_KEY = String.fromEnvironment('DEFINE_WEB_KEY');
-// }
+class EnvironmentConfig {
+  static const ANDROID_KEY = String.fromEnvironment('DEFINE_ANDROID_KEY');
+  static const IOS_KEY = String.fromEnvironment('DEFINE_IOS_KEY');
+  static const WEB_KEY = String.fromEnvironment('DEFINE_WEB_KEY');
+}
 
 const isProductionEnvKey = 'IS_PRODUCTION';
 const englishLocale = Locale('en', 'US');
@@ -32,8 +32,8 @@ Future<void> main() async {
     EasyLocalization.logger.enableBuildModes = [];
   }
 
-  final themeViewModel = ThemeViewModel();
-  await themeViewModel.init();
+  // final themeViewModel = ThemeViewModel();
+  // await themeViewModel.init();
 
   setupLogger();
 
@@ -48,10 +48,11 @@ Future<void> main() async {
     supportedLocales: const [englishLocale, ukrainianLocale],
     path: translationsFolderPath,
     fallbackLocale: englishLocale,
-    child: ChangeNotifierProvider.value(
-      value: themeViewModel,
-      child: Application(credentials),
-    ),
+    // child: ChangeNotifierProvider.value(
+    //   value: themeViewModel,
+    //   child: Application(credentials),
+    // ),
+    child: Application(credentials),
   );
 
   runApp(app);

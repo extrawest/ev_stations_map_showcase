@@ -6,11 +6,13 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
+import 'package:volkhov_maps_app/logic/cubit/chargestations_cubit.dart';
 import 'package:volkhov_maps_app/routes.dart';
 import 'package:volkhov_maps_app/theme/theme.dart';
-import 'package:volkhov_maps_app/view_models/theme_view_model.dart';
 
 // import '' if (kIsWeb) 'dart:html' as html;
+import 'logic/bloc/app_bloc_bloc.dart';
+import 'logic/bloc/chargestations/chargestations_bloc.dart';
 import 'services/api_service.dart';
 import 'services/credentials_loader.dart';
 import 'view_models/home_view_model.dart';
@@ -30,16 +32,26 @@ class Application extends StatelessWidget {
     //     html.document.dispatchEvent(html.CustomEvent('dart_loaded'));
     //   }
 
-    return MultiBlocProvider(
-      providers: [],
-      child: MultiProvider(
+    return MultiProvider(
+        providers: [
+          // ChangeNotifierProvider(create: (context) => HomeViewModel()),
+          ChangeNotifierProvider(
+            create: (context) =>
+                PostsViewModel(ApiService(credentials.apiDomain)),
+          ),
+          Provider.value(value: credentials),
+        ],
+        child: MultiBlocProvider(
           providers: [
-            // ChangeNotifierProvider(create: (context) => HomeViewModel()),
-            ChangeNotifierProvider(
-              create: (context) =>
-                  PostsViewModel(ApiService(credentials.apiDomain)),
+            BlocProvider<AppBlocBloc>(
+              create: (appContext) => AppBlocBloc(),
             ),
-            Provider.value(value: credentials),
+            BlocProvider<ChargestationsCubit>(
+              create: (chargestationsContext) => ChargestationsCubit(
+                  // credentials: credentials,
+                  apiService: ApiService(credentials.apiDomain))
+                ..fetchChargestations(ApiService(credentials.apiDomain)),
+            ),
           ],
           child: MaterialApp(
             title: 'Flutter Provider Starter',
@@ -50,7 +62,7 @@ class Application extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             routes: applicationRoutes,
-          )),
-    );
+          ),
+        ));
   }
 }
