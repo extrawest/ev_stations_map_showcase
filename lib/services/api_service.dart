@@ -2,7 +2,10 @@ import 'package:volkhov_maps_app/models/post.dart';
 import 'package:volkhov_maps_app/network/api_client.dart';
 import 'package:volkhov_maps_app/utils/logger.dart';
 
+import '../models/chargestations_model.dart';
+
 const String postsPath = '/posts';
+const String stationslist = '/stationslist';
 
 class ApiService {
   late ApiClient _apiClient;
@@ -31,6 +34,17 @@ class ApiService {
       return PostModel.fromJson(response);
     } catch (e) {
       log.severe('publishPostData error: $e');
+      rethrow;
+    }
+  }
+
+  Future<List<ChargestationsModel>> fetchChargestations() async {
+    try {
+      final response = await _apiClient.get(stationslist);
+      return List<ChargestationsModel>.from(
+          response.map((element) => ChargestationsModel.fromJson(element)));
+    } catch (e) {
+      log.severe('chargestationsData error: $e');
       rethrow;
     }
   }
