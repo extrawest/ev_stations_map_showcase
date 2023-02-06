@@ -12,7 +12,7 @@
             // "flutterMode": "debug",
             "toolArgs": [
                 "--dart-define",
-                "ANDROID_KEY=AIzaSyDP_5WMYfCrOBb0tvdG3O19rUrarkrQcx4",
+                "DEFINE_ANDROID_KEY=AIzaSyDP_5WMYfCrOBb0tvdG3O19rUrarkrQcx4",
             ]
         },
         {
@@ -22,7 +22,7 @@
             "type": "dart",
             "toolArgs": [
                 "--dart-define",
-                "IOS_KEY=AIzaSyDqFdvK1Ld2M5ASyz20M4OSw-ijfiii0o4",
+                "DEFINE_IOS_KEY=AIzaSyDqFdvK1Ld2M5ASyz20M4OSw-ijfiii0o4",
             ]
         },
         {
@@ -32,7 +32,7 @@
             "type": "dart",
             "toolArgs": [
                 "--dart-define",
-                "WEB_KEY=AIzaSyCxRvi4_4hyAw49PObPVtOq9iPqdvCFWKw",
+                "DEFINE_WEB_KEY=AIzaSyCxRvi4_4hyAw49PObPVtOq9iPqdvCFWKw",
             ]
         },
         {

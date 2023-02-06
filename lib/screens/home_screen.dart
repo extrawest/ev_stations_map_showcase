@@ -28,13 +28,6 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: Text(tr(LocaleKeys.google_map)),
             ),
-            BlocConsumer(
-                listener: (context, state) {},
-                builder: (context, state) {
-                  return TextController(
-                    text: state.text,
-                  );
-                })
           ],
         ),
       ),

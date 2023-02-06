@@ -6,22 +6,22 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:volkhov_maps_app/logic/cubit/chargestations_cubit.dart';
 import 'package:volkhov_maps_app/routes.dart';
 import 'package:volkhov_maps_app/theme/theme.dart';
 
 // import '' if (kIsWeb) 'dart:html' as html;
-import 'logic/bloc/app_bloc_bloc.dart';
-import 'logic/bloc/chargestations/chargestations_bloc.dart';
+import 'logic/bloc/chargestations_bloc.dart';
 import 'services/api_service.dart';
 import 'services/credentials_loader.dart';
-import 'view_models/home_view_model.dart';
 import 'view_models/posts_view_model.dart';
 
 class Application extends StatelessWidget {
   final Credentials credentials;
 
-  const Application(this.credentials, {Key? key}) : super(key: key);
+  const Application(
+    this.credentials, {
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,14 +43,10 @@ class Application extends StatelessWidget {
         ],
         child: MultiBlocProvider(
           providers: [
-            BlocProvider<AppBlocBloc>(
-              create: (appContext) => AppBlocBloc(),
-            ),
-            BlocProvider<ChargestationsCubit>(
-              create: (chargestationsContext) => ChargestationsCubit(
-                  // credentials: credentials,
+            BlocProvider(
+              create: (_) => ChargestationsBloc(
                   apiService: ApiService(credentials.apiDomain))
-                ..fetchChargestations(ApiService(credentials.apiDomain)),
+                ..add(ChargestationsStarted()),
             ),
           ],
           child: MaterialApp(
