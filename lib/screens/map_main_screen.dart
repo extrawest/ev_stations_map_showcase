@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:volkhov_maps_app/theme/assets.dart';
 
+import '../widgets/widgets.dart';
+
 class MapMainScreen extends StatelessWidget {
   const MapMainScreen({super.key});
 
@@ -22,7 +24,19 @@ class MapMainScreen extends StatelessWidget {
               height: height,
             ),
           ),
-          Column(),
+          Column(
+            children: const [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 43,
+                ),
+                child: CustomTextField(
+                  hint: 'Type here',
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     ));

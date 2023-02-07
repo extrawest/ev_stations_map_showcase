@@ -45,24 +45,35 @@ class CustomTextField extends StatelessWidget {
         controller: textEditingController,
         decoration: inputDecoration ??
             InputDecoration(
+              filled: true,
+              fillColor: AppColors.whiteColor,
+              prefixIcon: const Padding(
+                padding: EdgeInsets.only(
+                  top: 14,
+                  bottom: 14,
+                  left: 15,
+                  right: 10,
+                ),
+                child: Icon(Icons.help_outline),
+              ),
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
                   color: AppColors.lightGrey,
                   width: 1.0,
                 ),
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(16),
               ),
               focusedBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
                   color: AppColors.lightGrey,
                   width: 1.0,
                 ),
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(16),
               ),
               disabledBorder: OutlineInputBorder(
                 borderSide:
                     const BorderSide(color: AppColors.lightGrey, width: 1.0),
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(16),
               ),
               contentPadding: contentPadding ??
                   const EdgeInsets.symmetric(
