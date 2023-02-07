@@ -14,47 +14,70 @@ class MapMainScreen extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
 
     return MaterialApp(
-        home: Scaffold(
-      body: Stack(
-        children: [
-          BackGround(width: width, height: height),
-          const MapBodyWidget(),
-          const Positioned(
-            top: 126,
-            right: 66,
-            child: RoundFlash(
-              color: AppColors.yellowColor,
+      home: Scaffold(
+        body: Stack(
+          children: [
+            BackGround(width: width, height: height),
+            const MapBodyWidget(),
+            const Positioned(
+              top: 126,
+              right: 66,
+              child: RoundFlash(
+                color: AppColors.yellowColor,
+              ),
+            ),
+            const Positioned(
+              top: 202,
+              right: 71,
+              child: RoundFlash(
+                color: AppColors.blackColor,
+              ),
+            ),
+            const Positioned(
+              top: 225,
+              right: 225,
+              child: RoundFlash(
+                color: AppColors.redColor,
+              ),
+            ),
+            const Positioned(
+              top: 345,
+              right: 168,
+              child: RoundFlash(
+                color: AppColors.greenColor,
+              ),
+            ),
+            Positioned(
+              top: 315,
+              left: 49,
+              child: SvgPicture.asset(placeVector),
+            ),
+          ],
+        ),
+        bottomNavigationBar: BottomAppBar(
+          shape: CircularNotchedRectangle(),
+          notchMargin: 14,
+          color: AppColors.whiteColor,
+          child: Container(
+            height: 60,
+            alignment: Alignment.center,
+            child: BottomTabBar(),
+          ),
+        ),
+        floatingActionButton: SizedBox(
+          width: 68,
+          height: 68,
+          child: FittedBox(
+            child: FloatingActionButton(
+              backgroundColor: AppColors.whiteColor,
+              onPressed: null,
+              child: SvgPicture.asset(greyFlash),
             ),
           ),
-          const Positioned(
-            top: 202,
-            right: 71,
-            child: RoundFlash(
-              color: AppColors.blackColor,
-            ),
-          ),
-          const Positioned(
-            top: 225,
-            right: 225,
-            child: RoundFlash(
-              color: AppColors.redColor,
-            ),
-          ),
-          const Positioned(
-            top: 345,
-            right: 168,
-            child: RoundFlash(
-              color: AppColors.greenColor,
-            ),
-          ),
-          Positioned(
-            top: 315,
-            left: 49,
-            child: SvgPicture.asset(placeVector),
-          ),
-        ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
-    ));
+    );
   }
 }
 
@@ -107,9 +130,11 @@ class MapBodyWidget extends StatelessWidget {
               StationName(),
               CoordinatesWidget(),
               Divider(),
+              OutletsList(),
             ],
           ),
         ),
+        const SizedBox(height: 8),
       ],
     );
   }

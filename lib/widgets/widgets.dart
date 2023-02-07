@@ -1,6 +1,9 @@
+export './bottom_tab_bar.dart';
 export './coordinates_widget.dart';
 export './custom_text_field.dart';
 export './map_background.dart';
+export './outlet_widget.dart';
+export './outlets_list_widget.dart';
 export './round_flash.dart';
 export './square_button.dart';
 export './station_name_widget.dart';
