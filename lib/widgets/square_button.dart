@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:volkhov_maps_app/theme/app_colors.dart';
-import 'package:volkhov_maps_app/theme/assets.dart';
 
 class SquareButton extends StatelessWidget {
   final String asset;
@@ -10,6 +8,10 @@ class SquareButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        margin: const EdgeInsets.symmetric(
+          horizontal: 16,
+          vertical: 4,
+        ),
         padding: const EdgeInsets.all(10),
         width: 48,
         height: 48,

@@ -65,7 +65,9 @@ class MapBodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(
@@ -78,11 +80,35 @@ class MapBodyWidget extends StatelessWidget {
             suffixIcon: SvgPicture.asset(cancelIcon),
           ),
         ),
+        const Expanded(
+          child: SizedBox(),
+        ),
         const SquareButton(
           asset: searchLocPng,
         ),
         const SquareButton(
           asset: threeBarIconPng,
+        ),
+        Container(
+          margin: const EdgeInsets.only(
+            top: 8,
+            bottom: 34,
+            right: 16,
+            left: 16,
+          ),
+          padding: const EdgeInsets.all(16),
+          width: screenWidth,
+          // height: 20,
+          decoration: BoxDecoration(
+              color: AppColors.whiteColor,
+              borderRadius: BorderRadius.circular(16)),
+          child: Column(
+            children: const [
+              StationName(),
+              CoordinatesWidget(),
+              Divider(),
+            ],
+          ),
         ),
       ],
     );
