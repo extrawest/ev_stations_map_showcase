@@ -8,12 +8,25 @@ const Color greyShadeLight = Color(0xFFE5E5E5);
 const Color greyLight = Color(0x0c000000);
 const Color white = Color(0xffffffff);
 
-
 class TextStyles {
   static const notifierTextLabel = TextStyle(
     fontSize: 26,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w300,
+  );
+
+  static const hintTextStyle = TextStyle(
+    // fontFamily: GoogleFonts.roboto(),
+    fontSize: 16,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+  );
+
+  static const textStyle = TextStyle(
+    // fontFamily: GoogleFonts.inter(),
+    fontSize: 16,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
   );
 }
 
@@ -21,7 +34,8 @@ ThemeData darkTheme = ThemeData(
   primaryColor: Colors.black,
   backgroundColor: blackShade,
   colorScheme: ColorScheme.dark(primary: Colors.grey.shade200),
-  floatingActionButtonTheme: const FloatingActionButtonThemeData(foregroundColor: Colors.black),
+  floatingActionButtonTheme:
+      const FloatingActionButtonThemeData(foregroundColor: Colors.black),
   dividerColor: Colors.black12,
   // or use string of the font in the assets 'SFUIDisplay'
   fontFamily: GoogleFonts.roboto().fontFamily,
@@ -36,7 +50,8 @@ ThemeData lightTheme = ThemeData(
   primaryColor: Colors.white,
   backgroundColor: greyShadeLight,
   colorScheme: const ColorScheme.light(primary: Colors.black54),
-  floatingActionButtonTheme: const FloatingActionButtonThemeData(foregroundColor: Colors.white),
+  floatingActionButtonTheme:
+      const FloatingActionButtonThemeData(foregroundColor: Colors.white),
   dividerColor: Colors.white54,
   // or use string of the font in the assets 'SFUIDisplay'
   fontFamily: GoogleFonts.roboto().fontFamily,
