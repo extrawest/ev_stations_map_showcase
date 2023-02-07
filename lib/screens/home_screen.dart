@@ -29,6 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: Text(tr(LocaleKeys.google_map)),
             ),
+            ElevatedButton(
+              onPressed: () async {
+                Navigator.pushNamed(context, mapMainScreenRoute);
+              },
+              child: Text(tr(LocaleKeys.google_map)),
+            ),
             SizedBox(
               height: 200,
               child: BlocBuilder<ChargestationsBloc, ChargestationsState>(
