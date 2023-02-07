@@ -13,6 +13,7 @@ class ChargestationsBloc
       : super(ChargestationsLoading()) {
     on<ChargestationsStarted>(_onStarted);
   }
+
   final ApiService apiService;
 
   Future<void> _onStarted(

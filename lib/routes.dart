@@ -13,4 +13,5 @@ Map<String, WidgetBuilder> applicationRoutes = <String, WidgetBuilder>{
   splashScreenRoute: (context) => SplashScreen(),
   homeScreenRoute: (context) => const FlavorBanner(child: HomeScreen()),
   mapScreenRoute: (context) => const MapScreen(),
+  mapMainRoute: (context) => const MapMainScreen(),
 };

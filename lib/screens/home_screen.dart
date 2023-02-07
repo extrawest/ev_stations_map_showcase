@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:volkhov_maps_app/common/app_bar_config.dart';
+import 'package:volkhov_maps_app/logic/bloc/chargestations_bloc.dart';
 import 'package:volkhov_maps_app/routes.dart';
 
 import '../generated/locale_keys.g.dart';
@@ -28,6 +29,21 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: Text(tr(LocaleKeys.google_map)),
             ),
+            SizedBox(
+              height: 200,
+              child: BlocBuilder<ChargestationsBloc, ChargestationsState>(
+                  builder: (context, state) {
+                if (state is ChargestationsLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is ChargestationsLoaded) {
+                  return Text(state.stationslist.toString());
+                } else {
+                  return const Center(
+                    child: Text('Error ChargestationsBloc'),
+                  );
+                }
+              }),
+            )
           ],
         ),
       ),
