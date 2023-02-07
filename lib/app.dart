@@ -32,22 +32,21 @@ class Application extends StatelessWidget {
     //     html.document.dispatchEvent(html.CustomEvent('dart_loaded'));
     //   }
 
-    return MultiProvider(
-        providers: [
-          // ChangeNotifierProvider(create: (context) => HomeViewModel()),
-          ChangeNotifierProvider(
-            create: (context) =>
-                PostsViewModel(ApiService(credentials.apiDomain)),
-          ),
-          Provider.value(value: credentials),
-        ],
-        child: MultiBlocProvider(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => ChargestationsBloc(
+            apiService: ApiService(credentials.apiDomain),
+          )..add(ChargestationsStarted()),
+        ),
+      ],
+      child: MultiProvider(
           providers: [
-            BlocProvider(
-              create: (_) => ChargestationsBloc(
-                  apiService: ApiService(credentials.apiDomain))
-                ..add(ChargestationsStarted()),
+            ChangeNotifierProvider(
+              create: (context) =>
+                  PostsViewModel(ApiService(credentials.apiDomain)),
             ),
+            Provider.value(value: credentials),
           ],
           child: MaterialApp(
             title: 'Flutter Provider Starter',
@@ -58,7 +57,7 @@ class Application extends StatelessWidget {
             supportedLocales: context.supportedLocales,
             locale: context.locale,
             routes: applicationRoutes,
-          ),
-        ));
+          )),
+    );
   }
 }
