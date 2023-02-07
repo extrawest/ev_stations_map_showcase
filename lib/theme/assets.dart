@@ -18,6 +18,9 @@ const String wallet = 'assets/icons/wallet.svg';
 const String yellowFlash = 'assets/icons/yellow_flash.svg';
 const String yellowStar = 'assets/icons/yellow_star.svg';
 const String placeVector = 'assets/icons/place_vector.svg';
+const String cancelIcon = 'assets/icons/cancel_icon.svg';
+const String searchIcon = 'assets/icons/search_icon.svg';
+const String flashIcon = 'assets/icons/flash_icon.svg';
 
 const String credentialsDevFile = 'assets/credentials_development.json';
 const String credentialsProdFile = 'assets/credentials_production.json';
