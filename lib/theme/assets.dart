@@ -4,13 +4,16 @@ const String mapMainImage = 'assets/images/map_main.svg';
 
 /// Map/main icons
 const String blackFlash = 'assets/icons/black_flash.svg';
+const String blackMarkerPng = 'assets/icons/black_marker.png';
 const String earth = 'assets/icons/earth.svg';
 const String greenBar = 'assets/icons/green_bar.svg';
 const String greenFlash = 'assets/icons/green_flash.svg';
+const String greenMarkerPng = 'assets/icons/green_marker.png';
 const String greenPlug = 'assets/icons/green_plug.svg';
 const String greyFlash = 'assets/icons/grey_flash.svg';
 const String greyStar = 'assets/icons/grey_star.svg';
 const String redFlash = 'assets/icons/red_flash.svg';
+const String redMarker = 'assets/icons/red_marker.png';
 const String rightSign = 'assets/icons/right_sign.svg';
 const String roundPerson = 'assets/icons/round_person.svg';
 const String searchLoc = 'assets/icons/search_location.svg';
@@ -19,8 +22,10 @@ const String threeBarIcon = 'assets/icons/three_bar_icon.svg';
 const String threeBarIconPng = 'assets/icons/three_bar_icon.png';
 const String wallet = 'assets/icons/wallet.svg';
 const String yellowFlash = 'assets/icons/yellow_flash.svg';
+const String yellowMarkerPng = 'assets/icons/yellow_marker.png';
 const String yellowStar = 'assets/icons/yellow_star.svg';
 const String placeVector = 'assets/icons/place_vector.svg';
+const String myMarkerPng = 'assets/icons/my_marker.png';
 const String cancelIcon = 'assets/icons/cancel_icon.svg';
 const String searchIcon = 'assets/icons/search_icon.svg';
 const String flashIcon = 'assets/icons/flash_icon.svg';
