@@ -1,5 +1,6 @@
 const String translationsFolderPath = 'assets/i18n';
 const String icMap = 'assets/images/ic_map.png';
+const String oneMarker = 'assets/images/one_marker.png';
 const String mapMainImage = 'assets/images/map_main.svg';
 
 /// Map/main icons
@@ -13,7 +14,7 @@ const String greenPlug = 'assets/icons/green_plug.svg';
 const String greyFlash = 'assets/icons/grey_flash.svg';
 const String greyStar = 'assets/icons/grey_star.svg';
 const String redFlash = 'assets/icons/red_flash.svg';
-const String redMarker = 'assets/icons/red_marker.png';
+const String redMarkerPng = 'assets/icons/red_marker.png';
 const String rightSign = 'assets/icons/right_sign.svg';
 const String roundPerson = 'assets/icons/round_person.svg';
 const String searchLoc = 'assets/icons/search_location.svg';
@@ -25,10 +26,14 @@ const String yellowFlash = 'assets/icons/yellow_flash.svg';
 const String yellowMarkerPng = 'assets/icons/yellow_marker.png';
 const String yellowStar = 'assets/icons/yellow_star.svg';
 const String placeVector = 'assets/icons/place_vector.svg';
+const String placeVectorPng = 'assets/icons/place_vector.png';
 const String myMarkerPng = 'assets/icons/my_marker.png';
+const String myMarkerX1Png = 'assets/icons/my_marker_x1.png';
+const String myMarkerX4Png = 'assets/icons/my_marker_x4.png';
 const String cancelIcon = 'assets/icons/cancel_icon.svg';
 const String searchIcon = 'assets/icons/search_icon.svg';
 const String flashIcon = 'assets/icons/flash_icon.svg';
+const String flashIconPng = 'assets/icons/flash_icon.png';
 
 const String credentialsDevFile = 'assets/credentials_development.json';
 const String credentialsProdFile = 'assets/credentials_production.json';

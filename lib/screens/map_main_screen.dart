@@ -50,7 +50,7 @@ class MapMainScreen extends StatelessWidget {
             Positioned(
               top: 315,
               left: 49,
-              child: SvgPicture.asset(placeVector),
+              child: Image.asset(placeVectorPng),
             ),
           ],
         ),

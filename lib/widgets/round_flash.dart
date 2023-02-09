@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+// import 'package:flutter_svg/svg.dart';
 import 'package:volkhov_maps_app/theme/app_colors.dart';
 import 'package:volkhov_maps_app/theme/assets.dart';
 
@@ -24,9 +24,9 @@ class RoundFlash extends StatelessWidget {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
             border: Border.all(color: color, width: 4)),
-        child: SvgPicture.asset(
-          flashIcon,
-          colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
+        child: Image.asset(
+          flashIconPng,
+          color: color,
         ),
       ),
     );
