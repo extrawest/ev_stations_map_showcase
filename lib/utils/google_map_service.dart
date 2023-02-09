@@ -1,4 +1,23 @@
+import 'dart:ui';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:volkhov_maps_app/logic/bloc/chargestations_bloc.dart';
+
+import '../models/models.dart';
+import '../theme/assets.dart';
+
+BitmapDescriptor myMarkerIcon = BitmapDescriptor.defaultMarker;
+
+BitmapDescriptor redMarkerIcon = BitmapDescriptor.defaultMarker;
+
+BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
+
+BitmapDescriptor yellowMarkerIcon = BitmapDescriptor.defaultMarker;
+
+BitmapDescriptor blackMarkerIcon = BitmapDescriptor.defaultMarker;
 
 /// Determine the current position of the device.
 ///
@@ -42,3 +61,128 @@ Future<Position> determinePosition() async {
 }
 
 // void getPermission
+BitmapDescriptor getIcon(Status? status) {
+  BitmapDescriptor result;
+  switch (status) {
+    case Status.AVAILABLE:
+      result = greenMarkerIcon;
+      break;
+    case Status.OFFLINE:
+      result = redMarkerIcon;
+      break;
+    case Status.BUSY:
+      result = yellowMarkerIcon;
+      break;
+    default:
+      result = blackMarkerIcon;
+      break;
+  }
+  return result;
+}
+
+Future<BitmapDescriptor> getMarkerBitmap(int size, {String? text}) async {
+  if (kIsWeb) size = (size / 2).floor();
+
+  final PictureRecorder pictureRecorder = PictureRecorder();
+  final Canvas canvas = Canvas(pictureRecorder);
+  final Paint paint1 = Paint()..color = Colors.orange;
+  final Paint paint2 = Paint()..color = Colors.white;
+
+  canvas.drawCircle(Offset(size / 2, size / 2), size / 2.0, paint1);
+  canvas.drawCircle(Offset(size / 2, size / 2), size / 2.2, paint2);
+  canvas.drawCircle(Offset(size / 2, size / 2), size / 2.8, paint1);
+
+  if (text != null) {
+    final TextPainter painter = TextPainter(textDirection: TextDirection.ltr);
+    painter.text = TextSpan(
+      text: text,
+      style: TextStyle(
+          fontSize: size / 3,
+          color: Colors.white,
+          fontWeight: FontWeight.normal),
+    );
+    painter.layout();
+    painter.paint(
+      canvas,
+      Offset(size / 2 - painter.width / 2, size / 2 - painter.height / 2),
+    );
+  }
+
+  final img = await pictureRecorder.endRecording().toImage(size, size);
+  final data = await img.toByteData(format: ImageByteFormat.png) as ByteData;
+
+  return BitmapDescriptor.fromBytes(data.buffer.asUint8List());
+}
+
+void setMarkersIcon({required Function() function}) {
+  BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(30, 30)), oneMarker)
+      .then(
+    (icon) {
+      myMarkerIcon = icon;
+    },
+  );
+  BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(100, 100)), redMarkerPng)
+      .then(
+    (icon) {
+      redMarkerIcon = icon;
+    },
+  );
+  BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(100, 100)), greenMarkerPng)
+      .then(
+    (icon) {
+      greenMarkerIcon = icon;
+    },
+  );
+  BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(100, 100)), yellowMarkerPng)
+      .then(
+    (icon) {
+      yellowMarkerIcon = icon;
+    },
+  );
+  BitmapDescriptor.fromAssetImage(
+          const ImageConfiguration(size: Size(100, 100)), blackMarkerPng)
+      .then(
+    (icon) {
+      blackMarkerIcon = icon;
+    },
+  );
+  function();
+}
+
+List<Place> setPlaceItems(ChargestationsLoaded state) {
+  final List<Place> items = [];
+
+  for (final stationslist in state.stationslist) {
+    final status = getStatus(stationslist.status);
+    final place = Place(
+      stationId: stationslist.stationId ?? '',
+      latLng: LatLng(
+        stationslist.latitude ?? 0,
+        stationslist.longitude ?? 0,
+      ),
+      status: status,
+      icon: getIcon(status),
+    );
+
+    items.add(place);
+  }
+  return items;
+}
+
+Set<Marker> setMarkers(List<Place> places) {
+  final Set<Marker> markers = {};
+  for (final place in places) {
+    markers.add(
+      Marker(
+        markerId: MarkerId(place.latLng.toString()),
+        position: place.latLng,
+        icon: place.icon,
+      ),
+    );
+  }
+  return markers;
+}

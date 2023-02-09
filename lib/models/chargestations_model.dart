@@ -68,9 +68,9 @@ class ChargestationsModel {
   }
 }
 
-enum Status { BUSY, AVAILABLE, OFFLINE }
+enum Status { BUSY, AVAILABLE, OFFLINE, UNKNOWN }
 
-Status getStatus(String status) {
+Status getStatus(String? status) {
   Status result;
   switch (status) {
     case 'available':
@@ -79,8 +79,11 @@ Status getStatus(String status) {
     case 'busy':
       result = Status.BUSY;
       break;
-    default:
+    case 'offline':
       result = Status.OFFLINE;
+      break;
+    default:
+      result = Status.UNKNOWN;
       break;
   }
   return result;

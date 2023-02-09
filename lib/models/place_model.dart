@@ -7,12 +7,13 @@ class Place with ClusterItem {
   final String stationId;
   final LatLng latLng;
   final Status status;
+  final BitmapDescriptor icon;
 
-  Place({
-    required this.stationId,
-    required this.latLng,
-    required this.status,
-  });
+  Place(
+      {required this.stationId,
+      required this.latLng,
+      required this.status,
+      this.icon = BitmapDescriptor.defaultMarker});
 
   @override
   String toString() {
