@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:volkhov_maps_app/theme/assets.dart';
 
-import '../services/services.dart';
+import '../utils/utils.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -27,16 +27,54 @@ class _MapScreenState extends State<MapScreen> {
 
   BitmapDescriptor myMarkerIcon = BitmapDescriptor.defaultMarker;
 
-  void setMyMarkerIcon() {
-    BitmapDescriptor.fromAssetImage(
-            const ImageConfiguration(size: Size(100, 100)), myMarkerPng)
-        .then(
-      (icon) {
-        setState(() {
+  BitmapDescriptor redMarkerIcon = BitmapDescriptor.defaultMarker;
+
+  BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
+
+  BitmapDescriptor yellowMarkerIcon = BitmapDescriptor.defaultMarker;
+
+  BitmapDescriptor blackMarkerIcon = BitmapDescriptor.defaultMarker;
+
+  bool _mapCreated = false;
+
+  void setMarkersIcon() {
+    setState(() {
+      BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(100, 100)), myMarkerPng)
+          .then(
+        (icon) {
           myMarkerIcon = icon;
-        });
-      },
-    );
+        },
+      );
+      BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(100, 100)), redMarkerPng)
+          .then(
+        (icon) {
+          redMarkerIcon = icon;
+        },
+      );
+      BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(100, 100)), greenMarkerPng)
+          .then(
+        (icon) {
+          greenMarkerIcon = icon;
+        },
+      );
+      BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(100, 100)), yellowMarkerPng)
+          .then(
+        (icon) {
+          yellowMarkerIcon = icon;
+        },
+      );
+      BitmapDescriptor.fromAssetImage(
+              const ImageConfiguration(size: Size(100, 100)), blackMarkerPng)
+          .then(
+        (icon) {
+          blackMarkerIcon = icon;
+        },
+      );
+    });
   }
 
   final LocationSettings locationSettings = const LocationSettings(
@@ -46,6 +84,9 @@ class _MapScreenState extends State<MapScreen> {
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    setState(() {
+      _mapCreated = true;
+    });
   }
 
   Future<void> getPosition() async {
@@ -56,7 +97,7 @@ class _MapScreenState extends State<MapScreen> {
   @override
   void initState() {
     getPosition();
-    setMyMarkerIcon();
+    setMarkersIcon();
 
     myPosition = const LatLng(45.521563, -122.677433);
 
@@ -65,22 +106,32 @@ class _MapScreenState extends State<MapScreen> {
           Geolocator.getPositionStream(locationSettings: locationSettings)
               .listen((Position position) {
         myPosition = LatLng(position.latitude, position.longitude);
-        mapController.moveCamera(
-          CameraUpdate.newCameraPosition(
-            CameraPosition(
-              target: LatLng(
-                position.latitude,
-                position.longitude,
+
+        // if (_mapCreated)
+        {
+          mapController.moveCamera(
+            CameraUpdate.newCameraPosition(
+              CameraPosition(
+                target: LatLng(
+                  position.latitude,
+                  position.longitude,
+                ),
+                zoom: 11.0,
               ),
-              zoom: 11.0,
             ),
-          ),
-        );
-        setState(() {});
+          );
+          setState(() {});
+        }
       });
     });
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    mapController.dispose();
+    super.dispose();
   }
 
   @override
@@ -91,24 +142,31 @@ class _MapScreenState extends State<MapScreen> {
           title: const Text('Maps Sample App'),
           backgroundColor: Colors.green[700],
         ),
-        body: GoogleMap(
-          onMapCreated: _onMapCreated,
-          initialCameraPosition: CameraPosition(
-            target: _center,
-            zoom: 11.0,
+        body: Stack(children: [
+          GoogleMap(
+            onMapCreated:
+                // (GoogleMapController controller) {
+                //   mapController = controller;
+                // },
+                _onMapCreated,
+            initialCameraPosition: CameraPosition(
+              target: _center,
+              zoom: 11.0,
+            ),
+            markers: {
+              Marker(
+                  markerId: const MarkerId('myPosition'),
+                  position: LatLng(myPosition.latitude, myPosition.longitude),
+                  draggable: true,
+                  onDragEnd: (value) {
+                    // value is the new position
+                  },
+                  icon: myMarkerIcon // icon: markerIcon,
+                  ),
+            },
           ),
-          markers: {
-            Marker(
-                markerId: const MarkerId('myPosition'),
-                position: LatLng(myPosition.latitude, myPosition.longitude),
-                draggable: true,
-                onDragEnd: (value) {
-                  // value is the new position
-                },
-                icon: myMarkerIcon // icon: markerIcon,
-                ),
-          },
-        ),
+          // if (!_mapCreated) const Center(child: CircularProgressIndicator()),
+        ]),
       ),
     );
   }
