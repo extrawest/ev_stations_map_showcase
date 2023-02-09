@@ -42,7 +42,9 @@ class ChargestationsModel {
         longitude:
             json['longitude'] == null ? null : json['longitude'] as double?,
         latitude: json['latitude'] == null ? null : json['latitude'] as double?,
-        status: json['status'] as String?,
+        status:
+            // getStatus(json['status'] as String),
+            json['status'] as String?,
         imageUrls: json['imageUrls'] != null
             ? ImageUrls.fromJson(json['imageUrls'])
             : null,
@@ -64,6 +66,24 @@ class ChargestationsModel {
     }
     return data;
   }
+}
+
+enum Status { BUSY, AVAILABLE, OFFLINE }
+
+Status getStatus(String status) {
+  Status result;
+  switch (status) {
+    case 'available':
+      result = Status.AVAILABLE;
+      break;
+    case 'busy':
+      result = Status.BUSY;
+      break;
+    default:
+      result = Status.OFFLINE;
+      break;
+  }
+  return result;
 }
 
 class Connectors {
