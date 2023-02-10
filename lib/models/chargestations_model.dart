@@ -90,16 +90,6 @@ class Connectors {
       this.enabled,
       this.tariff});
 
-  // factory Connectors.fromJson(Map<String, dynamic> json) => Connectors(
-  //       id: json['id'] == null ? null : json['id'] as String?,
-  //       type: json['type'] == null ? null : json['type'] as String?,
-  //       connectorId:
-  //           json['connectorId'] == null ? null : json['connectorId'] as int?,
-  //       power: json['power'] == null ? null : json['power'] as double?,
-  //       enabled: json['enabled'] == null ? null : json['enabled'] as bool?,
-  //       tariff: json['tariff'] == null ? null : json['tariff'] as double?,
-  //     );
-
   Connectors.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     type = json['type'];
