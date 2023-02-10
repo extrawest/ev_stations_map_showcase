@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -27,8 +26,6 @@ class _MapScreenState extends State<MapScreen> {
 
   final Completer<GoogleMapController> _controller = Completer();
 
-  late Set<Marker> markers;
-
   final LatLng _center = const LatLng(45.521563, -122.677433);
 
   late LatLng myPosition;
@@ -37,9 +34,13 @@ class _MapScreenState extends State<MapScreen> {
 
   late Marker marker;
 
+  Set<Marker> markers = {};
+
   List<Place> placeItems = [];
 
   bool _mapCreated = false;
+
+  double _currentZoom = 12.0;
 
   final LocationSettings locationSettings = const LocationSettings(
     accuracy: LocationAccuracy.high,
@@ -48,6 +49,9 @@ class _MapScreenState extends State<MapScreen> {
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
+    _controller.complete(controller);
+    _manager.setMapId(controller.mapId);
+
     setState(() {
       _mapCreated = true;
     });
@@ -60,8 +64,8 @@ class _MapScreenState extends State<MapScreen> {
 
   @override
   void initState() {
-    markers = {};
     getPosition();
+
     setMarkersIcon(function: () => setState(() {}));
 
     _manager = _initClusterManager();
@@ -75,23 +79,27 @@ class _MapScreenState extends State<MapScreen> {
         myPosition = LatLng(position.latitude, position.longitude);
 
         if (_mapCreated) {
-          mapController.moveCamera(
-            CameraUpdate.newCameraPosition(
-              CameraPosition(
-                target: LatLng(
-                  position.latitude,
-                  position.longitude,
-                ),
-                zoom: 11.0,
-              ),
-            ),
-          );
+          moveCameraTo(myPosition);
           setState(() {});
         }
       });
     });
 
     super.initState();
+  }
+
+  Future<void> moveCameraTo(LatLng position) {
+    return mapController.moveCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(
+            position.latitude,
+            position.longitude,
+          ),
+          zoom: _currentZoom,
+        ),
+      ),
+    );
   }
 
   @override
@@ -115,15 +123,15 @@ class _MapScreenState extends State<MapScreen> {
                 mapType: MapType.normal,
                 onMapCreated: (GoogleMapController controller) {
                   _onMapCreated(controller);
-                  _manager.setMapId(controller.mapId);
                   if (state is ChargestationsLoaded) {
-                    final listPlaces = setPlaceItems(state);
-                    placeItems = [...listPlaces];
+                    final listPlaces = [...setPlaceItems(state)];
+                    placeItems.addAll(listPlaces);
                     markers = {...setMarkers(listPlaces)};
+                    moveCameraTo(myPosition);
                   }
                 },
                 initialCameraPosition: CameraPosition(
-                  target: _center,
+                  target: LatLng(myPosition.latitude, myPosition.longitude),
                   zoom: 11.0,
                 ),
                 markers: {
@@ -137,7 +145,7 @@ class _MapScreenState extends State<MapScreen> {
                       icon: myMarkerIcon),
                   ...markers,
                 },
-                onCameraMove: _manager.onCameraMove,
+                onCameraMove: _onCameraMove,
                 onCameraIdle: _manager.updateMap,
               );
             },
@@ -148,6 +156,11 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  void _onCameraMove(CameraPosition cameraPosition) {
+    _manager.onCameraMove(cameraPosition);
+    _currentZoom = cameraPosition.zoom + 2;
+  }
+
   ClusterManager _initClusterManager() {
     return ClusterManager<Place>(placeItems, _updateMarkers,
         markerBuilder: _markerBuilder);
@@ -156,7 +169,7 @@ class _MapScreenState extends State<MapScreen> {
   void _updateMarkers(Set<Marker> markerSet) {
     log.fine('Updated ${markers.length} markers');
     setState(() {
-      // markers = markerSet;
+      markers = markerSet;
     });
   }
 
@@ -167,12 +180,21 @@ class _MapScreenState extends State<MapScreen> {
           position: cluster.location,
           onTap: () {
             log.fine('---- $cluster');
-            for (final p in cluster.items) {
-              log.fine(p);
-            }
+            moveCameraTo(cluster.location);
+            // for (final p in cluster.items) {
+            //   log.fine(p);
+            // }
           },
           icon: await getMarkerBitmap(cluster.isMultiple ? 125 : 75,
               text: cluster.isMultiple ? cluster.count.toString() : null),
         );
       };
+
+  // void _onCameraMove(CameraPosition cameraPosition) {
+  //   _currentZoom = cameraPosition.zoom;
+  // }
+
+  //  void _onCameraIdle() {
+  //   _bloc.setCameraZoom(_currentZoom);
+  // }
 }

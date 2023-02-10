@@ -18,19 +18,6 @@ class ChargestationsModel {
       this.connectors,
       this.imageUrls});
 
-  // factory ChargestationsModel.fromJson(Map<String, dynamic> json) =>
-  //     ChargestationsModel(
-  //       stationId: json['stationId'] as String,
-  //       tenantId: json['tenantId'] as String,
-  //       chargePointId: json['chargePointId'] as String,
-  //       longitude: json['longitude'] as double,
-  //       latitude: json['latitude'] as double,
-  //       status: json['status'] as String,
-  //       imageUrls: json['imageUrls'] != null
-  //           ? ImageUrls.fromJson(json['imageUrls'])
-  //           : null,
-  //     );
-
   factory ChargestationsModel.fromJson(Map<String, dynamic> json) =>
       ChargestationsModel(
         stationId:
@@ -42,9 +29,7 @@ class ChargestationsModel {
         longitude:
             json['longitude'] == null ? null : json['longitude'] as double?,
         latitude: json['latitude'] == null ? null : json['latitude'] as double?,
-        status:
-            // getStatus(json['status'] as String),
-            json['status'] as String?,
+        status: json['status'] as String?,
         imageUrls: json['imageUrls'] != null
             ? ImageUrls.fromJson(json['imageUrls'])
             : null,
@@ -68,22 +53,22 @@ class ChargestationsModel {
   }
 }
 
-enum Status { BUSY, AVAILABLE, OFFLINE, UNKNOWN }
+enum Status { busy, available, offline, unknown }
 
 Status getStatus(String? status) {
   Status result;
   switch (status) {
     case 'available':
-      result = Status.AVAILABLE;
+      result = Status.available;
       break;
     case 'busy':
-      result = Status.BUSY;
+      result = Status.busy;
       break;
     case 'offline':
-      result = Status.OFFLINE;
+      result = Status.offline;
       break;
     default:
-      result = Status.UNKNOWN;
+      result = Status.unknown;
       break;
   }
   return result;

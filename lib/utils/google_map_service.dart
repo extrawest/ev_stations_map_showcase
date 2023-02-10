@@ -60,17 +60,16 @@ Future<Position> determinePosition() async {
   return await Geolocator.getCurrentPosition();
 }
 
-// void getPermission
 BitmapDescriptor getIcon(Status? status) {
   BitmapDescriptor result;
   switch (status) {
-    case Status.AVAILABLE:
+    case Status.available:
       result = greenMarkerIcon;
       break;
-    case Status.OFFLINE:
+    case Status.offline:
       result = redMarkerIcon;
       break;
-    case Status.BUSY:
+    case Status.busy:
       result = yellowMarkerIcon;
       break;
     default:
@@ -81,7 +80,9 @@ BitmapDescriptor getIcon(Status? status) {
 }
 
 Future<BitmapDescriptor> getMarkerBitmap(int size, {String? text}) async {
-  if (kIsWeb) size = (size / 2).floor();
+  if (kIsWeb) {
+    size = (size / 2).floor();
+  }
 
   final PictureRecorder pictureRecorder = PictureRecorder();
   final Canvas canvas = Canvas(pictureRecorder);
