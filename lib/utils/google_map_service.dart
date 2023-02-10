@@ -79,7 +79,7 @@ BitmapDescriptor getIcon(Status? status) {
   return result;
 }
 
-Future<BitmapDescriptor> getMarkerBitmap(int size, {String? text}) async {
+Future<BitmapDescriptor> getCountMarkerBitmap(int size, {String? text}) async {
   if (kIsWeb) {
     size = (size / 2).floor();
   }
@@ -117,36 +117,41 @@ Future<BitmapDescriptor> getMarkerBitmap(int size, {String? text}) async {
 
 void setMarkersIcon({required Function() function}) {
   BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(30, 30)), oneMarker)
-      .then(
+    const ImageConfiguration(size: Size(30, 30)),
+    oneMarker,
+  ).then(
     (icon) {
       myMarkerIcon = icon;
     },
   );
   BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(100, 100)), redMarkerPng)
-      .then(
+    const ImageConfiguration(size: Size(100, 100)),
+    redMarkerPng,
+  ).then(
     (icon) {
       redMarkerIcon = icon;
     },
   );
   BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(100, 100)), greenMarkerPng)
-      .then(
+    const ImageConfiguration(size: Size(100, 100)),
+    greenMarkerPng,
+  ).then(
     (icon) {
       greenMarkerIcon = icon;
     },
   );
   BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(100, 100)), yellowMarkerPng)
-      .then(
+    const ImageConfiguration(size: Size(100, 100)),
+    yellowMarkerPng,
+  ).then(
     (icon) {
       yellowMarkerIcon = icon;
     },
   );
   BitmapDescriptor.fromAssetImage(
-          const ImageConfiguration(size: Size(100, 100)), blackMarkerPng)
-      .then(
+    const ImageConfiguration(size: Size(100, 100)),
+    blackMarkerPng,
+  ).then(
     (icon) {
       blackMarkerIcon = icon;
     },
@@ -166,24 +171,9 @@ List<Place> setPlaceItems(ChargestationsLoaded state) {
         stationslist.longitude ?? 0,
       ),
       status: status,
-      icon: getIcon(status),
     );
 
     items.add(place);
   }
   return items;
-}
-
-Set<Marker> setMarkers(List<Place> places) {
-  final Set<Marker> markers = {};
-  for (final place in places) {
-    markers.add(
-      Marker(
-        markerId: MarkerId(place.latLng.toString()),
-        position: place.latLng,
-        icon: place.icon,
-      ),
-    );
-  }
-  return markers;
 }

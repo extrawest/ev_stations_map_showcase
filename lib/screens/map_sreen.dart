@@ -26,8 +26,6 @@ class _MapScreenState extends State<MapScreen> {
 
   final Completer<GoogleMapController> _controller = Completer();
 
-  final LatLng _center = const LatLng(45.521563, -122.677433);
-
   late LatLng myPosition;
 
   late StreamSubscription<Position> positionStream;
@@ -59,7 +57,10 @@ class _MapScreenState extends State<MapScreen> {
 
   Future<void> getPosition() async {
     final Position position = await determinePosition();
-    myPosition = LatLng(position.latitude, position.longitude);
+    myPosition = LatLng(
+      position.latitude,
+      position.longitude,
+    );
   }
 
   @override
@@ -73,10 +74,13 @@ class _MapScreenState extends State<MapScreen> {
     myPosition = const LatLng(45.521563, -122.677433);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      positionStream =
-          Geolocator.getPositionStream(locationSettings: locationSettings)
-              .listen((Position position) {
-        myPosition = LatLng(position.latitude, position.longitude);
+      positionStream = Geolocator.getPositionStream(
+        locationSettings: locationSettings,
+      ).listen((Position position) {
+        myPosition = LatLng(
+          position.latitude,
+          position.longitude,
+        );
 
         if (_mapCreated) {
           moveCameraTo(myPosition);
@@ -124,21 +128,24 @@ class _MapScreenState extends State<MapScreen> {
                 onMapCreated: (GoogleMapController controller) {
                   _onMapCreated(controller);
                   if (state is ChargestationsLoaded) {
-                    final listPlaces = [...setPlaceItems(state)];
-                    placeItems.addAll(listPlaces);
-                    markers = {...setMarkers(listPlaces)};
+                    placeItems.addAll(setPlaceItems(state));
                     moveCameraTo(myPosition);
                   }
                 },
                 initialCameraPosition: CameraPosition(
-                  target: LatLng(myPosition.latitude, myPosition.longitude),
+                  target: LatLng(
+                    myPosition.latitude,
+                    myPosition.longitude,
+                  ),
                   zoom: 11.0,
                 ),
                 markers: {
                   Marker(
                       markerId: const MarkerId('myPosition'),
-                      position:
-                          LatLng(myPosition.latitude, myPosition.longitude),
+                      position: LatLng(
+                        myPosition.latitude,
+                        myPosition.longitude,
+                      ),
                       draggable: true,
                       onDragEnd: (value) {},
                       onTap: null,
@@ -162,8 +169,11 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   ClusterManager _initClusterManager() {
-    return ClusterManager<Place>(placeItems, _updateMarkers,
-        markerBuilder: _markerBuilder);
+    return ClusterManager<Place>(
+      placeItems,
+      _updateMarkers,
+      markerBuilder: _markerBuilder,
+    );
   }
 
   void _updateMarkers(Set<Marker> markerSet) {
@@ -181,20 +191,13 @@ class _MapScreenState extends State<MapScreen> {
           onTap: () {
             log.fine('---- $cluster');
             moveCameraTo(cluster.location);
-            // for (final p in cluster.items) {
-            //   log.fine(p);
-            // }
           },
-          icon: await getMarkerBitmap(cluster.isMultiple ? 125 : 75,
-              text: cluster.isMultiple ? cluster.count.toString() : null),
+          icon: cluster.isMultiple
+              ? await getCountMarkerBitmap(
+                  125,
+                  text: cluster.count.toString(),
+                )
+              : getIcon(cluster.items.first.status),
         );
       };
-
-  // void _onCameraMove(CameraPosition cameraPosition) {
-  //   _currentZoom = cameraPosition.zoom;
-  // }
-
-  //  void _onCameraIdle() {
-  //   _bloc.setCameraZoom(_currentZoom);
-  // }
 }

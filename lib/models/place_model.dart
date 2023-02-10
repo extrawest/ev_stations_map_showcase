@@ -7,7 +7,7 @@ class Place with ClusterItem {
   final String stationId;
   final LatLng latLng;
   final Status status;
-  final BitmapDescriptor icon;
+  final BitmapDescriptor? icon;
 
   Place(
       {required this.stationId,
@@ -23,10 +23,3 @@ class Place with ClusterItem {
   @override
   LatLng get location => latLng;
 }
-
-// stationId;
-//   String? tenantId;
-//   String? chargePointId;
-//   double? longitude;
-//   double? latitude;
-//   String? status;
