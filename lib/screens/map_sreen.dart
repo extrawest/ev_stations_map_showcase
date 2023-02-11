@@ -6,10 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:volkhov_maps_app/logic/bloc/chargestations_bloc.dart';
 import 'package:volkhov_maps_app/theme/assets.dart';
 
 import '../models/models.dart';
+import '../theme/themes.dart';
 import '../utils/utils.dart';
 
 class MapScreen extends StatefulWidget {
@@ -83,7 +85,7 @@ class _MapScreenState extends State<MapScreen> {
         );
 
         if (_mapCreated) {
-          moveCameraTo(myPosition);
+          moveCameraTo(position: myPosition);
           setState(() {});
         }
       });
@@ -92,15 +94,15 @@ class _MapScreenState extends State<MapScreen> {
     super.initState();
   }
 
-  Future<void> moveCameraTo(LatLng position) {
-    return mapController.moveCamera(
+  Future<void> moveCameraTo({required LatLng position, double? zoom}) {
+    return mapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: LatLng(
             position.latitude,
             position.longitude,
           ),
-          zoom: _currentZoom,
+          zoom: zoom ?? _currentZoom,
         ),
       ),
     );
@@ -129,7 +131,7 @@ class _MapScreenState extends State<MapScreen> {
                   _onMapCreated(controller);
                   if (state is ChargestationsLoaded) {
                     placeItems.addAll(setPlaceItems(state));
-                    moveCameraTo(myPosition);
+                    moveCameraTo(position: myPosition);
                   }
                 },
                 initialCameraPosition: CameraPosition(
@@ -152,6 +154,7 @@ class _MapScreenState extends State<MapScreen> {
                       icon: myMarkerIcon),
                   ...markers,
                 },
+                myLocationButtonEnabled: false,
                 onCameraMove: _onCameraMove,
                 onCameraIdle: _manager.updateMap,
               );
@@ -159,8 +162,70 @@ class _MapScreenState extends State<MapScreen> {
             listener: (context, state) {},
           ),
         ]),
+        floatingActionButton: Container(
+          height: 140,
+          width: 60,
+          alignment: Alignment.topCenter,
+          child: GestureDetector(
+            onTap: () => requestPermission(
+              () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Attention'),
+                        content: const Text(
+                            'Turning on the geolocation is necessary to determine your location'),
+                        actions: [
+                          ElevatedButton(
+                              onPressed: () {
+                                openAppSettings();
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Accept')),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: const Text('Decline')),
+                        ],
+                      );
+                    });
+              },
+            ),
+            child: Container(
+                width: 55,
+                height: 55,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(28),
+                  color: AppColors.whiteColor,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 7,
+                      offset: const Offset(0, 1),
+                    ),
+                  ],
+                ),
+                child: const Icon(Icons.my_location)),
+          ),
+        ),
       ),
     );
+  }
+
+  Future<void> requestPermission(Function() callBack) async {
+    if (await Permission.location.request().isGranted) {
+      await getPosition();
+      await moveCameraTo(position: myPosition, zoom: 15);
+    } else {
+      final permissionStatus = await Permission.locationWhenInUse.request();
+      if (permissionStatus == PermissionStatus.permanentlyDenied ||
+          permissionStatus == PermissionStatus.denied) {
+        callBack();
+      }
+    }
   }
 
   void _onCameraMove(CameraPosition cameraPosition) {
@@ -190,7 +255,7 @@ class _MapScreenState extends State<MapScreen> {
           position: cluster.location,
           onTap: () {
             log.fine('---- $cluster');
-            moveCameraTo(cluster.location);
+            moveCameraTo(position: cluster.location);
           },
           icon: cluster.isMultiple
               ? await getCountMarkerBitmap(
