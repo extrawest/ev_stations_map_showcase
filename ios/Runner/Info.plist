@@ -40,10 +40,20 @@
 		<key>$(DEFINE_IOS_KEY)</key>
 		<string>The example App requires temporary access to the device's precise location.</string>
 	</dict>
+	<!-- location section -->
 	<key>NSLocationUsageDescription</key>
 	<string>This app needs access to location.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open.</string>
+	<!-- <key>NSLocationWhenInUseUsageDescription</key>
+    <string>Need location when in use</string> -->
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Always and when in use!</string>
+    <!-- <key>NSLocationUsageDescription</key>
+    <string>Older devices need location.</string> -->
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Can I have location always?</string>
+	<!-- end location section -->
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>UIBackgroundModes</key>

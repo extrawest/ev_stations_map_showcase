@@ -34,18 +34,6 @@
                 "--dart-define",
                 "DEFINE_WEB_KEY=AIzaSyCxRvi4_4hyAw49PObPVtOq9iPqdvCFWKw",
             ]
-        },
-        {
-            "name": "volkhov_maps_app (profile mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "profile"
-        },
-        {
-            "name": "volkhov_maps_app (release mode)",
-            "request": "launch",
-            "type": "dart",
-            "flutterMode": "release"
         }
     ]
 }

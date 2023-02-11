@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
@@ -118,7 +119,7 @@ Future<BitmapDescriptor> getCountMarkerBitmap(int size, {String? text}) async {
 void setMarkersIcon({required Function() function}) {
   BitmapDescriptor.fromAssetImage(
     const ImageConfiguration(size: Size(30, 30)),
-    oneMarker,
+    Platform.isAndroid ? myMarkerPng : oneMarker,
   ).then(
     (icon) {
       myMarkerIcon = icon;
@@ -126,7 +127,7 @@ void setMarkersIcon({required Function() function}) {
   );
   BitmapDescriptor.fromAssetImage(
     const ImageConfiguration(size: Size(100, 100)),
-    redMarkerPng,
+    Platform.isAndroid ? redMarkerPng3x : redMarkerPng,
   ).then(
     (icon) {
       redMarkerIcon = icon;
@@ -134,7 +135,7 @@ void setMarkersIcon({required Function() function}) {
   );
   BitmapDescriptor.fromAssetImage(
     const ImageConfiguration(size: Size(100, 100)),
-    greenMarkerPng,
+    Platform.isAndroid ? greenMarkerPng3x : greenMarkerPng,
   ).then(
     (icon) {
       greenMarkerIcon = icon;
@@ -142,7 +143,7 @@ void setMarkersIcon({required Function() function}) {
   );
   BitmapDescriptor.fromAssetImage(
     const ImageConfiguration(size: Size(100, 100)),
-    yellowMarkerPng,
+    Platform.isAndroid ? yellowMarkerPng3x : yellowMarkerPng,
   ).then(
     (icon) {
       yellowMarkerIcon = icon;
@@ -150,7 +151,7 @@ void setMarkersIcon({required Function() function}) {
   );
   BitmapDescriptor.fromAssetImage(
     const ImageConfiguration(size: Size(100, 100)),
-    blackMarkerPng,
+    Platform.isAndroid ? blackMarkerPng3x : blackMarkerPng,
   ).then(
     (icon) {
       blackMarkerIcon = icon;
