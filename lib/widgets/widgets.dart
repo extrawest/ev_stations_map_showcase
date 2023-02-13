@@ -8,4 +8,5 @@ export './outlets_list_widget.dart';
 export './round_flash.dart';
 export './square_button.dart';
 export './station_info_bottom_sheet.dart';
+export './station_info_outlet_widget.dart';
 export './station_name_widget.dart';

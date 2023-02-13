@@ -314,6 +314,8 @@ void showStationInfoBottomSheet({
   required Place station,
 }) {
   showModalBottomSheet(
+      isScrollControlled: true,
+      useRootNavigator: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10.0),
       ),

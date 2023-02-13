@@ -6,6 +6,7 @@ import 'package:volkhov_maps_app/logic/bloc/chargestations_bloc.dart';
 
 import '../models/models.dart';
 import '../theme/themes.dart';
+import 'widgets.dart';
 
 class StationInfoWidget extends StatelessWidget {
   final Place station;
@@ -111,10 +112,29 @@ class StationInfoWidget extends StatelessWidget {
                   height: 1,
                 ),
               ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: const Text(
+                  'Connectors',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 8),
+              // if (stationInfo.connectors != null)
+              StationInfoOutlet(
+                connector: stationInfo.connectors?[0],
+              ),
+              StationInfoOutlet(
+                connector: stationInfo.connectors?[0],
+              ),
+              StationInfoOutlet(
+                connector: stationInfo.connectors?[0],
+              ),
               //Last padding
-              const SizedBox(
-                height: 16,
-              )
+              const SizedBox(height: 16)
             ],
           );
         } else {
