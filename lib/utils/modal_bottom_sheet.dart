@@ -1,21 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-import '../common/enum.dart';
 import '../theme/themes.dart';
-
-void modalBottomSheetMenu(
-    {required BuildContext context, MapType mapType = MapType.defaultType}) {
-  showModalBottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      context: context,
-      builder: (builder) {
-        return BodyBottomSheetWidget(
-          mapType: mapType,
-        );
-      });
-}
 
 class BodyBottomSheetWidget extends StatefulWidget {
   final MapType mapType;
@@ -31,6 +17,7 @@ class _BodyBottomSheetWidgetState extends State<BodyBottomSheetWidget> {
   @override
   void initState() {
     selectedtype = widget.mapType;
+    super.initState();
   }
 
   @override
@@ -41,10 +28,12 @@ class _BodyBottomSheetWidgetState extends State<BodyBottomSheetWidget> {
       child: Container(
           padding: const EdgeInsets.only(left: 16, right: 16, bottom: 0),
           decoration: const BoxDecoration(
-              color: AppColors.whiteColor,
-              borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(10.0),
-                  topRight: Radius.circular(10.0))),
+            color: AppColors.whiteColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10.0),
+              topRight: Radius.circular(10.0),
+            ),
+          ),
           child: Column(
             children: [
               Container(
@@ -78,50 +67,53 @@ class _BodyBottomSheetWidgetState extends State<BodyBottomSheetWidget> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GestureDetector(
-                      onTap: () => setState(() {
-                        selectedtype = MapType.defaultType;
-                      }),
-                      child: Column(
-                        children: [
-                          Container(
-                              width: 159,
-                              height: 88,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: selectedtype == MapType.defaultType
-                                      ? Border.all(color: AppColors.blueColor)
-                                      : null),
-                              child: Image.asset(defaultMap)),
-                          const SizedBox(height: 11),
-                          const Text(
-                            'Default',
-                            style: TextStyle(fontSize: 12),
-                          )
-                        ],
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => setState(() {
+                          selectedtype = MapType.normal;
+                        }),
+                        child: Column(
+                          children: [
+                            Container(
+                                // width: 159,
+                                height: 88,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: selectedtype == MapType.normal
+                                        ? Border.all(color: AppColors.blueColor)
+                                        : null),
+                                child: Image.asset(defaultMap)),
+                            const SizedBox(height: 11),
+                            const Text(
+                              'Default',
+                              style: TextStyle(fontSize: 12),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                    GestureDetector(
-                      onTap: () => setState(() {
-                        selectedtype = MapType.satelliteType;
-                      }),
-                      child: Column(
-                        children: [
-                          Container(
-                              width: 159,
-                              height: 88,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  border: selectedtype == MapType.satelliteType
-                                      ? Border.all(color: AppColors.blueColor)
-                                      : null),
-                              child: Image.asset(satelliteMap)),
-                          const SizedBox(height: 11),
-                          const Text(
-                            'Default',
-                            style: TextStyle(fontSize: 12),
-                          )
-                        ],
+                    Expanded(
+                      child: GestureDetector(
+                        onTap: () => setState(() {
+                          selectedtype = MapType.satellite;
+                        }),
+                        child: Column(
+                          children: [
+                            Container(
+                                height: 88,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: selectedtype == MapType.satellite
+                                        ? Border.all(color: AppColors.blueColor)
+                                        : null),
+                                child: Image.asset(satelliteMap)),
+                            const SizedBox(height: 11),
+                            const Text(
+                              'Satellite',
+                              style: TextStyle(fontSize: 12),
+                            )
+                          ],
+                        ),
                       ),
                     )
                   ],
@@ -131,23 +123,26 @@ class _BodyBottomSheetWidgetState extends State<BodyBottomSheetWidget> {
                 color: AppColors.dividerColor,
                 height: 1,
               ),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                margin: const EdgeInsets.only(
-                  top: 30,
-                ),
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  color: AppColors.activeBottomBarButton,
-                ),
-                child: const Text(
-                  'Apply',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      color: AppColors.whiteColor),
+              GestureDetector(
+                onTap: () => Navigator.pop(context, selectedtype),
+                child: Container(
+                  width: MediaQuery.of(context).size.width,
+                  margin: const EdgeInsets.only(
+                    top: 30,
+                  ),
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(4),
+                    color: AppColors.activeBottomBarButton,
+                  ),
+                  child: const Text(
+                    'Apply',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.whiteColor),
+                  ),
                 ),
               ),
             ],
