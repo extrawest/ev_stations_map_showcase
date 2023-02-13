@@ -27,6 +27,7 @@ class StationInfoWidget extends StatelessWidget {
               .firstWhere((st) => st.stationId == station.stationId);
 
           return Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Container(
                 width: 135,
@@ -122,7 +123,7 @@ class StationInfoWidget extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 8),
+              const SizedBox(height: 4),
               // if (stationInfo.connectors != null)
               StationInfoOutlet(
                 connector: stationInfo.connectors?[0],
@@ -134,7 +135,7 @@ class StationInfoWidget extends StatelessWidget {
                 connector: stationInfo.connectors?[0],
               ),
               //Last padding
-              const SizedBox(height: 16)
+              const SizedBox(height: 12)
             ],
           );
         } else {

@@ -11,6 +11,7 @@ class StationInfoOutlet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 8,
