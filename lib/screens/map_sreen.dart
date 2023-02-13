@@ -41,6 +41,8 @@ class _MapScreenState extends State<MapScreen> {
 
   double _currentZoom = 12.0;
 
+  MapType _currentMapType = MapType.normal;
+
   final LocationSettings locationSettings = const LocationSettings(
     accuracy: LocationAccuracy.high,
     distanceFilter: 100,
@@ -76,8 +78,15 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  // enums.SelectedMapType getSelectedMapType() {
+  //   return _currentMapType == MapType.satellite
+  //       ? enums.SelectedMapType.satelliteType
+  //       : enums.SelectedMapType.defaultType;
+  // }
+
   @override
   void initState() {
+    _currentMapType = MapType.normal;
     getPosition();
 
     setMarkersIcon(function: () => setState(() {}));
@@ -137,7 +146,7 @@ class _MapScreenState extends State<MapScreen> {
           BlocConsumer<ChargestationsBloc, ChargestationsState>(
             builder: (context, state) {
               return GoogleMap(
-                mapType: MapType.normal,
+                mapType: _currentMapType,
                 onMapCreated: (GoogleMapController controller) {
                   _onMapCreated(controller);
                   if (state is ChargestationsLoaded) {
@@ -187,14 +196,34 @@ class _MapScreenState extends State<MapScreen> {
             ),
             const SizedBox(height: 20),
             MapButton(
-                icon: const Icon(Icons.info),
-                function: () => modalBottomSheetMenu(
-                    context: context, mapType: enums.MapType.defaultType)),
+              icon: const Icon(Icons.info),
+              function: () => modalBottomSheetMenu(
+                  context: context, mapType: _currentMapType),
+            ),
             const SizedBox(height: 105),
           ],
         ),
       ),
     );
+  }
+
+  Future<void> modalBottomSheetMenu({
+    required BuildContext context,
+    required MapType mapType,
+  }) async {
+    final res = await showModalBottomSheet(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        context: context,
+        builder: (builder) {
+          return BodyBottomSheetWidget(
+            mapType: mapType,
+          );
+        });
+    setState(() {
+      _currentMapType = res;
+    });
   }
 
   Future<dynamic> showPermissionDialog(BuildContext context) {
