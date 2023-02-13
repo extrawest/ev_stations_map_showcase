@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
@@ -8,11 +7,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:volkhov_maps_app/logic/bloc/chargestations_bloc.dart';
-import 'package:volkhov_maps_app/theme/assets.dart';
 
 import '../models/models.dart';
 import '../theme/themes.dart';
 import '../utils/utils.dart';
+import '../common/enum.dart' as enums;
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -57,8 +56,20 @@ class _MapScreenState extends State<MapScreen> {
     });
   }
 
+  Future<void> getLastPosition() async {
+    final Position? position = await Geolocator.getLastKnownPosition();
+    if (position != null) {
+      myPosition = LatLng(
+        position.latitude,
+        position.longitude,
+      );
+    }
+  }
+
   Future<void> getPosition() async {
-    final Position position = await determinePosition();
+    // final Position position = await determinePosition();
+    final Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
     myPosition = LatLng(
       position.latitude,
       position.longitude,
@@ -162,62 +173,58 @@ class _MapScreenState extends State<MapScreen> {
             listener: (context, state) {},
           ),
         ]),
-        floatingActionButton: Container(
-          height: 140,
-          width: 60,
-          alignment: Alignment.topCenter,
-          child: GestureDetector(
-            onTap: () => requestPermission(
-              () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text('Attention'),
-                        content: const Text(
-                            'Turning on the geolocation is necessary to determine your location'),
-                        actions: [
-                          ElevatedButton(
-                              onPressed: () {
-                                openAppSettings();
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Accept')),
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Decline')),
-                        ],
-                      );
-                    });
-              },
+        floatingActionButton: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            MapButton(
+              icon: const Icon(Icons.my_location),
+              function: () => requestPermission(
+                () {
+                  showPermissionDialog(context);
+                },
+              ),
             ),
-            child: Container(
-                width: 55,
-                height: 55,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(28),
-                  color: AppColors.whiteColor,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 7,
-                      offset: const Offset(0, 1),
-                    ),
-                  ],
-                ),
-                child: const Icon(Icons.my_location)),
-          ),
+            const SizedBox(height: 20),
+            MapButton(
+                icon: const Icon(Icons.info),
+                function: () => modalBottomSheetMenu(
+                    context: context, mapType: enums.MapType.defaultType)),
+            const SizedBox(height: 105),
+          ],
         ),
       ),
     );
   }
 
+  Future<dynamic> showPermissionDialog(BuildContext context) {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('Attention'),
+            content: const Text(
+                'Turning on the geolocation is necessary to determine your location'),
+            actions: [
+              ElevatedButton(
+                  onPressed: () {
+                    openAppSettings();
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Accept')),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text('Decline')),
+            ],
+          );
+        });
+  }
+
   Future<void> requestPermission(Function() callBack) async {
     if (await Permission.location.request().isGranted) {
-      await getPosition();
+      await getLastPosition();
       await moveCameraTo(position: myPosition, zoom: 15);
     } else {
       final permissionStatus = await Permission.locationWhenInUse.request();
@@ -265,4 +272,38 @@ class _MapScreenState extends State<MapScreen> {
               : getIcon(cluster.items.first.status),
         );
       };
+}
+
+class MapButton extends StatelessWidget {
+  final Icon icon;
+  final Function() function;
+  const MapButton({super.key, required this.icon, required this.function});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 55,
+      width: 55,
+      alignment: Alignment.topCenter,
+      child: GestureDetector(
+        onTap: function,
+        child: Container(
+            width: 55,
+            height: 55,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(28),
+              color: AppColors.whiteColor,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.grey.withOpacity(0.5),
+                  spreadRadius: 1,
+                  blurRadius: 7,
+                  offset: const Offset(0, 1),
+                ),
+              ],
+            ),
+            child: icon),
+      ),
+    );
+  }
 }

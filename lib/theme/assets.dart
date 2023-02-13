@@ -39,5 +39,8 @@ const String searchIcon = 'assets/icons/search_icon.svg';
 const String flashIcon = 'assets/icons/flash_icon.svg';
 const String flashIconPng = 'assets/icons/flash_icon.png';
 
+const String defaultMap = 'assets/icons/map_default.png';
+const String satelliteMap = 'assets/icons/map_satellite.png';
+
 const String credentialsDevFile = 'assets/credentials_development.json';
 const String credentialsProdFile = 'assets/credentials_production.json';
