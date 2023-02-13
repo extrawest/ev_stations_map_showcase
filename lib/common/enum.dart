@@ -1,0 +1,1 @@
+enum MapType { defaultType, satelliteType }

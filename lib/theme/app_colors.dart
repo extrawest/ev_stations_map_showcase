@@ -11,4 +11,7 @@ abstract class AppColors {
   static const Color greenColor = Color(0xFF00B929);
   static const Color lightBlue = Color(0xFFDDEAF3);
   static const Color activeBottomBarButton = Color(0xFF597393);
+  static const Color separatorGrey = Color(0xFFCCCFE3);
+  static const Color blueColor = Color(0xFF06A9DD);
+  static const Color dividerColor = Color(0xFFC3C7D4);
 }
