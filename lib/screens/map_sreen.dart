@@ -187,7 +187,7 @@ class _MapScreenState extends State<MapScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             MapButton(
-              icon: const Icon(Icons.my_location),
+              image: searchLocPng,
               function: () => requestPermission(
                 () {
                   showPermissionDialog(context);
@@ -196,7 +196,7 @@ class _MapScreenState extends State<MapScreen> {
             ),
             const SizedBox(height: 20),
             MapButton(
-              icon: const Icon(Icons.info),
+              image: threeBarIconPng,
               function: () => modalBottomSheetMenu(
                   context: context, mapType: _currentMapType),
             ),
@@ -304,9 +304,9 @@ class _MapScreenState extends State<MapScreen> {
 }
 
 class MapButton extends StatelessWidget {
-  final Icon icon;
+  final String image;
   final Function() function;
-  const MapButton({super.key, required this.icon, required this.function});
+  const MapButton({super.key, required this.image, required this.function});
 
   @override
   Widget build(BuildContext context) {
@@ -331,7 +331,7 @@ class MapButton extends StatelessWidget {
                 ),
               ],
             ),
-            child: icon),
+            child: Image.asset(image)),
       ),
     );
   }
