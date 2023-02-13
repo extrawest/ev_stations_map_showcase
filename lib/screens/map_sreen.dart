@@ -7,11 +7,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:volkhov_maps_app/logic/bloc/chargestations_bloc.dart';
+import 'package:volkhov_maps_app/widgets/widgets.dart';
 
 import '../models/models.dart';
 import '../theme/themes.dart';
 import '../utils/utils.dart';
-import '../common/enum.dart' as enums;
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -197,7 +197,7 @@ class _MapScreenState extends State<MapScreen> {
             const SizedBox(height: 20),
             MapButton(
               image: threeBarIconPng,
-              function: () => modalBottomSheetMenu(
+              function: () => showMapTypeBottomSheet(
                   context: context, mapType: _currentMapType),
             ),
             const SizedBox(height: 105),
@@ -207,7 +207,7 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  Future<void> modalBottomSheetMenu({
+  Future<void> showMapTypeBottomSheet({
     required BuildContext context,
     required MapType mapType,
   }) async {
@@ -289,10 +289,16 @@ class _MapScreenState extends State<MapScreen> {
         return Marker(
           markerId: MarkerId(cluster.getId()),
           position: cluster.location,
-          onTap: () {
-            log.fine('---- $cluster');
-            moveCameraTo(position: cluster.location);
-          },
+          onTap: cluster.isMultiple
+              ? () {
+                  log.fine('---- $cluster');
+                  moveCameraTo(position: cluster.location);
+                }
+              : () {
+                  final station = cluster.items.first;
+                  showStationInfoBottomSheet(
+                      context: context, station: station);
+                },
           icon: cluster.isMultiple
               ? await getCountMarkerBitmap(
                   125,
@@ -301,6 +307,20 @@ class _MapScreenState extends State<MapScreen> {
               : getIcon(cluster.items.first.status),
         );
       };
+}
+
+void showStationInfoBottomSheet({
+  required BuildContext context,
+  required Place station,
+}) {
+  showModalBottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      context: context,
+      builder: (builder) {
+        return StationInfoWidget(station: station);
+      });
 }
 
 class MapButton extends StatelessWidget {
