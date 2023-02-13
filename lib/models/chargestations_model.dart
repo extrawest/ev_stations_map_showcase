@@ -1,5 +1,5 @@
 class ChargestationsModel {
-  String? stationId;
+  String stationId;
   String? tenantId;
   String? chargePointId;
   double? longitude;
@@ -9,7 +9,7 @@ class ChargestationsModel {
   ImageUrls? imageUrls;
 
   ChargestationsModel(
-      {this.stationId,
+      {required this.stationId,
       this.tenantId,
       this.chargePointId,
       this.longitude,
@@ -20,8 +20,7 @@ class ChargestationsModel {
 
   factory ChargestationsModel.fromJson(Map<String, dynamic> json) =>
       ChargestationsModel(
-        stationId:
-            json['stationId'] == null ? null : json['stationId'] as String?,
+        stationId: json['stationId'] as String,
         tenantId: json['tenantId'] == null ? null : json['tenantId'] as String?,
         chargePointId: json['chargePointId'] == null
             ? null
@@ -29,7 +28,9 @@ class ChargestationsModel {
         longitude:
             json['longitude'] == null ? null : json['longitude'] as double?,
         latitude: json['latitude'] == null ? null : json['latitude'] as double?,
-        status: json['status'] as String?,
+        status: json['status'] == null
+            ? null
+            : (json['status'] as String).toLowerCase(),
         imageUrls: json['imageUrls'] != null
             ? ImageUrls.fromJson(json['imageUrls'])
             : null,

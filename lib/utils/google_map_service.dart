@@ -163,13 +163,13 @@ void setMarkersIcon({required Function() function}) {
 List<Place> setPlaceItems(ChargestationsLoaded state) {
   final List<Place> items = [];
 
-  for (final stationslist in state.stationslist) {
-    final status = getStatus(stationslist.status);
+  for (final station in state.stationslist) {
+    final status = getStatus(station.status);
     final place = Place(
-      stationId: stationslist.stationId ?? '',
+      stationId: station.stationId,
       latLng: LatLng(
-        stationslist.latitude ?? 0,
-        stationslist.longitude ?? 0,
+        station.latitude ?? 0,
+        station.longitude ?? 0,
       ),
       status: status,
     );

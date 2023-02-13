@@ -7,11 +7,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:volkhov_maps_app/logic/bloc/chargestations_bloc.dart';
+import 'package:volkhov_maps_app/widgets/widgets.dart';
 
 import '../models/models.dart';
 import '../theme/themes.dart';
 import '../utils/utils.dart';
-import '../common/enum.dart' as enums;
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -187,7 +187,7 @@ class _MapScreenState extends State<MapScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             MapButton(
-              icon: const Icon(Icons.my_location),
+              image: searchLocPng,
               function: () => requestPermission(
                 () {
                   showPermissionDialog(context);
@@ -196,8 +196,8 @@ class _MapScreenState extends State<MapScreen> {
             ),
             const SizedBox(height: 20),
             MapButton(
-              icon: const Icon(Icons.info),
-              function: () => modalBottomSheetMenu(
+              image: threeBarIconPng,
+              function: () => showMapTypeBottomSheet(
                   context: context, mapType: _currentMapType),
             ),
             const SizedBox(height: 105),
@@ -207,7 +207,7 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
-  Future<void> modalBottomSheetMenu({
+  Future<void> showMapTypeBottomSheet({
     required BuildContext context,
     required MapType mapType,
   }) async {
@@ -289,10 +289,16 @@ class _MapScreenState extends State<MapScreen> {
         return Marker(
           markerId: MarkerId(cluster.getId()),
           position: cluster.location,
-          onTap: () {
-            log.fine('---- $cluster');
-            moveCameraTo(position: cluster.location);
-          },
+          onTap: cluster.isMultiple
+              ? () {
+                  log.fine('---- $cluster');
+                  moveCameraTo(position: cluster.location);
+                }
+              : () {
+                  final station = cluster.items.first;
+                  showStationInfoBottomSheet(
+                      context: context, station: station);
+                },
           icon: cluster.isMultiple
               ? await getCountMarkerBitmap(
                   125,
@@ -303,10 +309,26 @@ class _MapScreenState extends State<MapScreen> {
       };
 }
 
+void showStationInfoBottomSheet({
+  required BuildContext context,
+  required Place station,
+}) {
+  showModalBottomSheet(
+      isScrollControlled: true,
+      useRootNavigator: true,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      context: context,
+      builder: (builder) {
+        return StationInfoWidget(station: station);
+      });
+}
+
 class MapButton extends StatelessWidget {
-  final Icon icon;
+  final String image;
   final Function() function;
-  const MapButton({super.key, required this.icon, required this.function});
+  const MapButton({super.key, required this.image, required this.function});
 
   @override
   Widget build(BuildContext context) {
@@ -331,7 +353,7 @@ class MapButton extends StatelessWidget {
                 ),
               ],
             ),
-            child: icon),
+            child: Image.asset(image)),
       ),
     );
   }
