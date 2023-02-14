@@ -124,16 +124,13 @@ class StationInfoWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 4),
-              // if (stationInfo.connectors != null)
-              StationInfoOutlet(
-                connector: stationInfo.connectors?[0],
-              ),
-              StationInfoOutlet(
-                connector: stationInfo.connectors?[0],
-              ),
-              StationInfoOutlet(
-                connector: stationInfo.connectors?[0],
-              ),
+              if (stationInfo.connectors != null)
+                ...List.generate(
+                  stationInfo.connectors!.length,
+                  (int index) => StationInfoOutlet(
+                    connector: stationInfo.connectors?[index],
+                  ),
+                ),
               //Last padding
               const SizedBox(height: 12)
             ],
@@ -145,6 +142,10 @@ class StationInfoWidget extends StatelessWidget {
     );
   }
 }
+
+// extension FirstLetterCapital on String {
+//   String get firstCapital => this[0].toUpperCase() + substring(1);
+// }
 
 String firstLetterCapital(String? string) {
   String result = '';

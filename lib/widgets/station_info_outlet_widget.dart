@@ -10,8 +10,9 @@ class StationInfoOutlet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final enabled = connector?.enabled ?? false;
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 4),
+      margin: const EdgeInsets.symmetric(vertical: 4),
       padding: const EdgeInsets.symmetric(
         horizontal: 16,
         vertical: 8,
@@ -34,16 +35,16 @@ class StationInfoOutlet extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                   child: Text(
-                'Type 2(AC)',
+                getConnectorType(connector?.type),
                 style: TextStyles.textStyle.copyWith(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
-                  color: AppColors.greyTextColor,
+                  color: AppColors.blackColor,
                 ),
               )),
               const SizedBox(width: 8),
               Text(
-                '22 kWh',
+                '${connector?.power}',
                 style: TextStyles.textStyle.copyWith(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
@@ -57,7 +58,7 @@ class StationInfoOutlet extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  '\$3 per kWh',
+                  '\$${connector?.tariff} per kWh',
                   style: TextStyles.textStyle.copyWith(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
@@ -67,28 +68,21 @@ class StationInfoOutlet extends StatelessWidget {
               ),
               const SizedBox(width: 8),
               Container(
-                  // margin: const EdgeInsets.all(8),
-                  padding: const EdgeInsets.symmetric(vertical: 5),
-                  width: 76,
-                  decoration: BoxDecoration(
-                      color:
-                          // enabled ?
-                          AppColors.lightGreen,
-                      //  : AppColors.lightGrey,
-                      borderRadius: BorderRadius.circular(4)),
-                  child: Text(
-                      // enabled ?
-                      'Charge',
-                      // : 'In Use',
-                      textAlign: TextAlign.center,
-                      style: TextStyles.textStyle.copyWith(
+                // margin: const EdgeInsets.all(8),
+                padding: const EdgeInsets.symmetric(vertical: 5),
+                width: 76,
+                decoration: BoxDecoration(
+                    color: enabled ? AppColors.lightGreen : AppColors.lightGrey,
+                    borderRadius: BorderRadius.circular(4)),
+                child: Text(enabled ? 'Charge' : 'In Use',
+                    textAlign: TextAlign.center,
+                    style: TextStyles.textStyle.copyWith(
                         fontSize: 11,
                         fontWeight: FontWeight.w500,
-                        color:
-                            //  enabled?
-                            AppColors.whiteColor,
-                        // : AppColors.greyTextColor)),
-                      )))
+                        color: enabled
+                            ? AppColors.whiteColor
+                            : AppColors.greyTextColor)),
+              )
             ],
           ),
         ],
