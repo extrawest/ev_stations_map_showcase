@@ -34,6 +34,9 @@ class ChargestationsModel {
         imageUrls: json['imageUrls'] != null
             ? ImageUrls.fromJson(json['imageUrls'])
             : null,
+        connectors: List<Connectors>.from(
+            json['connectors'].map((model) => Connectors.fromJson(model))),
+        // List<Connectors>.from(json['connectors']),
       );
 
   Map<String, dynamic> toJson() {
@@ -91,14 +94,15 @@ class Connectors {
       this.enabled,
       this.tariff});
 
-  Connectors.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    type = json['type'];
-    connectorId = json['connectorId'];
-    power = json['power'];
-    enabled = json['enabled'];
-    tariff = json['tariff'];
-  }
+  factory Connectors.fromJson(Map<String, dynamic> json) => Connectors(
+        id: json['id'] == null ? null : json['id'] as String?,
+        type: json['type'] == null ? null : json['type'] as String?,
+        connectorId:
+            json['connectorId'] == null ? null : json['connectorId'] as int?,
+        power: json['power'] == null ? null : json['power'] as double?,
+        enabled: json['enabled'] == null ? null : json['enabled'] as bool?,
+        tariff: json['tariff'] == null ? null : json['tariff'] as double?,
+      );
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -132,4 +136,25 @@ class ImageUrls {
     data['1024'] = l1024;
     return data;
   }
+}
+
+enum Type { TYPE_2_PLUG, CCS_COMBO_12, TYPE_1 }
+
+String getConnectorType(String? type) {
+  String result;
+  switch (type) {
+    case 'TYPE_2_PLUG':
+      result = 'Type 2(AC)';
+      break;
+    case 'CCS_COMBO_1_2':
+      result = 'Type Combo';
+      break;
+    case 'TYPE_1':
+      result = 'Type 2(AC)';
+      break;
+    default:
+      result = 'unknown';
+      break;
+  }
+  return result;
 }
