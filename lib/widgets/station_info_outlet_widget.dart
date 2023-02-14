@@ -44,7 +44,7 @@ class StationInfoOutlet extends StatelessWidget {
               )),
               const SizedBox(width: 8),
               Text(
-                '${connector?.power}',
+                '${connector?.power?.toStringAsFixed(0)} kWh',
                 style: TextStyles.textStyle.copyWith(
                   fontSize: 12,
                   fontWeight: FontWeight.w400,
