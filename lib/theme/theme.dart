@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'themes.dart';
+
 const Color redLight = Color(0xFFE44125);
 const Color blackShade = Color(0xFF222222);
 const Color cherryRed = Color(0xffe8001d);
@@ -15,6 +17,13 @@ class TextStyles {
     fontWeight: FontWeight.w300,
   );
 
+  static const headerTextStyle = TextStyle(
+    fontSize: 20,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w700,
+    color: AppColors.blackColor,
+  );
+
   static const hintTextStyle = TextStyle(
     // fontFamily: GoogleFonts.roboto(),
     fontSize: 16,
@@ -27,6 +36,23 @@ class TextStyles {
     fontSize: 16,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w400,
+    color: AppColors.blackColor,
+  );
+
+  static const textWalletStyle = TextStyle(
+    // fontFamily: GoogleFonts.inter(),
+    fontSize: 14,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    color: AppColors.blackColor,
+  );
+
+  static const smallTextStyle = TextStyle(
+    // fontFamily: GoogleFonts.inter(),
+    fontSize: 12,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    color: AppColors.blackColor,
   );
 }
 

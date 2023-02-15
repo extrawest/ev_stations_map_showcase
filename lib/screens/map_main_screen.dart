@@ -1,67 +1,84 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:volkhov_maps_app/theme/assets.dart';
+import 'package:volkhov_maps_app/common/common.dart';
+import 'package:volkhov_maps_app/screens/map_sreen.dart';
+import 'package:volkhov_maps_app/screens/wallet_screen.dart';
 
 import '../theme/themes.dart';
 import '../widgets/widgets.dart';
 
-class MapMainScreen extends StatelessWidget {
+class MapMainScreen extends StatefulWidget {
   const MapMainScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+  State<MapMainScreen> createState() => _MapMainScreenState();
+}
 
+class _MapMainScreenState extends State<MapMainScreen> {
+  PageController myPage = PageController(initialPage: 0);
+
+  int currentTabIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Stack(
-          children: [
-            BackGround(width: width, height: height),
-            const MapBodyWidget(),
-            const Positioned(
-              top: 126,
-              right: 66,
-              child: RoundFlash(
-                color: AppColors.yellowColor,
-              ),
-            ),
-            const Positioned(
-              top: 202,
-              right: 71,
-              child: RoundFlash(
-                color: AppColors.blackColor,
-              ),
-            ),
-            const Positioned(
-              top: 225,
-              right: 225,
-              child: RoundFlash(
-                color: AppColors.redColor,
-              ),
-            ),
-            const Positioned(
-              top: 345,
-              right: 168,
-              child: RoundFlash(
-                color: AppColors.greenColor,
-              ),
-            ),
-            Positioned(
-              top: 315,
-              left: 49,
-              child: Image.asset(placeVectorPng),
-            ),
+        extendBody: true,
+        body: PageView(
+          physics: const NeverScrollableScrollPhysics(),
+          controller: myPage,
+          children: const [
+            StaticMainScreenWidget(),
+            MapScreen(),
+            WalletScreen(),
           ],
         ),
-        bottomNavigationBar: BottomAppBar(
-          shape: CircularNotchedRectangle(),
-          notchMargin: 14,
-          color: AppColors.whiteColor,
-          child: Container(
-            height: 60,
-            alignment: Alignment.center,
-            child: BottomTabBar(),
+        bottomNavigationBar: Theme(
+          data: ThemeData(
+            primaryColor: Colors.transparent,
+            splashColor: Colors.transparent,
+          ),
+          child: BottomAppBar(
+            shape: const CircularNotchedRectangle(),
+            notchMargin: 14,
+            color: AppColors.whiteColor,
+            child: Container(
+              height: 70,
+              alignment: Alignment.center,
+              child: BottomTabBar(
+                tabBarItem: getBottomTabBarEnumItem(),
+                onTapMap: () {
+                  setState(() {
+                    currentTabIndex = 1;
+                    myPage.jumpToPage(currentTabIndex);
+                  });
+                },
+                onTapFavorites: () {
+                  setState(() {
+                    currentTabIndex = 0;
+                    myPage.jumpToPage(currentTabIndex);
+                  });
+                },
+                onTapWallet: () {
+                  setState(() {
+                    currentTabIndex = 3;
+                    myPage.jumpToPage(currentTabIndex);
+                  });
+                },
+                onTapAccount: () {
+                  setState(() {
+                    currentTabIndex = 0;
+                    myPage.jumpToPage(currentTabIndex);
+                  });
+                },
+              ),
+            ),
           ),
         ),
         floatingActionButton: SizedBox(
@@ -79,63 +96,26 @@ class MapMainScreen extends StatelessWidget {
       ),
     );
   }
-}
 
-class MapBodyWidget extends StatelessWidget {
-  const MapBodyWidget({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 43,
-          ),
-          child: CustomTextField(
-            hint: 'Type here',
-            prefixIcon: SvgPicture.asset(searchIcon),
-            suffixIcon: SvgPicture.asset(cancelIcon),
-          ),
-        ),
-        const Expanded(
-          child: SizedBox(),
-        ),
-        const SquareButton(
-          asset: searchLocPng,
-        ),
-        const SquareButton(
-          asset: threeBarIconPng,
-        ),
-        Container(
-          margin: const EdgeInsets.only(
-            top: 8,
-            bottom: 34,
-            right: 16,
-            left: 16,
-          ),
-          padding: const EdgeInsets.all(16),
-          width: screenWidth,
-          // height: 20,
-          decoration: BoxDecoration(
-              color: AppColors.whiteColor,
-              borderRadius: BorderRadius.circular(16)),
-          child: Column(
-            children: const [
-              StationName(),
-              CoordinatesWidget(),
-              Divider(),
-              OutletsList(),
-            ],
-          ),
-        ),
-        const SizedBox(height: 8),
-      ],
-    );
+  BottomTabBarItem getBottomTabBarEnumItem() {
+    BottomTabBarItem result;
+    switch (currentTabIndex) {
+      case 1:
+        result = BottomTabBarItem.map;
+        break;
+      case 2:
+        result = BottomTabBarItem.favorites;
+        break;
+      case 3:
+        result = BottomTabBarItem.wallet;
+        break;
+      case 4:
+        result = BottomTabBarItem.account;
+        break;
+      default:
+        result = BottomTabBarItem.none;
+        break;
+    }
+    return result;
   }
 }

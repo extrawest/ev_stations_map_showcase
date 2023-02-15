@@ -10,7 +10,7 @@ import 'package:volkhov_maps_app/routes.dart';
 import 'package:volkhov_maps_app/theme/theme.dart';
 
 // import '' if (kIsWeb) 'dart:html' as html;
-import 'logic/bloc/chargestations_bloc.dart';
+import 'logic/bloc/bloc.dart';
 import 'services/api_service.dart';
 import 'services/credentials_loader.dart';
 import 'view_models/posts_view_model.dart';
@@ -38,6 +38,11 @@ class Application extends StatelessWidget {
           create: (_) => ChargestationsBloc(
             apiService: ApiService(credentials.apiDomain),
           )..add(ChargestationsStarted()),
+        ),
+        BlocProvider(
+          create: (_) => WalletBloc(
+            apiService: ApiService(credentials.apiDomain),
+          )..add(WalletStarted()),
         ),
       ],
       child: MultiProvider(
