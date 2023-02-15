@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:volkhov_maps_app/common/common.dart';
 import 'package:volkhov_maps_app/screens/map_sreen.dart';
 import 'package:volkhov_maps_app/screens/wallet_screen.dart';
 
@@ -51,17 +52,30 @@ class _MapMainScreenState extends State<MapMainScreen> {
               height: 70,
               alignment: Alignment.center,
               child: BottomTabBar(
+                tabBarItem: getBottomTabBarEnumItem(),
                 onTapMap: () {
-                  myPage.jumpToPage(1);
+                  setState(() {
+                    currentTabIndex = 1;
+                    myPage.jumpToPage(currentTabIndex);
+                  });
                 },
                 onTapFavorites: () {
-                  myPage.jumpToPage(0);
+                  setState(() {
+                    currentTabIndex = 0;
+                    myPage.jumpToPage(currentTabIndex);
+                  });
                 },
                 onTapWallet: () {
-                  myPage.jumpToPage(2);
+                  setState(() {
+                    currentTabIndex = 3;
+                    myPage.jumpToPage(currentTabIndex);
+                  });
                 },
                 onTapAccount: () {
-                  myPage.jumpToPage(0);
+                  setState(() {
+                    currentTabIndex = 0;
+                    myPage.jumpToPage(currentTabIndex);
+                  });
                 },
               ),
             ),
@@ -81,5 +95,27 @@ class _MapMainScreenState extends State<MapMainScreen> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       ),
     );
+  }
+
+  BottomTabBarItem getBottomTabBarEnumItem() {
+    BottomTabBarItem result;
+    switch (currentTabIndex) {
+      case 1:
+        result = BottomTabBarItem.map;
+        break;
+      case 2:
+        result = BottomTabBarItem.favorites;
+        break;
+      case 3:
+        result = BottomTabBarItem.wallet;
+        break;
+      case 4:
+        result = BottomTabBarItem.account;
+        break;
+      default:
+        result = BottomTabBarItem.none;
+        break;
+    }
+    return result;
   }
 }
