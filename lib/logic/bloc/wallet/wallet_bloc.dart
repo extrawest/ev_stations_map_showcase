@@ -6,7 +6,6 @@ import '../../../services/api_service.dart';
 
 part 'wallet_event.dart';
 part 'wallet_state.dart';
-// part 'wallet_bloc.freezed.dart';
 
 class WalletBloc extends Bloc<WalletEvent, WalletState> {
   WalletBloc({required this.apiService}) : super(WalletLoading()) {
