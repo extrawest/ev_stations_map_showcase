@@ -36,7 +36,6 @@ class ChargestationsModel {
             : null,
         connectors: List<Connectors>.from(
             json['connectors'].map((model) => Connectors.fromJson(model))),
-        // List<Connectors>.from(json['connectors']),
       );
 
   Map<String, dynamic> toJson() {

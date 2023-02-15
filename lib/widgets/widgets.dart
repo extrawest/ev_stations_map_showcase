@@ -10,3 +10,4 @@ export './square_button.dart';
 export './station_info_bottom_sheet.dart';
 export './station_info_outlet_widget.dart';
 export './station_name_widget.dart';
+export '../screens/static_main_screen.dart';

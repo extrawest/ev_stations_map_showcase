@@ -5,8 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:volkhov_maps_app/logic/bloc/chargestations_bloc.dart';
 
+import '../logic/bloc/bloc.dart';
 import '../models/models.dart';
 import '../theme/assets.dart';
 
