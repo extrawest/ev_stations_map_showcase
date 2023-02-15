@@ -70,7 +70,6 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> getPosition() async {
-    // final Position position = await determinePosition();
     final Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high);
     myPosition = LatLng(
@@ -78,12 +77,6 @@ class _MapScreenState extends State<MapScreen> {
       position.longitude,
     );
   }
-
-  // enums.SelectedMapType getSelectedMapType() {
-  //   return _currentMapType == MapType.satellite
-  //       ? enums.SelectedMapType.satelliteType
-  //       : enums.SelectedMapType.defaultType;
-  // }
 
   @override
   void initState() {
@@ -143,10 +136,10 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Maps Sample App'),
-          backgroundColor: Colors.green[700],
-        ),
+        // appBar: AppBar(
+        //   title: const Text('Maps Sample App'),
+        //   backgroundColor: Colors.green[700],
+        // ),
         body: Stack(children: [
           BlocBuilder<ChargestationsBloc, ChargestationsState>(
             builder: (context, state) {

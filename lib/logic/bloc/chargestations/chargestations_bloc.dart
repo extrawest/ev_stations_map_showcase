@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../models/chargestations_model.dart';
+import '../../../../models/models.dart';
+
 import '../../../services/api_service.dart';
 
 part 'chargestations_event.dart';

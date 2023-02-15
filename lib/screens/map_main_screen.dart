@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:volkhov_maps_app/screens/map_sreen.dart';
@@ -15,16 +16,11 @@ class MapMainScreen extends StatefulWidget {
 
 class _MapMainScreenState extends State<MapMainScreen> {
   PageController myPage = PageController(initialPage: 0);
-  // TabController controller = TabController(
-  //   vsync: ,
-  //   length: 3,
-  //   initialIndex: 0,
-  // );
+
   int currentTabIndex = 0;
 
   @override
   void initState() {
-    // controller.animateTo(currentTabIndex);
     super.initState();
   }
 
@@ -32,10 +28,9 @@ class _MapMainScreenState extends State<MapMainScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        extendBody: true,
         body: PageView(
           physics: const NeverScrollableScrollPhysics(),
-          // TabBarView(
-          // controller: _controller,
           controller: myPage,
           children: const [
             StaticMainScreenWidget(),
@@ -53,7 +48,7 @@ class _MapMainScreenState extends State<MapMainScreen> {
             notchMargin: 14,
             color: AppColors.whiteColor,
             child: Container(
-              height: 90,
+              height: 70,
               alignment: Alignment.center,
               child: BottomTabBar(
                 onTapMap: () {

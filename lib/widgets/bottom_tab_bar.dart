@@ -30,7 +30,10 @@ class BottomTabBar extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SvgPicture.asset(earth),
+                SvgPicture.asset(
+                  earth,
+                  color: AppColors.activeBottomBarButton.withOpacity(0.6),
+                ),
                 const SizedBox(height: 10),
                 Text(
                   'MAP',

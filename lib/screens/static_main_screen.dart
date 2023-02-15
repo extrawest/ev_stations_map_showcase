@@ -109,7 +109,7 @@ class MapBodyWidget extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 8),
+        const SizedBox(height: 113),
       ],
     );
   }

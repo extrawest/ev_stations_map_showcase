@@ -39,6 +39,11 @@ class Application extends StatelessWidget {
             apiService: ApiService(credentials.apiDomain),
           )..add(ChargestationsStarted()),
         ),
+        BlocProvider(
+          create: (_) => WalletBloc(
+            apiService: ApiService(credentials.apiDomain),
+          )..add(WalletStarted()),
+        ),
       ],
       child: MultiProvider(
           providers: [

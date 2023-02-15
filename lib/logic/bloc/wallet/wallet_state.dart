@@ -12,12 +12,12 @@ class WalletInitial extends WalletState {}
 class WalletLoading extends WalletState {}
 
 class WalletLoaded extends WalletState {
-  const WalletLoaded(this.stationslist);
+  const WalletLoaded(this.walletData);
 
-  final List<WalletModel> stationslist;
+  final WalletModel walletData;
 
   @override
-  List<Object> get props => [stationslist];
+  List<Object> get props => [walletData];
 }
 
-class ChargestationsError extends WalletState {}
+class WalletError extends WalletState {}
