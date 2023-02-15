@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:volkhov_maps_app/logic/bloc/chargestations_bloc.dart';
 
 import '../common/common.dart';
+import '../logic/bloc/bloc.dart';
 import '../models/models.dart';
 import '../theme/themes.dart';
 import 'widgets.dart';

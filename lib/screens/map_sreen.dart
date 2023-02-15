@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:volkhov_maps_app/logic/bloc/chargestations_bloc.dart';
+
 import 'package:volkhov_maps_app/widgets/widgets.dart';
 
+import '../logic/bloc/bloc.dart';
 import '../models/models.dart';
 import '../theme/themes.dart';
 import '../utils/utils.dart';
@@ -96,6 +97,10 @@ class _MapScreenState extends State<MapScreen> {
     myPosition = const LatLng(45.521563, -122.677433);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await requestPermission(() {
+        showPermissionDialog(context);
+      });
+
       positionStream = Geolocator.getPositionStream(
         locationSettings: locationSettings,
       ).listen((Position position) {
@@ -143,43 +148,48 @@ class _MapScreenState extends State<MapScreen> {
           backgroundColor: Colors.green[700],
         ),
         body: Stack(children: [
-          BlocConsumer<ChargestationsBloc, ChargestationsState>(
+          BlocBuilder<ChargestationsBloc, ChargestationsState>(
             builder: (context, state) {
-              return GoogleMap(
-                mapType: _currentMapType,
-                onMapCreated: (GoogleMapController controller) {
-                  _onMapCreated(controller);
-                  if (state is ChargestationsLoaded) {
+              if (state is ChargestationsLoading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (state is ChargestationsLoaded) {
+                return GoogleMap(
+                  mapType: _currentMapType,
+                  onMapCreated: (GoogleMapController controller) {
+                    _onMapCreated(controller);
                     placeItems.addAll(setPlaceItems(state));
                     moveCameraTo(position: myPosition);
-                  }
-                },
-                initialCameraPosition: CameraPosition(
-                  target: LatLng(
-                    myPosition.latitude,
-                    myPosition.longitude,
+                  },
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(
+                      myPosition.latitude,
+                      myPosition.longitude,
+                    ),
+                    zoom: 11.0,
                   ),
-                  zoom: 11.0,
-                ),
-                markers: {
-                  Marker(
-                      markerId: const MarkerId('myPosition'),
-                      position: LatLng(
-                        myPosition.latitude,
-                        myPosition.longitude,
-                      ),
-                      draggable: true,
-                      onDragEnd: (value) {},
-                      onTap: null,
-                      icon: myMarkerIcon),
-                  ...markers,
-                },
-                myLocationButtonEnabled: false,
-                onCameraMove: _onCameraMove,
-                onCameraIdle: _manager.updateMap,
-              );
+                  markers: {
+                    Marker(
+                        markerId: const MarkerId('myPosition'),
+                        position: LatLng(
+                          myPosition.latitude,
+                          myPosition.longitude,
+                        ),
+                        draggable: true,
+                        onDragEnd: (value) {},
+                        onTap: null,
+                        icon: myMarkerIcon),
+                    ...markers,
+                  },
+                  myLocationButtonEnabled: false,
+                  onCameraMove: _onCameraMove,
+                  onCameraIdle: _manager.updateMap,
+                );
+              } else {
+                return const Center(
+                  child: Text('Error ChargestationsBloc'),
+                );
+              }
             },
-            listener: (context, state) {},
           ),
         ]),
         floatingActionButton: Column(

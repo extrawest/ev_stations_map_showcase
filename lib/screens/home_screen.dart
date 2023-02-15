@@ -2,10 +2,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:volkhov_maps_app/common/app_bar_config.dart';
-import 'package:volkhov_maps_app/logic/bloc/chargestations_bloc.dart';
 import 'package:volkhov_maps_app/routes.dart';
 
 import '../generated/locale_keys.g.dart';
+import '../logic/bloc/bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
