@@ -1,4 +1,4 @@
-import 'package:easy_localization/easy_localization.dart';
+// import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:volkhov_maps_app/common/app_bar_config.dart';
@@ -18,7 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: defaultAppBar(context, tr(LocaleKeys.app_bar_title)),
+      appBar: defaultAppBar(context, 'Home screen'),
+      //  defaultAppBar(context, tr(LocaleKeys.app_bar_title)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -27,13 +28,15 @@ class _HomeScreenState extends State<HomeScreen> {
               onPressed: () async {
                 Navigator.pushNamed(context, mapScreenRoute);
               },
-              child: Text(tr(LocaleKeys.google_map)),
+              child: const Text('Google map'),
+              // Text(tr(LocaleKeys.google_map)),
             ),
             ElevatedButton(
               onPressed: () async {
                 Navigator.pushNamed(context, mapMainScreenRoute);
               },
-              child: Text(tr(LocaleKeys.google_map)),
+              child: Text('main screen'),
+              // Text(tr(LocaleKeys.google_map)),
             ),
             SizedBox(
               height: 200,

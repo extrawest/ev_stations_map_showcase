@@ -40,14 +40,14 @@ class StaticMainScreenWidget extends StatelessWidget {
           ),
         ),
         const Positioned(
-          top: 345,
+          bottom: 405,
           right: 168,
           child: RoundFlash(
             color: AppColors.greenColor,
           ),
         ),
         Positioned(
-          top: 315,
+          bottom: 368,
           left: 49,
           child: Image.asset(placeVectorPng),
         ),
@@ -109,7 +109,7 @@ class MapBodyWidget extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: 113),
+        const SizedBox(height: 93),
       ],
     );
   }
