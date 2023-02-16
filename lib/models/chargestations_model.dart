@@ -1,3 +1,5 @@
+import '../common/common.dart';
+
 class ChargestationsModel {
   String stationId;
   String? tenantId;
@@ -55,8 +57,6 @@ class ChargestationsModel {
     return data;
   }
 }
-
-enum Status { busy, available, offline, unknown }
 
 Status getStatus(String? status) {
   Status result;
@@ -136,8 +136,6 @@ class ImageUrls {
     return data;
   }
 }
-
-enum Type { TYPE_2_PLUG, CCS_COMBO_12, TYPE_1 }
 
 String getConnectorType(String? type) {
   String result;

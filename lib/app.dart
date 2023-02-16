@@ -5,7 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
+// import 'package:provider/provider.dart';
 import 'package:volkhov_maps_app/routes.dart';
 import 'package:volkhov_maps_app/theme/theme.dart';
 
@@ -13,7 +13,7 @@ import 'package:volkhov_maps_app/theme/theme.dart';
 import 'logic/bloc/bloc.dart';
 import 'services/api_service.dart';
 import 'services/credentials_loader.dart';
-import 'view_models/posts_view_model.dart';
+// import 'view_models/posts_view_model.dart';
 
 class Application extends StatelessWidget {
   final Credentials credentials;
@@ -45,24 +45,16 @@ class Application extends StatelessWidget {
           )..add(WalletStarted()),
         ),
       ],
-      child: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(
-              create: (context) =>
-                  PostsViewModel(ApiService(credentials.apiDomain)),
-            ),
-            Provider.value(value: credentials),
-          ],
-          child: MaterialApp(
-            title: 'Flutter Provider Starter',
-            theme: lightTheme,
-            darkTheme: darkTheme,
-            initialRoute: splashScreenRoute,
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            routes: applicationRoutes,
-          )),
+      child: MaterialApp(
+        title: 'Flutter Provider Starter',
+        theme: lightTheme,
+        darkTheme: darkTheme,
+        initialRoute: splashScreenRoute,
+        localizationsDelegates: context.localizationDelegates,
+        supportedLocales: context.supportedLocales,
+        locale: context.locale,
+        routes: applicationRoutes,
+      ),
     );
   }
 }
