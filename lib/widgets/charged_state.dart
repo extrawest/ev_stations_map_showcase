@@ -94,7 +94,7 @@ class ChargedState extends StatelessWidget {
                           color: AppColors.activeBottomBarButton,
                           fontFamily: 'Inter'),
                     ),
-                    const SizedBox(height: 10),
+                    const SizedBox(height: 20),
                     Text('6.07 kWh',
                         style: TextStyles.headerTextStyle
                             .copyWith(fontFamily: 'Inter')),

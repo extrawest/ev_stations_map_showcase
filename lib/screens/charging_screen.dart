@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:volkhov_maps_app/theme/app_colors.dart';
 
@@ -30,7 +29,7 @@ class ChargingScreen extends StatelessWidget {
         height: MediaQuery.of(context).size.height,
         color: AppColors.whiteColor,
         child: Container(
-          margin: const EdgeInsets.all(13),
+          margin: const EdgeInsets.fromLTRB(13, 13, 13, 26),
           padding: const EdgeInsets.only(
             top: 29,
             bottom: 24,
@@ -55,22 +54,23 @@ class ChargingScreen extends StatelessWidget {
               ),
             ],
           ),
-          child: Column(
-            children: [
-              const ChargedState(),
-              const CostWidget(),
-              CustomButton(
-                onTap: () {},
-                caption: 'Stop charging',
-                fontFamily: 'Poppins',
-              ),
-              const ChargingInfoWidget(),
-              StationInfoWidget(),
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const ChargedState(),
+                const CostWidget(),
+                CustomButton(
+                  onTap: () {},
+                  caption: 'Stop charging',
+                  fontFamily: 'Poppins',
+                ),
+                const ChargingInfoWidget(),
+                const StationInfoWidget(),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 }
-

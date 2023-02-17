@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../theme/themes.dart';
 
@@ -76,7 +77,31 @@ class StationInfoWidget extends StatelessWidget {
                     ),
                   ),
                 ],
-              )
+              ),
+              Container(
+                padding: const EdgeInsets.all(4),
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColors.lightBlue),
+                child: Row(
+                  children: [
+                    Image.asset(outletPng),
+                    const SizedBox(width: 4),
+                    Text(
+                      'Type 2 ',
+                      style: TextStyles.smallTextStyle.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      '(AC)',
+                      style: TextStyles.smallTextStyle.copyWith(
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.greyTextColor),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ],
