@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:volkhov_maps_app/common/common.dart';
+import 'package:volkhov_maps_app/routes.dart';
 import 'package:volkhov_maps_app/screens/map_sreen.dart';
+import 'package:volkhov_maps_app/screens/screens.dart';
 import 'package:volkhov_maps_app/screens/wallet_screen.dart';
 
 import '../theme/themes.dart';
@@ -35,6 +37,7 @@ class _MapMainScreenState extends State<MapMainScreen> {
           children: const [
             StaticMainScreenWidget(),
             MapScreen(),
+            StaticMainScreenWidget(),
             WalletScreen(),
           ],
         ),
@@ -86,7 +89,9 @@ class _MapMainScreenState extends State<MapMainScreen> {
           child: FittedBox(
             child: FloatingActionButton(
               backgroundColor: AppColors.whiteColor,
-              onPressed: null,
+              onPressed: () => setState(() {
+                Navigator.pushNamed(context, chargingScreenRoute);
+              }),
               child: SvgPicture.asset(greyFlash),
             ),
           ),
@@ -110,6 +115,9 @@ class _MapMainScreenState extends State<MapMainScreen> {
         break;
       case 4:
         result = BottomTabBarItem.account;
+        break;
+      case 5:
+        result = BottomTabBarItem.charging;
         break;
       default:
         result = BottomTabBarItem.none;

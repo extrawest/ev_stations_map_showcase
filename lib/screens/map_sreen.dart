@@ -357,7 +357,9 @@ class MapButton extends StatelessWidget {
                 ),
               ],
             ),
-            child: Image.asset(image)),
+            child: Image.asset(
+              image,
+            )),
       ),
     );
   }
