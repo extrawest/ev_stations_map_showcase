@@ -16,7 +16,7 @@ void showDefault(BuildContext context, Widget widget, String title) {
         filter: ImageFilter.blur(sigmaX: 1.5, sigmaY: 1.5),
         child: PopupContent(
           content: Scaffold(
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Theme.of(context).colorScheme.background,
             appBar: AppBar(
               elevation: 0,
               shape: const RoundedRectangleBorder(

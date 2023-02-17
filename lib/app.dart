@@ -2,7 +2,7 @@
 // import 'dart:js' as js;
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
+// import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 // import 'package:provider/provider.dart';
@@ -13,7 +13,6 @@ import 'package:volkhov_maps_app/theme/theme.dart';
 import 'logic/bloc/bloc.dart';
 import 'services/api_service.dart';
 import 'services/credentials_loader.dart';
-// import 'view_models/posts_view_model.dart';
 
 class Application extends StatelessWidget {
   final Credentials credentials;

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:volkhov_maps_app/theme/assets.dart';
 
 import '../theme/themes.dart';
 

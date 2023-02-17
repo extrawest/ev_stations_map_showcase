@@ -58,32 +58,31 @@ class TextStyles {
 
 ThemeData darkTheme = ThemeData(
   primaryColor: Colors.black,
-  backgroundColor: blackShade,
-  colorScheme: ColorScheme.dark(primary: Colors.grey.shade200),
+  colorScheme:
+      ColorScheme.dark(primary: Colors.grey.shade200, background: blackShade),
   floatingActionButtonTheme:
       const FloatingActionButtonThemeData(foregroundColor: Colors.black),
   dividerColor: Colors.black12,
   // or use string of the font in the assets 'SFUIDisplay'
   fontFamily: GoogleFonts.roboto().fontFamily,
   textTheme: const TextTheme(
-    headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-    headline6: TextStyle(fontSize: 22.0, fontStyle: FontStyle.italic),
-    bodyText2: TextStyle(fontSize: 14.0),
-  ),
+      displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+      titleLarge: TextStyle(fontSize: 22.0, fontStyle: FontStyle.italic),
+      bodyMedium: TextStyle(fontSize: 14.0)),
 );
 
 ThemeData lightTheme = ThemeData(
   primaryColor: Colors.white,
-  backgroundColor: greyShadeLight,
-  colorScheme: const ColorScheme.light(primary: Colors.black54),
+  colorScheme: const ColorScheme.light(
+      primary: Colors.black54, background: greyShadeLight),
   floatingActionButtonTheme:
       const FloatingActionButtonThemeData(foregroundColor: Colors.white),
   dividerColor: Colors.white54,
   // or use string of the font in the assets 'SFUIDisplay'
   fontFamily: GoogleFonts.roboto().fontFamily,
   textTheme: const TextTheme(
-    headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
-    headline6: TextStyle(fontSize: 22.0, fontStyle: FontStyle.italic),
-    bodyText2: TextStyle(fontSize: 14.0),
+    displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
+    titleLarge: TextStyle(fontSize: 22.0, fontStyle: FontStyle.italic),
+    bodyMedium: TextStyle(fontSize: 14.0),
   ),
 );
