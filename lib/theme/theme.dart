@@ -13,43 +13,46 @@ const Color white = Color(0xffffffff);
 class TextStyles {
   static const notifierTextLabel = TextStyle(
     fontSize: 26,
+    fontFamily: 'Inter',
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w300,
   );
 
   static const headerTextStyle = TextStyle(
     fontSize: 20,
+    fontFamily: 'Inter',
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w700,
     color: AppColors.blackColor,
   );
 
-  static const hintTextStyle = TextStyle(
-    // fontFamily: GoogleFonts.roboto(),
-    fontSize: 16,
+  static const appBarTextStyle = TextStyle(
+    fontSize: 18,
+    fontFamily: 'Inter',
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w400,
+    color: AppColors.blackColor,
   );
 
   static const textStyle = TextStyle(
-    // fontFamily: GoogleFonts.inter(),
     fontSize: 16,
+    fontFamily: 'Inter',
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w400,
     color: AppColors.blackColor,
   );
 
   static const textWalletStyle = TextStyle(
-    // fontFamily: GoogleFonts.inter(),
     fontSize: 14,
+    fontFamily: 'Inter',
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w400,
     color: AppColors.blackColor,
   );
 
   static const smallTextStyle = TextStyle(
-    // fontFamily: GoogleFonts.inter(),
     fontSize: 12,
+    fontFamily: 'Inter',
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w400,
     color: AppColors.blackColor,

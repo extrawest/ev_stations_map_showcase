@@ -1,4 +1,4 @@
-enum BottomTabBarItem { map, favorites, wallet, account, none }
+enum BottomTabBarItem { map, favorites, wallet, account, charging, none }
 
 enum Status { busy, available, offline, unknown }
 

@@ -325,7 +325,7 @@ void showStationInfoBottomSheet({
       ),
       context: context,
       builder: (builder) {
-        return StationInfoWidget(station: station);
+        return StationInfoBottomWidget(station: station);
       });
 }
 
@@ -357,7 +357,9 @@ class MapButton extends StatelessWidget {
                 ),
               ],
             ),
-            child: Image.asset(image)),
+            child: Image.asset(
+              image,
+            )),
       ),
     );
   }

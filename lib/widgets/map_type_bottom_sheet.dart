@@ -1,7 +1,9 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../theme/themes.dart';
+import 'widgets.dart';
 
 class BodyBottomSheetWidget extends StatefulWidget {
   final MapType mapType;
@@ -123,27 +125,9 @@ class _BodyBottomSheetWidgetState extends State<BodyBottomSheetWidget> {
                 color: AppColors.dividerColor,
                 height: 1,
               ),
-              GestureDetector(
+              CustomButton(
+                caption: 'Apply',
                 onTap: () => Navigator.pop(context, selectedtype),
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  margin: const EdgeInsets.only(
-                    top: 30,
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                    color: AppColors.activeBottomBarButton,
-                  ),
-                  child: const Text(
-                    'Apply',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.whiteColor),
-                  ),
-                ),
               ),
             ],
           )),

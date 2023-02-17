@@ -13,6 +13,7 @@ const String greenFlash = 'assets/icons/green_flash.svg';
 const String greenMarkerPng = 'assets/icons/green_marker.png';
 const String greenMarkerPng3x = 'assets/icons/green_marker_x3.png';
 const String greenPlug = 'assets/icons/green_plug.svg';
+const String outletPng = 'assets/icons/outlet.png';
 const String greyFlash = 'assets/icons/grey_flash.svg';
 const String greyStar = 'assets/icons/grey_star.svg';
 const String redFlash = 'assets/icons/red_flash.svg';
