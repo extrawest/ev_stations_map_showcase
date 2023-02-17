@@ -7,10 +7,10 @@ import '../models/models.dart';
 import '../theme/themes.dart';
 import 'widgets.dart';
 
-class StationInfoWidget extends StatelessWidget {
+class StationInfoBottomWidget extends StatelessWidget {
   final Place station;
 
-  const StationInfoWidget({
+  const StationInfoBottomWidget({
     Key? key,
     required this.station,
   }) : super(key: key);

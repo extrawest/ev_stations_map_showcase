@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:volkhov_maps_app/theme/app_colors.dart';
 
@@ -62,7 +63,9 @@ class ChargingScreen extends StatelessWidget {
                 onTap: () {},
                 caption: 'Stop charging',
                 fontFamily: 'Poppins',
-              )
+              ),
+              const ChargingInfoWidget(),
+              StationInfoWidget(),
             ],
           ),
         ),
@@ -70,3 +73,4 @@ class ChargingScreen extends StatelessWidget {
     );
   }
 }
+

@@ -34,13 +34,6 @@ class TextStyles {
     color: AppColors.blackColor,
   );
 
-  static const hintTextStyle = TextStyle(
-    fontSize: 16,
-    fontFamily: 'Inter',
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.w400,
-  );
-
   static const textStyle = TextStyle(
     fontSize: 16,
     fontFamily: 'Inter',

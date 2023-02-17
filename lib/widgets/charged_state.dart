@@ -90,7 +90,7 @@ class ChargedState extends StatelessWidget {
                     ),
                     Text(
                       '24%',
-                      style: TextStyles.hintTextStyle.copyWith(
+                      style: TextStyles.textStyle.copyWith(
                           color: AppColors.activeBottomBarButton,
                           fontFamily: 'Inter'),
                     ),

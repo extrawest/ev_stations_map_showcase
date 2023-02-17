@@ -325,7 +325,7 @@ void showStationInfoBottomSheet({
       ),
       context: context,
       builder: (builder) {
-        return StationInfoWidget(station: station);
+        return StationInfoBottomWidget(station: station);
       });
 }
 
