@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
-import 'package:intl/date_symbol_data_local.dart';
+
+import 'package:volkhov_maps_app/models/wallet_model.dart';
 
 import '../logic/bloc/bloc.dart';
 import '../theme/themes.dart';
-import 'package:volkhov_maps_app/models/wallet_model.dart';
 
 class WalletScreen extends StatelessWidget {
   const WalletScreen({super.key});
@@ -32,7 +33,9 @@ class WalletScreen extends StatelessWidget {
                   backgroundColor: AppColors.lightBlue,
                   expandedHeight: 167,
                   flexibleSpace: FlexibleSpaceBar(
+                    centerTitle: true,
                     title: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(

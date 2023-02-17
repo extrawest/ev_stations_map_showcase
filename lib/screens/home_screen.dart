@@ -4,22 +4,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:volkhov_maps_app/common/app_bar_config.dart';
 import 'package:volkhov_maps_app/routes.dart';
 
-import '../generated/locale_keys.g.dart';
+// import '../generated/locale_keys.g.dart';
 import '../logic/bloc/bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  HomeScreenState createState() => HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: defaultAppBar(context, 'Home screen'),
-      //  defaultAppBar(context, tr(LocaleKeys.app_bar_title)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -29,14 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.pushNamed(context, mapScreenRoute);
               },
               child: const Text('Google map'),
-              // Text(tr(LocaleKeys.google_map)),
             ),
             ElevatedButton(
               onPressed: () async {
                 Navigator.pushNamed(context, mapMainScreenRoute);
               },
-              child: Text('main screen'),
-              // Text(tr(LocaleKeys.google_map)),
+              child: const Text('main screen'),
             ),
             SizedBox(
               height: 200,

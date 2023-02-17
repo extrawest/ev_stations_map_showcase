@@ -54,10 +54,10 @@ Future<String> getApplicationVersion() async {
 
 Future<Credentials> loadCredentials() async {
   try {
-    const _isProd =
+    const isProd =
         bool.fromEnvironment(isProductionEnvKey, defaultValue: false);
     final credentials = await CredentialsLoader(
-            pathToFile: _isProd ? credentialsProdFile : credentialsDevFile)
+            pathToFile: isProd ? credentialsProdFile : credentialsDevFile)
         .load();
     return credentials;
   } catch (e) {

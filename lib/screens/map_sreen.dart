@@ -30,6 +30,7 @@ class _MapScreenState extends State<MapScreen> {
 
   late LatLng myPosition;
 
+  // ignore: cancel_subscriptions
   late StreamSubscription<Position> positionStream;
 
   late Marker marker;

@@ -9,10 +9,10 @@ class PopupContent extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _PopupContentState createState() => _PopupContentState();
+  PopupContentState createState() => PopupContentState();
 }
 
-class _PopupContentState extends State<PopupContent> {
+class PopupContentState extends State<PopupContent> {
   @override
   void initState() {
     super.initState();
