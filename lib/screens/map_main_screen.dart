@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:volkhov_maps_app/common/common.dart';
 import 'package:volkhov_maps_app/routes.dart';
-import 'package:volkhov_maps_app/screens/map_sreen.dart';
 import 'package:volkhov_maps_app/screens/screens.dart';
-import 'package:volkhov_maps_app/screens/wallet_screen.dart';
 
 import '../theme/themes.dart';
 import '../widgets/widgets.dart';
