@@ -1,35 +1,6 @@
 # Ruslan.Volkhov Maps App
 
 
-**7. Add all files to git**
-
-`git add .`
-
-**8. Commit all the files with 'initial commit' commit message**
-
-`git commit -m "initial commit"`
-
-**9. Push to remote repository**
-
-`git push -u origin main`
-
-## Instructions on how to build, run and config
-## Localization
-
-### 1. Update en.json and other json dictionaries under the assets/i18n folder
-
-### 2. Load assets:
-
-```shell
-flutter pub run easy_localization:generate --source-dir assets/i18n
-```
-
-### 3. Generate static keys for translations
-
-```shell
-flutter pub run easy_localization:generate -f keys -o locale_keys.g.dart --source-dir assets/i18n
-```
-
 ## CREATE CREDENTIALS FILES FOR DEVELOPMENT AND PRODUCTION MODE
 
 Create `credentials_production.json` and `credentials_development.json` inside the `assets` folder.
@@ -79,3 +50,13 @@ Created by Extrawest Mobile Team
 ---
 ## Generate code
 fvm flutter pub run build_runner build --delete-conflicting-outputs
+
+##  Run App with arguments for using Google map:
+#   For Android:
+fvm flutter run --dart-define DEFINE_ANDROID_KEY=API_KEY_FOR_ANDROID
+
+#   For iOS:
+fvm flutter run --dart-define DEFINE_IOS_KEY=API_KEY_FOR_IOS
+
+#   For web:
+fvm flutter run --dart-define DEFINE_WEB_KEY=API_KEY_FOR_WEB
