@@ -21,34 +21,53 @@ class SearchScreen extends StatelessWidget {
         foregroundColor: AppColors.blackColor,
         shadowColor: Colors.transparent,
       ),
-      body: BlocProvider(
-        create: (context) => SearchStationBloc(),
-        child: BlocListener<ChargestationsBloc, ChargestationsState>(
-          listener: (context, state) {
-            // TODO: implement listener
-            if (state is ChargestationsLoaded) stations = state.stationslist;
-          },
-          child: Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
+      body: BlocListener<ChargestationsBloc, ChargestationsState>(
+        listener: (context, state) {
+          if (state is ChargestationsLoaded) {
+            stations = state.stationslist;
+          }
+        },
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+              ),
+              child: CustomTextField(
+                suffixIcon: SvgPicture.asset(
+                  cancelIcon,
+                  color: AppColors.lightGrey,
                 ),
-                child: CustomTextField(
-                  suffixIcon: SvgPicture.asset(
-                    cancelIcon,
-                    color: AppColors.lightGrey,
-                  ),
-                  onChanged: (input) => SearchStationBloc().add(
-                    SearchStationEvent.findItem(
-                      searchString: input,
-                      stations: stations,
-                    ),
+                onChanged: (input) => SearchStationBloc().add(
+                  SearchStationFindItem(
+                    searchString: input,
+                    stations: stations,
                   ),
                 ),
               ),
-            ],
-          ),
+            ),
+            BlocBuilder<SearchStationBloc, SearchStationState>(
+              builder: (context, searchState) {
+                if (searchState is SearchStationLoading) {
+                  return const LoadingSpinner();
+                } else if (searchState is SearchStationInitial) {
+                  return const SizedBox();
+                } else if (searchState is SearchStationError) {
+                  return const Center(child: Text('error'));
+                } else if (searchState is SearchStationFound) {
+                  // return Text('stations -----> ${searchState.foundStations}');
+                  return ListView.builder(
+                    itemCount: searchState.foundStations.length,
+                    itemBuilder: (context, index) => SearchResultItem(
+                      stations: searchState.foundStations[index],
+                    ),
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

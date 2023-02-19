@@ -132,7 +132,7 @@ class WalletHistoryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dateTime = getDateTime('${historyItem?.datetimeStarted}');
-    final differenceTime = getDifference(
+    final differenceTime = getTimeDifference(
       '${historyItem?.datetimeFinished}',
       '${historyItem?.datetimeStarted}',
     );
@@ -202,7 +202,7 @@ class WalletHistoryItem extends StatelessWidget {
     return result;
   }
 
-  String getDifference(String statrtDateTime, endDateTime) {
+  String getTimeDifference(String statrtDateTime, endDateTime) {
     String result = 'undefined';
     if (statrtDateTime != '' && endDateTime != '') {
       final dt1 = DateTime.parse(statrtDateTime);
