@@ -9,10 +9,12 @@ import 'widgets.dart';
 
 class StationInfoBottomWidget extends StatelessWidget {
   final Place station;
+  final Function()? addRemoveFavorite;
 
   const StationInfoBottomWidget({
     Key? key,
     required this.station,
+    this.addRemoveFavorite,
   }) : super(key: key);
 
   @override
@@ -58,7 +60,9 @@ class StationInfoBottomWidget extends StatelessWidget {
                     ],
                   )),
                   const SizedBox(width: 6),
-                  SvgPicture.asset(yellowStar),
+                  GestureDetector(
+                      onTap: addRemoveFavorite,
+                      child: SvgPicture.asset(yellowStar)),
                 ],
               ),
               const SizedBox(height: 25),

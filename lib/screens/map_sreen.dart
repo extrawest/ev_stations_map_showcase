@@ -137,10 +137,6 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        // appBar: AppBar(
-        //   title: const Text('Maps Sample App'),
-        //   backgroundColor: Colors.green[700],
-        // ),
         body: Stack(children: [
           BlocBuilder<ChargestationsBloc, ChargestationsState>(
             builder: (context, state) {
@@ -316,6 +312,7 @@ class _MapScreenState extends State<MapScreen> {
 void showStationInfoBottomSheet({
   required BuildContext context,
   required Place station,
+  Function()? addRemoveFavorite,
 }) {
   showModalBottomSheet(
       isScrollControlled: true,
@@ -325,7 +322,10 @@ void showStationInfoBottomSheet({
       ),
       context: context,
       builder: (builder) {
-        return StationInfoBottomWidget(station: station);
+        return StationInfoBottomWidget(
+          station: station,
+          addRemoveFavorite: addRemoveFavorite,
+        );
       });
 }
 

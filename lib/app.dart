@@ -43,6 +43,9 @@ class Application extends StatelessWidget {
             apiService: ApiService(credentials.apiDomain),
           )..add(WalletStarted()),
         ),
+        BlocProvider(
+          create: (_) => SearchStationBloc(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Provider Starter',
