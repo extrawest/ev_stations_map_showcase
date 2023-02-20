@@ -37,6 +37,7 @@ class _MapMainScreenState extends State<MapMainScreen> {
             MapScreen(),
             StaticMainScreenWidget(),
             WalletScreen(),
+            SignInScreen(),
           ],
         ),
         bottomNavigationBar: Theme(
@@ -73,7 +74,7 @@ class _MapMainScreenState extends State<MapMainScreen> {
                 },
                 onTapAccount: () {
                   setState(() {
-                    currentTabIndex = 0;
+                    currentTabIndex = 4;
                     myPage.jumpToPage(currentTabIndex);
                   });
                 },
