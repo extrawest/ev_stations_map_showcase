@@ -22,6 +22,8 @@ dependencies:
   device_info_plus: ^4.0.1
   easy_localization: ^3.0.1
   equatable: ^2.0.5
+  firebase_auth: ^4.2.8
+  firebase_core: ^2.6.1
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
