@@ -11,6 +11,7 @@ export './map_type_bottom_sheet.dart';
 export './outlet_widget.dart';
 export './outlets_list_widget.dart';
 export './round_flash.dart';
+export './search_no_result_widget.dart';
 export './search_result_item.dart';
 export './square_button.dart';
 export './station_info_bottom_sheet.dart';

@@ -6,7 +6,6 @@ import '../../../models/models.dart';
 
 part 'search_station_event.dart';
 part 'search_station_state.dart';
-// part 'search_station_bloc.freezed.dart';
 
 class SearchStationBloc extends Bloc<SearchStationEvent, SearchStationState> {
   SearchStationBloc() : super(SearchStationInitial()) {
@@ -20,7 +19,6 @@ class SearchStationBloc extends Bloc<SearchStationEvent, SearchStationState> {
     List<ChargestationsModel> result = [];
     emit(SearchStationLoading());
     try {
-      // final String
       final searchString = (event as SearchStationFindItem).searchString;
       result = [
         ...event.stations

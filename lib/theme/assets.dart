@@ -39,6 +39,7 @@ const String cancelIcon = 'assets/icons/cancel_icon.svg';
 const String searchIcon = 'assets/icons/search_icon.svg';
 const String flashIcon = 'assets/icons/flash_icon.svg';
 const String flashIconPng = 'assets/icons/flash_icon.png';
+const String searchNoResults = 'assets/icons/search_no_results.svg';
 
 const String defaultMap = 'assets/icons/map_default.png';
 const String satelliteMap = 'assets/icons/map_satellite.png';

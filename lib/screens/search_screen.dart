@@ -7,8 +7,23 @@ import '../models/models.dart';
 import '../theme/themes.dart';
 import '../widgets/widgets.dart';
 
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
+
+  @override
+  State<SearchScreen> createState() => _SearchScreenState();
+}
+
+class _SearchScreenState extends State<SearchScreen> {
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final chargeDtationBloc = context.read<ChargestationsBloc>();
+      chargeDtationBloc.add(ChargestationsStarted());
+    });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,12 +53,13 @@ class SearchScreen extends StatelessWidget {
                   cancelIcon,
                   color: AppColors.lightGrey,
                 ),
-                onChanged: (input) => SearchStationBloc().add(
-                  SearchStationFindItem(
+                onChanged: (input) {
+                  final searchBloc = context.read<SearchStationBloc>();
+                  searchBloc.add(SearchStationFindItem(
                     searchString: input,
                     stations: stations,
-                  ),
-                ),
+                  ));
+                },
               ),
             ),
             BlocBuilder<SearchStationBloc, SearchStationState>(
@@ -55,13 +71,17 @@ class SearchScreen extends StatelessWidget {
                 } else if (searchState is SearchStationError) {
                   return const Center(child: Text('error'));
                 } else if (searchState is SearchStationFound) {
-                  // return Text('stations -----> ${searchState.foundStations}');
-                  return ListView.builder(
-                    itemCount: searchState.foundStations.length,
-                    itemBuilder: (context, index) => SearchResultItem(
-                      stations: searchState.foundStations[index],
-                    ),
-                  );
+                  // return Text('stations -----> ${searchState.foubndStations}');
+                  return searchState.foundStations.isEmpty
+                      ? const SearchNoResultWidget()
+                      : Expanded(
+                          child: ListView.builder(
+                            itemCount: searchState.foundStations.length,
+                            itemBuilder: (context, index) => SearchResultItem(
+                              station: searchState.foundStations[index],
+                            ),
+                          ),
+                        );
                 } else {
                   return const SizedBox();
                 }
