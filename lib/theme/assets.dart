@@ -42,6 +42,11 @@ const String flashIconPng = 'assets/icons/flash_icon.png';
 const String searchNoResults = 'assets/icons/search_no_results.svg';
 const String googleSign = 'assets/icons/google_sign.svg';
 const String googleSignPng = 'assets/icons/google_sign.png';
+const String profilePhotoPng = 'assets/icons/profile_photo.png';
+const String userSvg = 'assets/icons/user.svg';
+const String userPng = 'assets/icons/user.png';
+const String mailSvg = 'assets/icons/mail.svg';
+const String mailPng = 'assets/icons/mail.png';
 
 const String defaultMap = 'assets/icons/map_default.png';
 const String satelliteMap = 'assets/icons/map_satellite.png';

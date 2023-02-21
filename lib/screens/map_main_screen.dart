@@ -37,7 +37,7 @@ class _MapMainScreenState extends State<MapMainScreen> {
             MapScreen(),
             StaticMainScreenWidget(),
             WalletScreen(),
-            SignInScreen(),
+            AccountScreen(),
           ],
         ),
         bottomNavigationBar: Theme(
