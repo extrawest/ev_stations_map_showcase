@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_udid/flutter_udid.dart';
 import 'package:package_info/package_info.dart';
@@ -64,4 +65,18 @@ Future<Credentials> loadCredentials() async {
     log.fine('loadCredentials error: $e');
     return await CredentialsLoader(pathToFile: credentialsDevFile).load();
   }
+}
+
+void openScreenWithFade(BuildContext context, Widget screen) {
+  Navigator.of(context).push(PageRouteBuilder(
+      pageBuilder: (context, animation, anotherAnimation) {
+        return screen;
+      },
+      transitionDuration: const Duration(milliseconds: 600),
+      transitionsBuilder: (context, animation, anotherAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      }));
 }

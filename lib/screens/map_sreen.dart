@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -13,6 +14,7 @@ import '../logic/bloc/bloc.dart';
 import '../models/models.dart';
 import '../theme/themes.dart';
 import '../utils/utils.dart';
+import 'screens.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -180,6 +182,18 @@ class _MapScreenState extends State<MapScreen> {
                 );
               }
             },
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 43,
+            ),
+            child: CustomTextField(
+              ontap: () => openScreenWithFade(context, const SearchScreen()),
+              hint: 'Type here',
+              prefixIcon: SvgPicture.asset(searchIcon),
+              suffixIcon: SvgPicture.asset(cancelIcon),
+            ),
           ),
         ]),
         floatingActionButton: Column(
