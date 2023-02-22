@@ -20,7 +20,6 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // (kIsWeb) ? signInWithGoogleWeb() : signInWithGoogle();
     signedUp = GoogleAuth.firebaseUser != null;
     return loading
         ? const Center(child: CircularProgressIndicator())

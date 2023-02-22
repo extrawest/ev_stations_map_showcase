@@ -32,7 +32,7 @@ class StationName extends StatelessWidget {
             ],
           ),
         ),
-        SvgPicture.asset(yellowStar)
+        SvgPicture.asset(yellowFilledStar)
       ],
     );
   }

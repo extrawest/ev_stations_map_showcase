@@ -30,6 +30,8 @@ const String yellowFlash = 'assets/icons/yellow_flash.svg';
 const String yellowMarkerPng = 'assets/icons/yellow_marker.png';
 const String yellowMarkerPng3x = 'assets/icons/yellow_marker_x3.png';
 const String yellowStar = 'assets/icons/yellow_star.svg';
+const String yellowFilledStar = 'assets/icons/yellow_filled_star.svg';
+
 const String placeVector = 'assets/icons/place_vector.svg';
 const String placeVectorPng = 'assets/icons/place_vector.png';
 const String myMarkerPng = 'assets/icons/my_marker.png';
