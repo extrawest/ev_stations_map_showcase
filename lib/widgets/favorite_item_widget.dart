@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../models/models.dart';
 import '../theme/themes.dart';
@@ -12,6 +13,7 @@ class FavoriteItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
+    final coordinate = LatLng(item.latitude ?? 0, item.longitude ?? 0);
 
     return Container(
       margin: const EdgeInsets.only(
@@ -41,10 +43,11 @@ class FavoriteItemWidget extends StatelessWidget {
         ],
       ),
       child: Column(
-        children: const [
-          StationName(),
-          CoordinatesWidget(),
-          FavoriteOutletsList(),
+        children: [
+          FavoriteStationName(
+              name: item.stationId, id: item.chargePointId ?? ''),
+          FavoriteCoordinatesWidget(coordinate: coordinate),
+          const FavoriteOutletsList(),
         ],
       ),
     );
