@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:volkhov_maps_app/widgets/widgets.dart';
 
 import '../theme/themes.dart';
+import '../utils/utils.dart';
 import 'screens.dart';
 
 class StaticMainScreenWidget extends StatelessWidget {
@@ -74,7 +75,8 @@ class MapBodyWidget extends StatelessWidget {
             vertical: 43,
           ),
           child: CustomTextField(
-            ontap: () => openScreenWithFade(context, const SearchScreen()),
+            ontap: null,
+            readOnly: true,
             hint: 'Type here',
             prefixIcon: SvgPicture.asset(searchIcon),
             suffixIcon: SvgPicture.asset(cancelIcon),
@@ -115,18 +117,4 @@ class MapBodyWidget extends StatelessWidget {
       ],
     );
   }
-}
-
-void openScreenWithFade(BuildContext context, Widget screen) {
-  Navigator.of(context).push(PageRouteBuilder(
-      pageBuilder: (context, animation, anotherAnimation) {
-        return screen;
-      },
-      transitionDuration: const Duration(milliseconds: 600),
-      transitionsBuilder: (context, animation, anotherAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      }));
 }

@@ -35,7 +35,7 @@ class _MapMainScreenState extends State<MapMainScreen> {
           children: const [
             StaticMainScreenWidget(),
             MapScreen(),
-            StaticMainScreenWidget(),
+            FavoritesScreen(),
             WalletScreen(),
             AccountScreen(),
           ],
@@ -62,7 +62,7 @@ class _MapMainScreenState extends State<MapMainScreen> {
                 },
                 onTapFavorites: () {
                   setState(() {
-                    currentTabIndex = 0;
+                    currentTabIndex = 2;
                     myPage.jumpToPage(currentTabIndex);
                   });
                 },

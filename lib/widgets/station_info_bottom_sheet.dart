@@ -4,7 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../logic/bloc/bloc.dart';
 import '../models/models.dart';
+import '../routes.dart';
 import '../theme/themes.dart';
+import '../utils/utils.dart';
 import 'widgets.dart';
 
 class StationInfoBottomWidget extends StatelessWidget {
@@ -49,6 +51,7 @@ class StationInfoBottomWidget extends StatelessWidget {
                     children: [
                       Text(
                         '${stationInfo.tenantId}',
+                        overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),
                       ),
@@ -60,9 +63,29 @@ class StationInfoBottomWidget extends StatelessWidget {
                     ],
                   )),
                   const SizedBox(width: 6),
-                  GestureDetector(
-                      onTap: addRemoveFavorite,
-                      child: SvgPicture.asset(yellowStar)),
+                  BlocBuilder<FavoritesBloc, FavoritesState>(
+                    builder: (context, state) {
+                      final favoritesBloc = context.read<FavoritesBloc>();
+                      List<String> favoriteIds = [];
+                      if (state is FavoritesLoaded) {
+                        favoriteIds = state.favoriteIds;
+                      }
+                      final isFavorite =
+                          isIdFavorite(favoriteIds, station.stationId);
+
+                      return GestureDetector(
+                          onTap: () {
+                            if (GoogleAuth.firebaseUser != null) {
+                              favoritesBloc.add(
+                                  FavoritesWrite(stationId: station.stationId));
+                            } else {
+                              Navigator.pushNamed(context, signInScreen);
+                            }
+                          },
+                          child: SvgPicture.asset(
+                              isFavorite ? yellowFilledStar : yellowStar));
+                    },
+                  ),
                 ],
               ),
               const SizedBox(height: 25),
@@ -80,7 +103,7 @@ class StationInfoBottomWidget extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          '${stationInfo.longitude}, ${stationInfo.latitude} here',
+                          '${stationInfo.longitude}, ${stationInfo.latitude}',
                           style: TextStyles.textStyle.copyWith(
                             fontWeight: FontWeight.w300,
                             fontSize: 12,
@@ -151,4 +174,8 @@ String firstLetterCapital(String? string) {
 
   result = string != null ? string[0].toUpperCase() + string.substring(1) : '';
   return result;
+}
+
+bool isIdFavorite(List<String> favoriteIds, String stationId) {
+  return favoriteIds.contains(stationId);
 }

@@ -31,14 +31,6 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
-    if (user == null) {
-      log.fine('User is currently signed out!');
-    } else {
-      log.fine('User is signed in!');
-    }
-  });
-
   Bloc.observer = SimpleBlocObserver();
 
   isProduction =

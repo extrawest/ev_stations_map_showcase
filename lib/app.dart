@@ -46,6 +46,9 @@ class Application extends StatelessWidget {
         BlocProvider(
           create: (_) => SearchStationBloc(),
         ),
+        BlocProvider(
+          create: (_) => FavoritesBloc()..add(FavoriteFireBaseAuthListen()),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Provider Starter',

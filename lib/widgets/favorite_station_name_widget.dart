@@ -1,10 +1,18 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../theme/themes.dart';
 
-class StationName extends StatelessWidget {
-  const StationName({super.key});
+class FavoriteStationName extends StatelessWidget {
+  final String name;
+  final String id;
+
+  const FavoriteStationName({
+    Key? key,
+    required this.name,
+    required this.id,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,13 +25,14 @@ class StationName extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Station Name',
+                name,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyles.textStyle.copyWith(
                   fontWeight: FontWeight.w500,
                 ),
               ),
               Text(
-                'STATUS: Available',
+                id,
                 style: TextStyles.textStyle.copyWith(
                   fontWeight: FontWeight.w300,
                   fontSize: 12,
@@ -32,6 +41,7 @@ class StationName extends StatelessWidget {
             ],
           ),
         ),
+        const SizedBox(width: 8),
         SvgPicture.asset(yellowFilledStar)
       ],
     );
