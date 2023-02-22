@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '../theme/themes.dart';
 
 class SignUpWidget extends StatelessWidget {
+  final Function() onTap;
   const SignUpWidget({
     super.key,
+    required this.onTap,
   });
 
   @override
@@ -23,50 +25,53 @@ class SignUpWidget extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          margin: const EdgeInsets.symmetric(horizontal: 40),
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: AppColors.greyTextColor,
+        GestureDetector(
+          onTap: onTap,
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 40),
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: AppColors.greyTextColor,
+              ),
+              borderRadius: BorderRadius.circular(16),
             ),
-            borderRadius: BorderRadius.circular(16),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  20,
-                  20,
-                  20,
-                  20,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(
+                    20,
+                    20,
+                    20,
+                    20,
+                  ),
+                  child: Image.asset(
+                    googleSignPng,
+                    width: 22,
+                    height: 22,
+                  ),
                 ),
-                child: Image.asset(
-                  googleSignPng,
-                  width: 22,
-                  height: 22,
+                Text(
+                  'Sign Up with Google',
+                  style: TextStyles.textStyle.copyWith(
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.greyTextColor,
+                  ),
                 ),
-              ),
-              Text(
-                'Sign Up with Google',
-                style: TextStyles.textStyle.copyWith(
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.greyTextColor,
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(
+                    20,
+                    20,
+                    20,
+                    20,
+                  ),
+                  child: SizedBox(
+                    width: 22,
+                    height: 22,
+                  ),
                 ),
-              ),
-              const Padding(
-                padding: EdgeInsets.fromLTRB(
-                  20,
-                  20,
-                  20,
-                  20,
-                ),
-                child: SizedBox(
-                  width: 22,
-                  height: 22,
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ],
