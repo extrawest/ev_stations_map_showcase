@@ -1,25 +1,47 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:volkhov_maps_app/logic/bloc/bloc.dart';
+
+import '../../../utils/utils.dart';
 
 part 'favorites_event.dart';
 part 'favorites_state.dart';
 
 class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   FavoritesBloc() : super(FavoritesInitial()) {
+    on<FavoriteFireBaseAuthListen>(_onInitial);
     on<FavoritesRead>(_onRead);
     on<FavoritesWrite>(_onWrite);
     on<FavoritesClear>(_onClear);
   }
 
+  Future<void> _onInitial(
+    FavoriteFireBaseAuthListen event,
+    Emitter<FavoritesState> emit,
+  ) async {
+    GoogleAuth.firebaseAuth.authStateChanges().listen((User? user) {
+      if (GoogleAuth.firebaseUser == null) {
+        log.fine('!------- User is currently signed out!');
+        _onClear(null, emit);
+      } else {
+        log.fine('!------- User is signed in!');
+        _onRead(null, emit);
+      }
+    });
+  }
+
   Future<void> _onRead(
-    FavoritesRead event,
+    FavoritesRead? event,
     Emitter<FavoritesState> emit,
   ) async {
     emit(FavoritesLoading());
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
-      final favoriteIds = [...prefs.getStringList('favoriteIds') ?? []];
+      final List<String> favoriteIds = [
+        ...prefs.getStringList('favoriteIds') ?? []
+      ];
       emit(FavoritesLoaded(favoriteIds));
     } catch (e) {
       emit(FavoritesError(
@@ -61,7 +83,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   }
 
   Future<void> _onClear(
-    FavoritesClear event,
+    FavoritesClear? event,
     Emitter<FavoritesState> emit,
   ) async {
     emit(FavoritesLoading());

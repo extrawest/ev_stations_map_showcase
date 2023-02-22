@@ -12,6 +12,7 @@ const String chargingScreenRoute = '/charging_screen';
 const String searchScreenRoute = '/search_screen';
 const String accountScreenRoute = '/account_screen';
 const String favoritesScreenRoute = '/favorites_screen';
+const String signInScreen = '/sign_in_screen';
 
 Map<String, WidgetBuilder> applicationRoutes = <String, WidgetBuilder>{
   splashScreenRoute: (context) => SplashScreen(),
@@ -22,4 +23,5 @@ Map<String, WidgetBuilder> applicationRoutes = <String, WidgetBuilder>{
   searchScreenRoute: (context) => const SearchScreen(),
   accountScreenRoute: (context) => const AccountScreen(),
   favoritesScreenRoute: (context) => const FavoritesScreen(),
+  signInScreen: (context) => const SignInScreen(),
 };

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:volkhov_maps_app/routes.dart';
 
+import '../logic/bloc/bloc.dart';
 import '../models/models.dart';
 import '../screens/screens.dart';
 import '../theme/themes.dart';
@@ -16,54 +19,70 @@ class SearchResultItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        showStationInfo(context);
-      },
-      child: Container(
-          color: Colors.transparent,
-          padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
-          child: Row(
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      station.stationId,
-                      style: TextStyles.textWalletStyle,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                    Text(
-                      '${station.longitude}, ${station.latitude}',
-                      style: TextStyles.smallTextStyle.copyWith(
-                        color: AppColors.greyTextColor,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 8),
-              Row(
+    return BlocBuilder<FavoritesBloc, FavoritesState>(
+      builder: (context, state) {
+        return GestureDetector(
+          onTap: () {
+            showStationInfo(
+              context: context,
+              onFavoriteTap: () {
+                // if (GoogleAuth.firebaseUser != null) {
+                //   final favoritesBloc = context.read();
+                //   favoritesBloc
+                //       .add(FavoritesWrite(stationId: station.stationId));
+                // } else {
+                //   Navigator.pushNamed(context, signInScreen);
+                // }
+              },
+            );
+          },
+          child: Container(
+              color: Colors.transparent,
+              padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
+              child: Row(
                 children: [
-                  Text(
-                    '15 m',
-                    style: TextStyles.smallTextStyle.copyWith(
-                      fontWeight: FontWeight.w600,
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          station.stationId,
+                          style: TextStyles.textWalletStyle,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        Text(
+                          '${station.longitude}, ${station.latitude}',
+                          style: TextStyles.smallTextStyle.copyWith(
+                            color: AppColors.greyTextColor,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const SizedBox(width: 4),
-                  Container(
-                      padding: const EdgeInsets.all(5),
-                      child: SvgPicture.asset(rightSign)),
+                  const SizedBox(width: 8),
+                  Row(
+                    children: [
+                      Text(
+                        '15 m',
+                        style: TextStyles.smallTextStyle.copyWith(
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      Container(
+                          padding: const EdgeInsets.all(5),
+                          child: SvgPicture.asset(rightSign)),
+                    ],
+                  ),
                 ],
-              ),
-            ],
-          )),
+              )),
+        );
+      },
     );
   }
 
-  void showStationInfo(BuildContext context) {
+  void showStationInfo(
+      {required BuildContext context, required Function() onFavoriteTap}) {
     final status = getStatus(station.status);
     final stationPlace = Place(
       stationId: station.stationId,
@@ -77,7 +96,7 @@ class SearchResultItem extends StatelessWidget {
     showStationInfoBottomSheet(
       context: context,
       station: stationPlace,
-      addRemoveFavorite: () => print(station.stationId),
+      addRemoveFavorite: onFavoriteTap, //() => print(station.stationId),
     );
   }
 }

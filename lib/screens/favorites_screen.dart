@@ -23,55 +23,63 @@ class _FavoritesScreenState extends State<FavoritesScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ChargestationsBloc, ChargestationsState>(
-      builder: (context, state) {
-        return CustomScrollView(
-          slivers: <Widget>[
-            SliverFixedExtentList(
-              itemExtent: 108,
-              delegate: SliverChildListDelegate(
-                [
-                  const Align(
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 52),
-                      child:
-                          Text('Favorites', style: TextStyles.headerTextStyle),
+      builder: (context, chargestationState) {
+        return BlocBuilder<FavoritesBloc, FavoritesState>(
+          builder: (context, state) {
+            if (state is FavoritesLoaded) {
+              favoriteIds = state.favoriteIds;
+            }
+            return CustomScrollView(
+              slivers: <Widget>[
+                SliverFixedExtentList(
+                  itemExtent: 108,
+                  delegate: SliverChildListDelegate(
+                    [
+                      const Align(
+                        child: Padding(
+                          padding: EdgeInsets.only(top: 52),
+                          child: Text('Favorites',
+                              style: TextStyles.headerTextStyle),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                if (chargestationState is ChargestationsError)
+                  SliverFixedExtentList(
+                    itemExtent: 56,
+                    delegate: SliverChildListDelegate(
+                      [
+                        const Center(child: Text('Error')),
+                      ],
                     ),
                   ),
-                ],
-              ),
-            ),
-            if (state is ChargestationsError)
-              SliverFixedExtentList(
-                itemExtent: 56,
-                delegate: SliverChildListDelegate(
-                  [
-                    const Center(child: Text('Error')),
-                  ],
-                ),
-              ),
-            if (state is ChargestationsLoading)
-              SliverFixedExtentList(
-                itemExtent: 56,
-                delegate: SliverChildListDelegate(
-                  [
-                    const Center(child: CircularProgressIndicator()),
-                  ],
-                ),
-              ),
-            if (state is ChargestationsLoaded)
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    final favoriteItem = state.stationslist.first; //[index];
+                if (chargestationState is ChargestationsLoading)
+                  SliverFixedExtentList(
+                    itemExtent: 56,
+                    delegate: SliverChildListDelegate(
+                      [
+                        const Center(child: CircularProgressIndicator()),
+                      ],
+                    ),
+                  ),
+                if (chargestationState is ChargestationsLoaded)
+                  SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final favoriteItem =
+                            chargestationState.stationslist[index];
 
-                    return FavoriteItemWidget(
-                      item: favoriteItem,
-                    );
-                  },
-                  childCount: 1, //favoriteIds.length,
-                ),
-              ),
-          ],
+                        return FavoriteItemWidget(
+                          item: favoriteItem,
+                        );
+                      },
+                      childCount: favoriteIds.length,
+                    ),
+                  ),
+              ],
+            );
+          },
         );
       },
     );

@@ -21,3 +21,8 @@ class FavoritesClear extends FavoritesEvent {
   @override
   List<Object> get props => [];
 }
+
+class FavoriteFireBaseAuthListen extends FavoritesEvent {
+  @override
+  List<Object> get props => [];
+}

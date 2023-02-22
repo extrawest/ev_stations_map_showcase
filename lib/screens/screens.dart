@@ -1,4 +1,5 @@
 export './favorites_screen.dart';
+export './sign_in_screen.dart';
 export 'account_screen.dart';
 export 'charging_screen.dart';
 export 'home_screen.dart';
