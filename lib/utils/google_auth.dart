@@ -3,10 +3,17 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+import 'logger.dart';
+
 abstract class GoogleAuth {
   static User? firebaseUser;
   static final firebaseAuth = FirebaseAuth.instance;
   final temp = '';
+
   static GoogleSignInAccount? googleUser;
 
   static Future<void> signInWithGoogle(BuildContext context) async {
@@ -19,23 +26,32 @@ abstract class GoogleAuth {
             FirebaseAuth.instanceFor(app: await Firebase.initializeApp())
                 .currentUser;
       } else {
-        googleUser = await GoogleSignIn().signIn();
-        final GoogleSignInAuthentication? googleAuth =
-            await googleUser?.authentication;
+        if (kIsWeb) {
+          final GoogleAuthProvider authProvider = GoogleAuthProvider();
 
-        final credential = GoogleAuthProvider.credential(
-          accessToken: googleAuth?.accessToken,
-          idToken: googleAuth?.idToken,
-        );
+          try {
+            final UserCredential userCredential =
+                await firebaseAuth.signInWithPopup(authProvider);
 
-        final UserCredential userCredential =
-            await firebaseAuth.signInWithCredential(credential);
+            firebaseUser = userCredential.user;
+          } catch (e) {
+            log.fine(e);
+          }
+        } else {
+          googleUser = await GoogleSignIn().signIn();
+          final GoogleSignInAuthentication? googleAuth =
+              await googleUser?.authentication;
 
-        // firebaseUser =
-        //     (await FirebaseAuth.instanceFor(app: await Firebase.initializeApp())
-        //             .signInWithCredential(credential))
-        //         .user;
-        firebaseUser = firebaseAuth.currentUser;
+          final credential = GoogleAuthProvider.credential(
+            accessToken: googleAuth?.accessToken,
+            idToken: googleAuth?.idToken,
+          );
+
+          firebaseUser = (await FirebaseAuth.instanceFor(
+                      app: await Firebase.initializeApp())
+                  .signInWithCredential(credential))
+              .user;
+        }
       }
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context)
