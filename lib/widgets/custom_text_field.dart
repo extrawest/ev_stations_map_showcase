@@ -18,6 +18,7 @@ class CustomTextField extends StatelessWidget {
   final String? errorText;
   final Widget? prefixIcon;
   final Widget? suffixIcon;
+  final Color? fillColor;
 
   ///For default, for textField, textStyle(18 pxs height) the height of the textField is approximately 40 pxs,
   ///and may change dependending on the size and height of the font. To control the height provide [contentPadding].
@@ -39,7 +40,8 @@ class CustomTextField extends StatelessWidget {
       this.onChanged,
       this.errorText,
       this.prefixIcon,
-      this.suffixIcon})
+      this.suffixIcon,
+      this.fillColor})
       : super(key: key);
 
   @override
@@ -50,7 +52,7 @@ class CustomTextField extends StatelessWidget {
         decoration: inputDecoration ??
             InputDecoration(
               filled: true,
-              fillColor: AppColors.whiteColor,
+              fillColor: fillColor ?? AppColors.whiteColor,
               prefixIcon: prefixIcon != null
                   ? Padding(
                       padding: const EdgeInsets.only(

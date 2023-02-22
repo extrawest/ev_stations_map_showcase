@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "552264685697",
+    "project_id": "volkhov-map",
+    "storage_bucket": "volkhov-map.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:552264685697:android:4eff4738b6c3c07cd2d580",
+        "android_client_info": {
+          "package_name": "com.extrawest.volkhov_maps_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "552264685697-u1njid74fa904hfalp7bjld29csk9hvj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPfj25Fd3CO9Z8VKRqBI0uzokt4u4J4Xo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "552264685697-u1njid74fa904hfalp7bjld29csk9hvj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "552264685697-jf5hc4g2ul7jj1581v5d7blv2o08ovmb.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.extrawest.providerStarterApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
