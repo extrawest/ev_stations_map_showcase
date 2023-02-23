@@ -161,10 +161,10 @@ void setMarkersIcon({required Function() function}) {
   function();
 }
 
-List<Place> setPlaceItems(ChargestationsLoaded state) {
+List<Place> setPlaceItems(List<ChargestationsModel> stationslist) {
   final List<Place> items = [];
 
-  for (final station in state.stationslist) {
+  for (final station in stationslist) {
     final status = getStatus(station.status);
     final place = Place(
       stationId: station.stationId,

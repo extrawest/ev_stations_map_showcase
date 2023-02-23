@@ -149,7 +149,7 @@ class _MapScreenState extends State<MapScreen> {
                   mapType: _currentMapType,
                   onMapCreated: (GoogleMapController controller) {
                     _onMapCreated(controller);
-                    placeItems.addAll(setPlaceItems(state));
+                    placeItems.addAll(setPlaceItems(state.stationslist));
                     moveCameraTo(position: myPosition);
                   },
                   initialCameraPosition: CameraPosition(
