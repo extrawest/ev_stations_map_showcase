@@ -22,8 +22,10 @@ class WalletBloc extends Bloc<WalletEvent, WalletState> {
     try {
       final walletData = await apiService.fetchWalletData();
       emit(WalletLoaded(walletData));
-    } catch (_) {
-      emit(WalletError());
+    } catch (e) {
+      emit(WalletError(
+        'Get wallt information error :${e.toString()}',
+      ));
     }
   }
 }

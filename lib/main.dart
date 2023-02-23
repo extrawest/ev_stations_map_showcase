@@ -6,7 +6,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:volkhov_maps_app/app.dart';
 import 'package:volkhov_maps_app/simple_bloc_observer.dart';
 import 'package:volkhov_maps_app/theme/assets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 import 'firebase_options.dart';
 import 'utils/application_utils.dart';

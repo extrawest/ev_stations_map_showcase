@@ -3,8 +3,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:volkhov_maps_app/widgets/widgets.dart';
 
 import '../theme/themes.dart';
-import '../utils/utils.dart';
-import 'screens.dart';
 
 class StaticMainScreenWidget extends StatelessWidget {
   const StaticMainScreenWidget({

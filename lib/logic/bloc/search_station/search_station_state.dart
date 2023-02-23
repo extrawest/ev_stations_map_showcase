@@ -18,6 +18,12 @@ class SearchStationFound extends SearchStationState {
   List<Object> get props => [foundStations];
 }
 
-class SearchStationError extends SearchStationState {}
+class SearchStationError extends SearchStationState {
+  final String error;
+  const SearchStationError(this.error);
+
+  @override
+  List<Object> get props => [error];
+}
 
 class SearchStationLoading extends SearchStationState {}

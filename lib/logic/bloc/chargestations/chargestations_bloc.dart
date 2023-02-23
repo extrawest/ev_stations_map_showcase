@@ -25,8 +25,10 @@ class ChargestationsBloc
     try {
       final stationsList = await apiService.fetchChargestations();
       emit(ChargestationsLoaded(stationsList));
-    } catch (_) {
-      emit(ChargestationsError());
+    } catch (e) {
+      emit(ChargestationsError(
+        'Get chargestation list error :${e.toString()}',
+      ));
     }
   }
 }
