@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:volkhov_maps_app/common/common.dart';
 import 'package:volkhov_maps_app/routes.dart';
 import 'package:volkhov_maps_app/screens/screens.dart';
 
+import '../logic/bloc/bloc.dart';
 import '../theme/themes.dart';
+import '../utils/utils.dart';
 import '../widgets/widgets.dart';
 
 class MapMainScreen extends StatefulWidget {
@@ -52,31 +55,39 @@ class _MapMainScreenState extends State<MapMainScreen> {
             child: Container(
               height: 70,
               alignment: Alignment.center,
-              child: BottomTabBar(
-                tabBarItem: getBottomTabBarEnumItem(),
-                onTapMap: () {
-                  setState(() {
-                    currentTabIndex = 1;
-                    myPage.jumpToPage(currentTabIndex);
-                  });
-                },
-                onTapFavorites: () {
-                  setState(() {
-                    currentTabIndex = 2;
-                    myPage.jumpToPage(currentTabIndex);
-                  });
-                },
-                onTapWallet: () {
-                  setState(() {
-                    currentTabIndex = 3;
-                    myPage.jumpToPage(currentTabIndex);
-                  });
-                },
-                onTapAccount: () {
-                  setState(() {
-                    currentTabIndex = 4;
-                    myPage.jumpToPage(currentTabIndex);
-                  });
+              child: BlocBuilder<FavoritesBloc, FavoritesState>(
+                builder: (context, state) {
+                  final favoritesBloc = context.read<FavoritesBloc>();
+                  return BottomTabBar(
+                    tabBarItem: getBottomTabBarEnumItem(),
+                    onTapMap: () {
+                      setState(() {
+                        currentTabIndex = 1;
+                        myPage.jumpToPage(currentTabIndex);
+                      });
+                    },
+                    onTapFavorites: () {
+                      setState(() {
+                        currentTabIndex = 2;
+                        if (GoogleAuth.firebaseUser != null) {
+                          favoritesBloc.add(FavoritesRead());
+                        }
+                        myPage.jumpToPage(currentTabIndex);
+                      });
+                    },
+                    onTapWallet: () {
+                      setState(() {
+                        currentTabIndex = 3;
+                        myPage.jumpToPage(currentTabIndex);
+                      });
+                    },
+                    onTapAccount: () {
+                      setState(() {
+                        currentTabIndex = 4;
+                        myPage.jumpToPage(currentTabIndex);
+                      });
+                    },
+                  );
                 },
               ),
             ),

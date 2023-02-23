@@ -21,6 +21,8 @@ class CustomTextField extends StatelessWidget {
   final Color? fillColor;
   final bool readOnly;
 
+  final FocusNode? focusNode;
+
   ///For default, for textField, textStyle(18 pxs height) the height of the textField is approximately 40 pxs,
   ///and may change dependending on the size and height of the font. To control the height provide [contentPadding].
   ///If you want to change style completely,
@@ -43,7 +45,8 @@ class CustomTextField extends StatelessWidget {
       this.prefixIcon,
       this.suffixIcon,
       this.fillColor,
-      this.readOnly = false})
+      this.readOnly = false,
+      this.focusNode})
       : super(key: key);
 
   @override
@@ -51,6 +54,7 @@ class CustomTextField extends StatelessWidget {
     return SizedBox(
       child: TextFormField(
         readOnly: readOnly,
+        focusNode: focusNode,
         controller: textEditingController,
         decoration: inputDecoration ??
             InputDecoration(

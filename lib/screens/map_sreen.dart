@@ -189,6 +189,7 @@ class _MapScreenState extends State<MapScreen> {
               vertical: 43,
             ),
             child: CustomTextField(
+              readOnly: true,
               ontap: () => openScreenWithFade(context, const SearchScreen()),
               hint: 'Type here',
               prefixIcon: SvgPicture.asset(searchIcon),

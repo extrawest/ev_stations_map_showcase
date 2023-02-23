@@ -15,14 +15,23 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  final focus = FocusNode();
+
   @override
   void initState() {
+    focus.requestFocus();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       final chargeDtationBloc = context.read<ChargestationsBloc>();
       chargeDtationBloc.add(ChargestationsStarted());
     });
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    focus.dispose();
+    super.dispose();
   }
 
   @override
@@ -49,6 +58,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 horizontal: 16,
               ),
               child: CustomTextField(
+                focusNode: focus,
                 suffixIcon: SvgPicture.asset(
                   cancelIcon,
                   color: AppColors.lightGrey,
