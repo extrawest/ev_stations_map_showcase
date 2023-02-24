@@ -10,29 +10,39 @@ part 'favorites_state.dart';
 
 class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   FavoritesBloc() : super(FavoritesInitial()) {
-    on<FavoriteFireBaseAuthListen>(_onInitial);
+    // on<FavoriteFireBaseAuthListen>(_onInitial);
     on<FavoritesRead>(_onRead);
     on<FavoritesWrite>(_onWrite);
     on<FavoritesClear>(_onClear);
-  }
 
-  Future<void> _onInitial(
-    FavoriteFireBaseAuthListen event,
-    Emitter<FavoritesState> emit,
-  ) async {
     GoogleAuth.firebaseAuth.authStateChanges().listen((User? user) {
       if (GoogleAuth.firebaseUser == null) {
         log.fine('!------- User is currently signed out!');
-        _onClear(null, emit);
+        FavoritesClear();
       } else {
         log.fine('!------- User is signed in!');
-        _onRead(null, emit);
+        FavoritesRead();
       }
     });
   }
 
+  // Future<void> _onInitial(
+  //   FavoriteFireBaseAuthListen event,
+  //   Emitter<FavoritesState> emit,
+  // ) async {
+  //   GoogleAuth.firebaseAuth.authStateChanges().listen((User? user) {
+  //     if (GoogleAuth.firebaseUser == null) {
+  //       log.fine('!------- User is currently signed out!');
+  //       _onClear(null, emit);
+  //     } else {
+  //       log.fine('!------- User is signed in!');
+  //       _onRead(null, emit);
+  //     }
+  //   });
+  // }
+
   Future<void> _onRead(
-    FavoritesRead? event,
+    FavoritesRead event,
     Emitter<FavoritesState> emit,
   ) async {
     emit(FavoritesLoading());
@@ -82,7 +92,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   }
 
   Future<void> _onClear(
-    FavoritesClear? event,
+    FavoritesClear event,
     Emitter<FavoritesState> emit,
   ) async {
     emit(FavoritesLoading());

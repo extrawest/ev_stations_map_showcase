@@ -24,15 +24,7 @@ class SearchResultItem extends StatelessWidget {
           onTap: () {
             showStationInfo(
               context: context,
-              onFavoriteTap: () {
-                // if (GoogleAuth.firebaseUser != null) {
-                //   final favoritesBloc = context.read();
-                //   favoritesBloc
-                //       .add(FavoritesWrite(stationId: station.stationId));
-                // } else {
-                //   Navigator.pushNamed(context, signInScreen);
-                // }
-              },
+              onFavoriteTap: () {},
             );
           },
           child: Container(

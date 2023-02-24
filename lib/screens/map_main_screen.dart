@@ -29,6 +29,8 @@ class _MapMainScreenState extends State<MapMainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final favoritesBloc = context.read<FavoritesBloc>();
+
     return MaterialApp(
       home: Scaffold(
         extendBody: true,
@@ -55,39 +57,34 @@ class _MapMainScreenState extends State<MapMainScreen> {
             child: Container(
               height: 70,
               alignment: Alignment.center,
-              child: BlocBuilder<FavoritesBloc, FavoritesState>(
-                builder: (context, state) {
-                  final favoritesBloc = context.read<FavoritesBloc>();
-                  return BottomTabBar(
-                    tabBarItem: getBottomTabBarEnumItem(),
-                    onTapMap: () {
-                      setState(() {
-                        currentTabIndex = 1;
-                        myPage.jumpToPage(currentTabIndex);
-                      });
-                    },
-                    onTapFavorites: () {
-                      setState(() {
-                        currentTabIndex = 2;
-                        if (GoogleAuth.firebaseUser != null) {
-                          favoritesBloc.add(FavoritesRead());
-                        }
-                        myPage.jumpToPage(currentTabIndex);
-                      });
-                    },
-                    onTapWallet: () {
-                      setState(() {
-                        currentTabIndex = 3;
-                        myPage.jumpToPage(currentTabIndex);
-                      });
-                    },
-                    onTapAccount: () {
-                      setState(() {
-                        currentTabIndex = 4;
-                        myPage.jumpToPage(currentTabIndex);
-                      });
-                    },
-                  );
+              child: BottomTabBar(
+                tabBarItem: getBottomTabBarEnumItem(),
+                onTapMap: () {
+                  setState(() {
+                    currentTabIndex = 1;
+                    myPage.jumpToPage(currentTabIndex);
+                  });
+                },
+                onTapFavorites: () {
+                  setState(() {
+                    currentTabIndex = 2;
+                    if (GoogleAuth.firebaseUser != null) {
+                      favoritesBloc.add(FavoritesRead());
+                    }
+                    myPage.jumpToPage(currentTabIndex);
+                  });
+                },
+                onTapWallet: () {
+                  setState(() {
+                    currentTabIndex = 3;
+                    myPage.jumpToPage(currentTabIndex);
+                  });
+                },
+                onTapAccount: () {
+                  setState(() {
+                    currentTabIndex = 4;
+                    myPage.jumpToPage(currentTabIndex);
+                  });
                 },
               ),
             ),

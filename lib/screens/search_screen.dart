@@ -81,7 +81,6 @@ class _SearchScreenState extends State<SearchScreen> {
                 } else if (searchState is SearchStationError) {
                   return const Center(child: Text('error'));
                 } else if (searchState is SearchStationFound) {
-                  // return Text('stations -----> ${searchState.foubndStations}');
                   return searchState.foundStations.isEmpty
                       ? const SearchNoResultWidget()
                       : Expanded(

@@ -7,7 +7,7 @@ abstract class WalletState extends Equatable {
   List<Object> get props => [];
 }
 
-class WalletInitial extends WalletState {}
+// class WalletInitial extends WalletState {}
 
 class WalletLoading extends WalletState {}
 
@@ -25,4 +25,5 @@ class WalletError extends WalletState {
   const WalletError(this.error);
 
   @override
-  List<Object> get props => [error];}
+  List<Object> get props => [error];
+}

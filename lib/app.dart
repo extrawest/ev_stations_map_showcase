@@ -47,7 +47,7 @@ class Application extends StatelessWidget {
           create: (_) => SearchStationBloc(),
         ),
         BlocProvider(
-          create: (_) => FavoritesBloc()..add(FavoriteFireBaseAuthListen()),
+          create: (_) => FavoritesBloc(),
         ),
       ],
       child: MaterialApp(
