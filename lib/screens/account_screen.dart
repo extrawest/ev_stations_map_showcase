@@ -23,44 +23,41 @@ class _AccountScreenState extends State<AccountScreen> {
   @override
   Widget build(BuildContext context) {
     signedUp = GoogleAuth.firebaseUser != null;
+    final favoriteBloc = context.watch<FavoritesBloc>();
+
     return loading
         ? const Center(child: CircularProgressIndicator())
-        : BlocBuilder<FavoritesBloc, FavoritesState>(
-            builder: (context, state) {
-              final favoriteBloc = context.read<FavoritesBloc>();
-              return Scaffold(
-                body: signedUp
-                    ? ProfileWidget(
-                        onLogOut: () async {
-                          setState(() {
-                            loading = true;
-                          });
-                          await GoogleAuth.signOutGoogle(context);
-                          if (GoogleAuth.firebaseUser == null) {
-                            favoriteBloc.add(FavoritesClear());
-                            signedUp = false;
-                          }
-                          setState(() {
-                            loading = false;
-                          });
-                        },
-                      )
-                    : SignUpWidget(
-                        onTap: () async {
-                          setState(() {
-                            loading = true;
-                          });
-                          await GoogleAuth.signInWithGoogle(context);
-                          if (GoogleAuth.firebaseUser != null) {
-                            signedUp = true;
-                          }
-                          setState(() {
-                            loading = false;
-                          });
-                        },
-                      ),
-              );
-            },
+        : Scaffold(
+            body: signedUp
+                ? ProfileWidget(
+                    onLogOut: () async {
+                      setState(() {
+                        loading = true;
+                      });
+                      await GoogleAuth.signOutGoogle(context);
+                      if (GoogleAuth.firebaseUser == null) {
+                        favoriteBloc.add(FavoritesClear());
+                        signedUp = false;
+                      }
+                      setState(() {
+                        loading = false;
+                      });
+                    },
+                  )
+                : SignUpWidget(
+                    onTap: () async {
+                      setState(() {
+                        loading = true;
+                      });
+                      await GoogleAuth.signInWithGoogle(context);
+                      if (GoogleAuth.firebaseUser != null) {
+                        signedUp = true;
+                      }
+                      setState(() {
+                        loading = false;
+                      });
+                    },
+                  ),
           );
   }
 }
