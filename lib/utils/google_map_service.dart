@@ -117,7 +117,7 @@ Future<BitmapDescriptor> getCountMarkerBitmap(int size, {String? text}) async {
   return BitmapDescriptor.fromBytes(data.buffer.asUint8List());
 }
 
-void setMarkersIcon({required Function() function}) {
+void setMarkersIcon({required Function() onFinish}) {
   BitmapDescriptor.fromAssetImage(
     const ImageConfiguration(size: Size(30, 30)),
     Platform.isAndroid ? myMarkerPng : oneMarker,
@@ -158,7 +158,7 @@ void setMarkersIcon({required Function() function}) {
       blackMarkerIcon = icon;
     },
   );
-  function();
+  onFinish();
 }
 
 List<Place> setPlaceItems(List<ChargestationsModel> stationslist) {

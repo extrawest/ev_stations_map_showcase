@@ -16,45 +16,45 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  bool loading = false;
-  bool signedUp = false;
+  bool isLoading = false;
+  bool isSignedUp = false;
   User? firebaseUser;
 
   @override
   Widget build(BuildContext context) {
-    signedUp = GoogleAuth.firebaseUser != null;
+    isSignedUp = GoogleAuth.firebaseUser != null;
     final favoriteBloc = context.watch<FavoritesBloc>();
 
-    return loading
+    return isLoading
         ? const Center(child: CircularProgressIndicator())
         : Scaffold(
-            body: signedUp
+            body: isSignedUp
                 ? ProfileWidget(
                     onLogOut: () async {
                       setState(() {
-                        loading = true;
+                        isLoading = true;
                       });
                       await GoogleAuth.signOutGoogle(context);
                       if (GoogleAuth.firebaseUser == null) {
                         favoriteBloc.add(FavoritesClear());
-                        signedUp = false;
+                        isSignedUp = false;
                       }
                       setState(() {
-                        loading = false;
+                        isLoading = false;
                       });
                     },
                   )
                 : SignUpWidget(
                     onTap: () async {
                       setState(() {
-                        loading = true;
+                        isLoading = true;
                       });
                       await GoogleAuth.signInWithGoogle(context);
                       if (GoogleAuth.firebaseUser != null) {
-                        signedUp = true;
+                        isSignedUp = true;
                       }
                       setState(() {
-                        loading = false;
+                        isLoading = false;
                       });
                     },
                   ),

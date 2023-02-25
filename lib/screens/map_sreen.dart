@@ -86,7 +86,7 @@ class _MapScreenState extends State<MapScreen> {
     _currentMapType = MapType.normal;
     getPosition();
 
-    setMarkersIcon(function: () => setState(() {}));
+    setMarkersIcon(onFinish: () => setState(() {}));
 
     _manager = _initClusterManager();
 
