@@ -31,7 +31,7 @@ class Application extends StatelessWidget {
     //     //Custom DOM event to signal to js the execution of the dart code
     //     html.document.dispatchEvent(html.CustomEvent('dart_loaded'));
     //   }
-
+    final storageRepository = StorageRepositoryImpl;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -48,7 +48,7 @@ class Application extends StatelessWidget {
           create: (_) => SearchStationBloc(),
         ),
         BlocProvider(
-          create: (_) => FavoritesBloc(storageRepository: StorageRepository()),
+          create: (_) => FavoritesBloc(),
         ),
       ],
       child: MaterialApp(

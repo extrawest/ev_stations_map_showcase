@@ -9,8 +9,8 @@ part 'favorites_event.dart';
 part 'favorites_state.dart';
 
 class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
-  final StorageRepository storageRepository;
-  FavoritesBloc({required this.storageRepository}) : super(FavoritesInitial()) {
+  final StorageRepository storageRepository = StorageRepositoryImpl();
+  FavoritesBloc() : super(FavoritesInitial()) {
     // on<FavoriteFireBaseAuthListen>(_onInitial);
     on<FavoritesRead>(_onRead);
     on<FavoritesWrite>(_onWrite);
