@@ -39,3 +39,4 @@ assets/credentials_development.json
 my_README.md
 google-services.json
 GoogleService-Info.plist
+firebase_options.dart
