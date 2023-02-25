@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../logic/bloc/bloc.dart';
 import '../theme/themes.dart';
 import '../utils/utils.dart';
 import '../widgets/widgets.dart';
@@ -30,6 +32,8 @@ class _SignInScreenState extends State<SignInScreen> {
             });
             await GoogleAuth.signInWithGoogle(context);
             if (GoogleAuth.firebaseUser != null) {
+              final favoriteBloc =
+                  context.read<FavoritesBloc>().add(FavoritesRead());
               Navigator.of(context).pop();
             }
             setState(() {
