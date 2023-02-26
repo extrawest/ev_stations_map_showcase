@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:volkhov_maps_app/utils/utils.dart';
 import 'package:volkhov_maps_app/widgets/widgets.dart';
 
+import '../logic/bloc/bloc.dart';
 import '../theme/themes.dart';
 
 class ProfileWidget extends StatefulWidget {
@@ -19,9 +20,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
 
   @override
   void initState() {
-    final user = GoogleAuth.firebaseUser;
-    userController.text = '${user?.displayName}';
-    mailController.text = '${user?.email}';
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      final authState = context.read<AuthBloc>().state;
+      final user = (authState is AuthAutorized) ? authState.user : null;
+      userController.text = '${user?.displayName}';
+      mailController.text = '${user?.email}';
+    });
+
     super.initState();
   }
 

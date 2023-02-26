@@ -25,7 +25,9 @@ class SearchStationBloc extends Bloc<SearchStationEvent, SearchStationState> {
       ];
       emit(SearchStationFound(foundStations: result));
     } catch (e) {
-      emit(SearchStationError(/*error: e.toString()*/));
+      emit(SearchStationError(
+        'Search chargestation error :${e.toString()}',
+      ));
     }
   }
 }

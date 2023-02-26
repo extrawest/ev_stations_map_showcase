@@ -7,14 +7,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:552264685697:android:4eff4738b6c3c07cd2d580",
+        "mobilesdk_app_id": "1:552264685697:android:7b86c7f3a8846943d2d580",
         "android_client_info": {
           "package_name": "com.extrawest.volkhov_maps_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "552264685697-u1njid74fa904hfalp7bjld29csk9hvj.apps.googleusercontent.com",
+          "client_id": "552264685697-4kbrrra1bvrl8fnsbk4rhetvdcnpk7kt.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +27,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "552264685697-u1njid74fa904hfalp7bjld29csk9hvj.apps.googleusercontent.com",
+              "client_id": "552264685697-4kbrrra1bvrl8fnsbk4rhetvdcnpk7kt.apps.googleusercontent.com",
               "client_type": 3
             },
             {

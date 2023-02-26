@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:volkhov_maps_app/common/common.dart';
 import 'package:volkhov_maps_app/routes.dart';
 import 'package:volkhov_maps_app/screens/screens.dart';
 
+import '../logic/bloc/bloc.dart';
 import '../theme/themes.dart';
 import '../widgets/widgets.dart';
 
@@ -26,6 +28,9 @@ class _MapMainScreenState extends State<MapMainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final favoritesBloc = context.read<FavoritesBloc>();
+    final authState = context.watch<AuthBloc>().state;
+
     return MaterialApp(
       home: Scaffold(
         extendBody: true,
@@ -63,6 +68,9 @@ class _MapMainScreenState extends State<MapMainScreen> {
                 onTapFavorites: () {
                   setState(() {
                     currentTabIndex = 2;
+                    if (authState is AuthAutorized) {
+                      favoritesBloc.add(FavoritesRead());
+                    }
                     myPage.jumpToPage(currentTabIndex);
                   });
                 },

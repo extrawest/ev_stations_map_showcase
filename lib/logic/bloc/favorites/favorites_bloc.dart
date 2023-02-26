@@ -1,46 +1,27 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:volkhov_maps_app/logic/bloc/bloc.dart';
 
-import '../../../utils/utils.dart';
+import '../../../repository/repositories.dart';
 
 part 'favorites_event.dart';
 part 'favorites_state.dart';
 
 class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
+  final StorageRepository storageRepository = StorageRepositoryImpl();
   FavoritesBloc() : super(FavoritesInitial()) {
-    on<FavoriteFireBaseAuthListen>(_onInitial);
     on<FavoritesRead>(_onRead);
     on<FavoritesWrite>(_onWrite);
     on<FavoritesClear>(_onClear);
   }
 
-  Future<void> _onInitial(
-    FavoriteFireBaseAuthListen event,
-    Emitter<FavoritesState> emit,
-  ) async {
-    GoogleAuth.firebaseAuth.authStateChanges().listen((User? user) {
-      if (GoogleAuth.firebaseUser == null) {
-        log.fine('!------- User is currently signed out!');
-        _onClear(null, emit);
-      } else {
-        log.fine('!------- User is signed in!');
-        _onRead(null, emit);
-      }
-    });
-  }
-
   Future<void> _onRead(
-    FavoritesRead? event,
+    FavoritesRead event,
     Emitter<FavoritesState> emit,
   ) async {
     emit(FavoritesLoading());
     try {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
       final List<String> favoriteIds = [
-        ...prefs.getStringList('favoriteIds') ?? []
+        ...await storageRepository.readList('favoriteIds')
       ];
       emit(FavoritesLoaded(favoriteIds));
     } catch (e) {
@@ -56,9 +37,8 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   ) async {
     emit(FavoritesLoading());
     try {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
       final List<String> favoriteIds = [
-        ...prefs.getStringList('favoriteIds') ?? []
+        ...await storageRepository.readList('favoriteIds')
       ];
 
       final stationId = event.stationId;
@@ -70,7 +50,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
         favoriteIds.add(stationId);
       }
 
-      await prefs.setStringList('favoriteIds', favoriteIds);
+      await storageRepository.writeList('favoriteIds', favoriteIds);
 
       emit(FavoritesLoaded(favoriteIds));
     } catch (e) {
@@ -83,7 +63,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   }
 
   Future<void> _onClear(
-    FavoritesClear? event,
+    FavoritesClear event,
     Emitter<FavoritesState> emit,
   ) async {
     emit(FavoritesLoading());

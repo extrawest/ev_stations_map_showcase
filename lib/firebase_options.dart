@@ -48,7 +48,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBOVV_7sF9p0vM1k1f58Du-x9-PlP5YzpU',
-    appId: '1:552264685697:web:c380bad656a68307d2d580',
+    appId: '1:552264685697:web:fedd9b3a70fc3687d2d580',
     messagingSenderId: '552264685697',
     projectId: 'volkhov-map',
     authDomain: 'volkhov-map.firebaseapp.com',
@@ -57,7 +57,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBPfj25Fd3CO9Z8VKRqBI0uzokt4u4J4Xo',
-    appId: '1:552264685697:android:4eff4738b6c3c07cd2d580',
+    appId: '1:552264685697:android:7b86c7f3a8846943d2d580',
     messagingSenderId: '552264685697',
     projectId: 'volkhov-map',
     storageBucket: 'volkhov-map.appspot.com',
@@ -65,11 +65,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCs6nOnzprsyKxQzNS1eUr5YyBd8hkjrlo',
-    appId: '1:552264685697:ios:70378c9d77904d84d2d580',
+    appId: '1:552264685697:ios:edcdb73fdba1d512d2d580',
     messagingSenderId: '552264685697',
     projectId: 'volkhov-map',
     storageBucket: 'volkhov-map.appspot.com',
-    iosClientId: '552264685697-jf5hc4g2ul7jj1581v5d7blv2o08ovmb.apps.googleusercontent.com',
-    iosBundleId: 'com.extrawest.providerStarterApp',
+    androidClientId: '552264685697-ps0o22nrnrbpgsiqppbganvbd2qkakut.apps.googleusercontent.com',
+    iosClientId: '552264685697-bludjsqoo8b0qifpvlsfq7gd1jph71p0.apps.googleusercontent.com',
+    iosBundleId: 'com.extrawest.volkhovMapsApp',
   );
 }

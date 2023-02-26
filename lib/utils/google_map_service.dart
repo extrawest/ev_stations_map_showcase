@@ -7,7 +7,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../common/common.dart';
-import '../logic/bloc/bloc.dart';
 import '../models/models.dart';
 import '../theme/assets.dart';
 
@@ -117,7 +116,7 @@ Future<BitmapDescriptor> getCountMarkerBitmap(int size, {String? text}) async {
   return BitmapDescriptor.fromBytes(data.buffer.asUint8List());
 }
 
-void setMarkersIcon({required Function() function}) {
+void setMarkersIcon({required Function() onFinish}) {
   BitmapDescriptor.fromAssetImage(
     const ImageConfiguration(size: Size(30, 30)),
     Platform.isAndroid ? myMarkerPng : oneMarker,
@@ -158,13 +157,13 @@ void setMarkersIcon({required Function() function}) {
       blackMarkerIcon = icon;
     },
   );
-  function();
+  onFinish();
 }
 
-List<Place> setPlaceItems(ChargestationsLoaded state) {
+List<Place> setPlaceItems(List<ChargestationsModel> stationslist) {
   final List<Place> items = [];
 
-  for (final station in state.stationslist) {
+  for (final station in stationslist) {
     final status = getStatus(station.status);
     final place = Place(
       stationId: station.stationId,

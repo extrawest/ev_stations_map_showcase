@@ -30,7 +30,6 @@ class Application extends StatelessWidget {
     //     //Custom DOM event to signal to js the execution of the dart code
     //     html.document.dispatchEvent(html.CustomEvent('dart_loaded'));
     //   }
-
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -47,8 +46,11 @@ class Application extends StatelessWidget {
           create: (_) => SearchStationBloc(),
         ),
         BlocProvider(
-          create: (_) => FavoritesBloc()..add(FavoriteFireBaseAuthListen()),
+          create: (_) => FavoritesBloc(),
         ),
+        BlocProvider(
+          create: (_) => AuthBloc(),
+        )
       ],
       child: MaterialApp(
         title: 'Flutter Provider Starter',

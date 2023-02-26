@@ -20,4 +20,10 @@ class ChargestationsLoaded extends ChargestationsState {
   List<Object> get props => [stationslist];
 }
 
-class ChargestationsError extends ChargestationsState {}
+class ChargestationsError extends ChargestationsState {
+  final String error;
+  const ChargestationsError(this.error);
+
+  @override
+  List<Object> get props => [error];
+}

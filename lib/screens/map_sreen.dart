@@ -86,7 +86,7 @@ class _MapScreenState extends State<MapScreen> {
     _currentMapType = MapType.normal;
     getPosition();
 
-    setMarkersIcon(function: () => setState(() {}));
+    setMarkersIcon(onFinish: () => setState(() {}));
 
     _manager = _initClusterManager();
 
@@ -149,7 +149,7 @@ class _MapScreenState extends State<MapScreen> {
                   mapType: _currentMapType,
                   onMapCreated: (GoogleMapController controller) {
                     _onMapCreated(controller);
-                    placeItems.addAll(setPlaceItems(state));
+                    placeItems.addAll(setPlaceItems(state.stationslist));
                     moveCameraTo(position: myPosition);
                   },
                   initialCameraPosition: CameraPosition(
@@ -189,6 +189,7 @@ class _MapScreenState extends State<MapScreen> {
               vertical: 43,
             ),
             child: CustomTextField(
+              readOnly: true,
               ontap: () => openScreenWithFade(context, const SearchScreen()),
               hint: 'Type here',
               prefixIcon: SvgPicture.asset(searchIcon),

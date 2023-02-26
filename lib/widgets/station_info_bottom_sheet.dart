@@ -6,7 +6,6 @@ import '../logic/bloc/bloc.dart';
 import '../models/models.dart';
 import '../routes.dart';
 import '../theme/themes.dart';
-import '../utils/utils.dart';
 import 'widgets.dart';
 
 class StationInfoBottomWidget extends StatelessWidget {
@@ -21,15 +20,23 @@ class StationInfoBottomWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: BlocBuilder<ChargestationsBloc, ChargestationsState>(
-          builder: (context, state) {
-        if (state is ChargestationsLoaded) {
-          final stationInfo = state.stationslist
-              .firstWhere((st) => st.stationId == station.stationId);
+    final chargestationsState = context.read<ChargestationsBloc>().state;
+    final authState = context.read<AuthBloc>().state;
+    if (chargestationsState is ChargestationsLoaded) {
+      final stationInfo = chargestationsState.stationslist
+          .firstWhere((st) => st.stationId == station.stationId);
 
-          return Column(
+      final favoritesBloc = context.watch<FavoritesBloc>();
+      final favoriteState = favoritesBloc.state;
+      List<String> favoriteIds = [];
+      if (favoriteState is FavoritesLoaded) {
+        favoriteIds = favoriteState.favoriteIds;
+      }
+      final isFavorite = isIdFavorite(favoriteIds, station.stationId);
+
+      return Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
@@ -63,28 +70,18 @@ class StationInfoBottomWidget extends StatelessWidget {
                     ],
                   )),
                   const SizedBox(width: 6),
-                  BlocBuilder<FavoritesBloc, FavoritesState>(
-                    builder: (context, state) {
-                      final favoritesBloc = context.read<FavoritesBloc>();
-                      List<String> favoriteIds = [];
-                      if (state is FavoritesLoaded) {
-                        favoriteIds = state.favoriteIds;
+                  GestureDetector(
+                    onTap: () {
+                      // if (GoogleAuth.firebaseUser != null) {
+                      if (authState is AuthAutorized) {
+                        favoritesBloc
+                            .add(FavoritesWrite(stationId: station.stationId));
+                      } else {
+                        Navigator.pushNamed(context, signInScreen);
                       }
-                      final isFavorite =
-                          isIdFavorite(favoriteIds, station.stationId);
-
-                      return GestureDetector(
-                          onTap: () {
-                            if (GoogleAuth.firebaseUser != null) {
-                              favoritesBloc.add(
-                                  FavoritesWrite(stationId: station.stationId));
-                            } else {
-                              Navigator.pushNamed(context, signInScreen);
-                            }
-                          },
-                          child: SvgPicture.asset(
-                              isFavorite ? yellowFilledStar : yellowStar));
                     },
+                    child: SvgPicture.asset(
+                        isFavorite ? yellowFilledStar : yellowStar),
                   ),
                 ],
               ),
@@ -160,12 +157,10 @@ class StationInfoBottomWidget extends StatelessWidget {
               //Last padding
               const SizedBox(height: 12)
             ],
-          );
-        } else {
-          return const Center(child: Text('Something went wrong'));
-        }
-      }),
-    );
+          ));
+    } else {
+      return const Center(child: Text('Something went wrong'));
+    }
   }
 }
 

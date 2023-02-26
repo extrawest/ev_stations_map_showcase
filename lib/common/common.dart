@@ -1,2 +1,2 @@
-export './enums.dart';
-export './extensions.dart';
+export 'enums.dart';
+export 'extensions.dart';
