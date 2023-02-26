@@ -3,21 +3,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../logic/bloc/bloc.dart';
 import '../theme/themes.dart';
-import '../utils/utils.dart';
 import '../widgets/widgets.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
-  bool loading = false;
-
-  @override
   Widget build(BuildContext context) {
+    final authBloc = context.watch<AuthBloc>();
     return Scaffold(
         appBar: AppBar(
           title: const Text('Search station'),
@@ -27,18 +20,13 @@ class _SignInScreenState extends State<SignInScreen> {
         ),
         body: SignUpWidget(
           onTap: () async {
-            setState(() {
-              loading = true;
-            });
-            await GoogleAuth.signInWithGoogle(context);
-            if (GoogleAuth.firebaseUser != null) {
-              final favoriteBloc =
-                  context.read<FavoritesBloc>().add(FavoritesRead());
+            if (authBloc.state is AuthUnautorized) {
+              authBloc.add(AuthSignIn(context: context));
+            }
+            if (authBloc.state is AuthAutorized) {
+              context.read<FavoritesBloc>().add(FavoritesRead());
               Navigator.of(context).pop();
             }
-            setState(() {
-              loading = false;
-            });
           },
         ));
   }

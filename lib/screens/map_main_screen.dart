@@ -7,7 +7,6 @@ import 'package:volkhov_maps_app/screens/screens.dart';
 
 import '../logic/bloc/bloc.dart';
 import '../theme/themes.dart';
-import '../utils/utils.dart';
 import '../widgets/widgets.dart';
 
 class MapMainScreen extends StatefulWidget {
@@ -30,6 +29,7 @@ class _MapMainScreenState extends State<MapMainScreen> {
   @override
   Widget build(BuildContext context) {
     final favoritesBloc = context.read<FavoritesBloc>();
+    final authState = context.watch<AuthBloc>().state;
 
     return MaterialApp(
       home: Scaffold(
@@ -68,7 +68,7 @@ class _MapMainScreenState extends State<MapMainScreen> {
                 onTapFavorites: () {
                   setState(() {
                     currentTabIndex = 2;
-                    if (GoogleAuth.firebaseUser != null) {
+                    if (authState is AuthAutorized) {
                       favoritesBloc.add(FavoritesRead());
                     }
                     myPage.jumpToPage(currentTabIndex);

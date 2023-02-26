@@ -7,7 +7,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../common/common.dart';
-import '../logic/bloc/bloc.dart';
 import '../models/models.dart';
 import '../theme/assets.dart';
 

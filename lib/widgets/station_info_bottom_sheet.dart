@@ -6,7 +6,6 @@ import '../logic/bloc/bloc.dart';
 import '../models/models.dart';
 import '../routes.dart';
 import '../theme/themes.dart';
-import '../utils/utils.dart';
 import 'widgets.dart';
 
 class StationInfoBottomWidget extends StatelessWidget {
@@ -22,6 +21,7 @@ class StationInfoBottomWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final chargestationsState = context.read<ChargestationsBloc>().state;
+    final authState = context.read<AuthBloc>().state;
     if (chargestationsState is ChargestationsLoaded) {
       final stationInfo = chargestationsState.stationslist
           .firstWhere((st) => st.stationId == station.stationId);
@@ -72,7 +72,8 @@ class StationInfoBottomWidget extends StatelessWidget {
                   const SizedBox(width: 6),
                   GestureDetector(
                     onTap: () {
-                      if (GoogleAuth.firebaseUser != null) {
+                      // if (GoogleAuth.firebaseUser != null) {
+                      if (authState is AuthAutorized) {
                         favoritesBloc
                             .add(FavoritesWrite(stationId: station.stationId));
                       } else {

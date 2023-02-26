@@ -11,7 +11,6 @@ import 'package:volkhov_maps_app/theme/theme.dart';
 
 // import '' if (kIsWeb) 'dart:html' as html;
 import 'logic/bloc/bloc.dart';
-import 'repository/repositories.dart';
 import 'services/api_service.dart';
 import 'services/credentials_loader.dart';
 
@@ -31,7 +30,6 @@ class Application extends StatelessWidget {
     //     //Custom DOM event to signal to js the execution of the dart code
     //     html.document.dispatchEvent(html.CustomEvent('dart_loaded'));
     //   }
-    final storageRepository = StorageRepositoryImpl;
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -50,6 +48,9 @@ class Application extends StatelessWidget {
         BlocProvider(
           create: (_) => FavoritesBloc(),
         ),
+        BlocProvider(
+          create: (_) => AuthBloc(),
+        )
       ],
       child: MaterialApp(
         title: 'Flutter Provider Starter',

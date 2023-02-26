@@ -6,9 +6,9 @@ abstract class StorageRepository {
 }
 
 class StorageRepositoryImpl implements StorageRepository {
-  StorageUtils utils = StorageUtils();
+  StorageUtils utils;
 
-  // StorageRepositoryImpl();
+  StorageRepositoryImpl() : utils = StorageUtils();
 
   @override
   Future<List<String>> readList(String key) async {

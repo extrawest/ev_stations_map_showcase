@@ -6,14 +6,13 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'logger.dart';
 
-abstract class GoogleAuth {
-  static User? firebaseUser;
-  static final firebaseAuth = FirebaseAuth.instance;
-  final temp = '';
+class GoogleAuth {
+  Future<User?> signInWithGoogle(BuildContext context) async {
+    final firebaseAuth = FirebaseAuth.instance;
 
-  static GoogleSignInAccount? googleUser;
+    User? firebaseUser;
+    GoogleSignInAccount? googleUser;
 
-  static Future<void> signInWithGoogle(BuildContext context) async {
     try {
       final isSignedIn = await GoogleSignIn().isSignedIn();
 
@@ -50,6 +49,7 @@ abstract class GoogleAuth {
               .user;
         }
       }
+      return firebaseUser;
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
@@ -59,12 +59,16 @@ abstract class GoogleAuth {
           ),
         );
     }
+    return null;
   }
 
-  static Future<void> signOutGoogle(BuildContext context) async {
+  Future<bool> signOutGoogle(BuildContext context) async {
+    bool isSignedOut;
     try {
-      googleUser = await GoogleSignIn().signOut();
-      firebaseUser = null;
+      // ignore: unused_local_variable
+      final googleUser = await GoogleSignIn().signOut();
+
+      isSignedOut = true;
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context)
         ..hideCurrentSnackBar()
@@ -73,6 +77,8 @@ abstract class GoogleAuth {
             content: Text('Error: $e'),
           ),
         );
+      isSignedOut = false;
     }
+    return isSignedOut;
   }
 }

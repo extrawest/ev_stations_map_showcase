@@ -7,7 +7,6 @@ import 'package:volkhov_maps_app/app.dart';
 import 'package:volkhov_maps_app/simple_bloc_observer.dart';
 import 'package:volkhov_maps_app/theme/assets.dart';
 
-import 'common/common.dart';
 import 'firebase_options.dart';
 import 'utils/application_utils.dart';
 import 'utils/logger.dart';
