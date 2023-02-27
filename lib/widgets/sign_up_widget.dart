@@ -28,7 +28,7 @@ class SignUpWidget extends StatelessWidget {
         GestureDetector(
           onTap: onTap,
           child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 40),
+            margin: const EdgeInsets.symmetric(horizontal: 30),
             decoration: BoxDecoration(
               border: Border.all(
                 color: AppColors.greyTextColor,

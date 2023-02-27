@@ -79,7 +79,7 @@ flutter {
 }
 
 dependencies {
-    implementation platform ('com.googlefirebase:firebase-bom:26.6.0')
+    implementation platform ('com.google.firebase:firebase-bom:31.2.2')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
