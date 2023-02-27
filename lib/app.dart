@@ -11,6 +11,7 @@ import 'package:volkhov_maps_app/theme/theme.dart';
 
 // import '' if (kIsWeb) 'dart:html' as html;
 import 'logic/bloc/bloc.dart';
+import 'repository/repositories.dart';
 import 'services/api_service.dart';
 import 'services/credentials_loader.dart';
 
@@ -46,10 +47,11 @@ class Application extends StatelessWidget {
           create: (_) => SearchStationBloc(),
         ),
         BlocProvider(
-          create: (_) => FavoritesBloc(),
+          create: (_) =>
+              FavoritesBloc(storageRepository: StorageRepositoryImpl()),
         ),
         BlocProvider(
-          create: (_) => AuthBloc(),
+          create: (_) => AuthBloc(authRepository: AuthGoogleImplement()),
         )
       ],
       child: MaterialApp(

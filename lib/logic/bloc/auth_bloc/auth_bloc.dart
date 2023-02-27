@@ -10,8 +10,11 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final AuthRepository _authRepository = AuthGoogleImplement();
-  AuthBloc() : super(AuthUnautorized()) {
+  final AuthRepository _authRepository;
+
+  AuthBloc({required AuthRepository authRepository})
+      : _authRepository = authRepository,
+        super(AuthUnautorized()) {
     on<AuthSignIn>(_onSignIn);
     on<AuthSignOut>(_onSignOut);
   }
