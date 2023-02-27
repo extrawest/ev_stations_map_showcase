@@ -21,7 +21,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     emit(FavoritesLoading());
     try {
       final List<String> favoriteIds = [
-        ...await storageRepository.readList('favoriteIds')
+        ...await storageRepository.readFavoriteIdsList('favoriteIds')
       ];
       emit(FavoritesLoaded(favoriteIds));
     } catch (e) {
@@ -38,7 +38,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
     emit(FavoritesLoading());
     try {
       final List<String> favoriteIds = [
-        ...await storageRepository.readList('favoriteIds')
+        ...await storageRepository.readFavoriteIdsList('favoriteIds')
       ];
 
       final stationId = event.stationId;
@@ -50,7 +50,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
         favoriteIds.add(stationId);
       }
 
-      await storageRepository.writeList('favoriteIds', favoriteIds);
+      await storageRepository.writeFavoriteIdsList('favoriteIds', favoriteIds);
 
       emit(FavoritesLoaded(favoriteIds));
     } catch (e) {
