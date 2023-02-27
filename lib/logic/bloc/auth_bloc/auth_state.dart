@@ -1,6 +1,5 @@
 part of 'auth_bloc.dart';
 
-@freezed
 abstract class AuthState extends Equatable {
   const AuthState();
 

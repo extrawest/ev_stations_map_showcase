@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import '../utils/utils.dart';
 
 abstract class AuthRepository {
-  Future<User?> signIn(BuildContext context);
-  Future<bool> signOut(BuildContext context);
+  Future<User?> signIn();
+  Future<bool> signOut();
 }
 
 class AuthGoogleImplement implements AuthRepository {
@@ -14,12 +14,12 @@ class AuthGoogleImplement implements AuthRepository {
   AuthGoogleImplement() : googleAuth = GoogleAuth();
 
   @override
-  Future<User?> signIn(BuildContext context) async {
-    return await googleAuth.signInWithGoogle(context);
+  Future<User?> signIn() async {
+    return await googleAuth.signInWithGoogle();
   }
 
   @override
-  Future<bool> signOut(BuildContext context) async {
-    return await googleAuth.signOutGoogle(context);
+  Future<bool> signOut() async {
+    return await googleAuth.signOutGoogle();
   }
 }

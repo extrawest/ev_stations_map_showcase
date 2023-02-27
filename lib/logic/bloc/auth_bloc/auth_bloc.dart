@@ -25,18 +25,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(AuthLoading());
     try {
-      final user = await _authRepository.signIn(event.context);
+      final user = await _authRepository.signIn();
       if (user != null) {
         emit(AuthAutorized(user));
       } else {
-        emit(const AuthError(
-          'Authorization error - no user',
-        ));
+        emit(const AuthError('Authorization error - no user'));
+        // throw Exception('Authorization error - no user');
       }
     } catch (e) {
-      emit(AuthError(
-        'Authorization error :${e.toString()}',
-      ));
+      emit(AuthError('Authorization error :${e.toString()}'));
+      // throw Exception('Authorization error :${e.toString()}');
     }
   }
 
@@ -46,18 +44,16 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   ) async {
     emit(AuthLoading());
     try {
-      final isSignedOut = await _authRepository.signOut(event.context);
+      final isSignedOut = await _authRepository.signOut();
       if (isSignedOut == true) {
         emit(AuthUnautorized());
       } else {
-        emit(const AuthError(
-          'Unauthorization error',
-        ));
+        emit(const AuthError('Unauthorization error'));
+        // throw Exception('Unauthorization error');
       }
     } catch (e) {
-      emit(AuthError(
-        'Unauthorization error :${e.toString()}',
-      ));
+      emit(AuthError('Unauthorization error :${e.toString()}'));
+      // throw Exception('Unauthorization error :${e.toString()}');
     }
   }
 }
