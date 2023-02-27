@@ -74,6 +74,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         resValue "string", "DEFINE_ANDROID_KEY", dartEnvironmentVariables.DEFINE_ANDROID_KEY
         manifestPlaceholders = [DEFINE_ANDROID_KEY: dartEnvironmentVariables.DEFINE_ANDROID_KEY]
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -95,4 +96,5 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation 'com.android.support:multidex:1.0.3'
 }
