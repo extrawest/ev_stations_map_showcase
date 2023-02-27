@@ -20,9 +20,8 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   ) async {
     emit(FavoritesLoading());
     try {
-      final List<String> favoriteIds = [
-        ...await storageRepository.readFavoriteIdsList('favoriteIds')
-      ];
+      final List<String> favoriteIds =
+          await storageRepository.readFavoriteIdsList('favoriteIds');
       emit(FavoritesLoaded(favoriteIds));
     } catch (e) {
       emit(FavoritesError(
@@ -37,9 +36,8 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   ) async {
     emit(FavoritesLoading());
     try {
-      final List<String> favoriteIds = [
-        ...await storageRepository.readFavoriteIdsList('favoriteIds')
-      ];
+      final List<String> favoriteIds =
+          await storageRepository.readFavoriteIdsList('favoriteIds');
 
       final stationId = event.stationId;
       final isFavorite = favoriteIds.contains(stationId);
