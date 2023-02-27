@@ -18,16 +18,29 @@ class SignInScreen extends StatelessWidget {
           foregroundColor: AppColors.blackColor,
           shadowColor: Colors.transparent,
         ),
-        body: SignUpWidget(
-          onTap: () async {
-            if (authBloc.state is AuthUnautorized) {
-              authBloc.add(AuthSignIn(context: context));
-            }
-            if (authBloc.state is AuthAutorized) {
-              context.read<FavoritesBloc>().add(FavoritesRead());
-              Navigator.of(context).pop();
+        body: BlocListener<AuthBloc, AuthState>(
+          listener: (context, listenState) {
+            if (listenState is AuthError) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(
+                    content: Text('Error: ${listenState.error}'),
+                  ),
+                );
             }
           },
+          child: SignUpWidget(
+            onTap: () async {
+              if (authBloc.state is AuthUnautorized) {
+                authBloc.add(AuthSignIn());
+              }
+              if (authBloc.state is AuthAutorized) {
+                context.read<FavoritesBloc>().add(FavoritesRead());
+                Navigator.of(context).pop();
+              }
+            },
+          ),
         ));
   }
 }

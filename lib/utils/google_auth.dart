@@ -1,13 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'logger.dart';
 
 class GoogleAuth {
-  Future<User?> signInWithGoogle(BuildContext context) async {
+  Future<User?> signInWithGoogle() async {
     final firebaseAuth = FirebaseAuth.instance;
 
     User? firebaseUser;
@@ -51,18 +50,11 @@ class GoogleAuth {
       }
       return firebaseUser;
     } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          SnackBar(
-            content: Text('Error: $e'),
-          ),
-        );
+      throw Exception('Authorization error :${e.toString()}');
     }
-    return null;
   }
 
-  Future<bool> signOutGoogle(BuildContext context) async {
+  Future<bool> signOutGoogle() async {
     bool isSignedOut;
     try {
       // ignore: unused_local_variable
@@ -70,14 +62,8 @@ class GoogleAuth {
 
       isSignedOut = true;
     } on FirebaseAuthException catch (e) {
-      ScaffoldMessenger.of(context)
-        ..hideCurrentSnackBar()
-        ..showSnackBar(
-          SnackBar(
-            content: Text('Error: $e'),
-          ),
-        );
       isSignedOut = false;
+      throw Exception('Unauthorization error :${e.toString()}');
     }
     return isSignedOut;
   }

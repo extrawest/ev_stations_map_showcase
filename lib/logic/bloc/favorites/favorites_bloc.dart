@@ -7,8 +7,8 @@ part 'favorites_event.dart';
 part 'favorites_state.dart';
 
 class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
-  final StorageRepository storageRepository = StorageRepositoryImpl();
-  FavoritesBloc() : super(FavoritesInitial()) {
+  final StorageRepository storageRepository;
+  FavoritesBloc({required this.storageRepository}) : super(FavoritesInitial()) {
     on<FavoritesRead>(_onRead);
     on<FavoritesWrite>(_onWrite);
     on<FavoritesClear>(_onClear);
@@ -20,9 +20,8 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   ) async {
     emit(FavoritesLoading());
     try {
-      final List<String> favoriteIds = [
-        ...await storageRepository.readList('favoriteIds')
-      ];
+      final List<String> favoriteIds =
+          await storageRepository.readFavoriteIdsList('favoriteIds');
       emit(FavoritesLoaded(favoriteIds));
     } catch (e) {
       emit(FavoritesError(
@@ -37,9 +36,8 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
   ) async {
     emit(FavoritesLoading());
     try {
-      final List<String> favoriteIds = [
-        ...await storageRepository.readList('favoriteIds')
-      ];
+      final List<String> favoriteIds =
+          await storageRepository.readFavoriteIdsList('favoriteIds');
 
       final stationId = event.stationId;
       final isFavorite = favoriteIds.contains(stationId);
@@ -50,7 +48,7 @@ class FavoritesBloc extends Bloc<FavoritesEvent, FavoritesState> {
         favoriteIds.add(stationId);
       }
 
-      await storageRepository.writeList('favoriteIds', favoriteIds);
+      await storageRepository.writeFavoriteIdsList('favoriteIds', favoriteIds);
 
       emit(FavoritesLoaded(favoriteIds));
     } catch (e) {

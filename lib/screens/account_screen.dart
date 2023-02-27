@@ -15,19 +15,32 @@ class AccountScreen extends StatelessWidget {
 
     final favoriteBloc = context.read<FavoritesBloc>();
 
-    return Scaffold(
-      body: (authBloc.state is AuthAutorized)
-          ? ProfileWidget(
-              onLogOut: () async {
-                favoriteBloc.add(FavoritesClear());
-                authBloc.add(AuthSignOut(context: context));
-              },
-            )
-          : SignUpWidget(
-              onTap: () async {
-                authBloc.add(AuthSignIn(context: context));
-              },
-            ),
+    return BlocListener<AuthBloc, AuthState>(
+      listener: (context, listenState) {
+        if (listenState is AuthError) {
+          ScaffoldMessenger.of(context)
+            ..hideCurrentSnackBar()
+            ..showSnackBar(
+              SnackBar(
+                content: Text('Error: ${listenState.error}'),
+              ),
+            );
+        }
+      },
+      child: Scaffold(
+        body: (authBloc.state is AuthAutorized)
+            ? ProfileWidget(
+                onLogOut: () async {
+                  favoriteBloc.add(FavoritesClear());
+                  authBloc.add(AuthSignOut());
+                },
+              )
+            : SignUpWidget(
+                onTap: () async {
+                  authBloc.add(AuthSignIn());
+                },
+              ),
+      ),
     );
   }
 }
