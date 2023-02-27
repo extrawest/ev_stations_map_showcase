@@ -21,19 +21,6 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-// def dartEnvironmentVariables = [
-//     DEFINE_ANDROID_KEY: '',
-//     DEFINE_IOS_KEY: '',
-//     DEFINE_WEB_KEY: ''
-// ];
-// if (project.hasProperty('dart-defines')) {
-//     dartEnvironmentVariables = dartEnvironmentVariables + project.property('dart-defines')
-//         .split(',')
-//         .collectEntries { entry ->
-//             def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
-//             [(pair.first()): pair.last()]
-//         }
-// }
 
 def dartEnvironmentVariables = [
     DEFINE_ANDROID_KEY: '',
@@ -48,11 +35,12 @@ if (project.hasProperty('dart-defines')) {
 }
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 // START: FlutterFire Configuration
 apply plugin: 'com.google.gms.google-services'
 // END: FlutterFire Configuration
-apply plugin: 'kotlin-android'
-apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
 
 android {
     compileSdkVersion 33
@@ -79,7 +67,7 @@ android {
 
     buildTypes {
         release {
-            
+            crunchPngs false // or true
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }

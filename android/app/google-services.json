@@ -31,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "552264685697-jf5hc4g2ul7jj1581v5d7blv2o08ovmb.apps.googleusercontent.com",
+              "client_id": "552264685697-bludjsqoo8b0qifpvlsfq7gd1jph71p0.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.extrawest.providerStarterApp"
+                "bundle_id": "com.extrawest.volkhovMapsApp"
               }
             }
           ]
