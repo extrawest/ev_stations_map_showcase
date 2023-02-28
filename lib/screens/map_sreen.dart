@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,6 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:permission_handler_web/permission_handler_web.dart';
 
 import 'package:volkhov_maps_app/widgets/widgets.dart';
 
@@ -93,9 +95,15 @@ class _MapScreenState extends State<MapScreen> {
     myPosition = const LatLng(45.521563, -122.677433);
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await requestPermission(() {
-        showPermissionDialog(context);
-      });
+      if (!kIsWeb) {
+        await requestPermission(() {
+          showPermissionDialog(context);
+        });
+      } else {
+        await getPosition();
+        await moveCameraTo(position: myPosition, zoom: 15);
+        setState(() {});
+      }
 
       positionStream = Geolocator.getPositionStream(
         locationSettings: locationSettings,
@@ -202,17 +210,23 @@ class _MapScreenState extends State<MapScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             MapButton(
-              image: searchLocPng,
-              function: () => requestPermission(
-                () {
-                  showPermissionDialog(context);
-                },
-              ),
-            ),
+                image: searchLocPng,
+                onTap: () async {
+                  if (!kIsWeb) {
+                    requestPermission(
+                      () {
+                        showPermissionDialog(context);
+                      },
+                    );
+                  } else {
+                    await getPosition();
+                    await moveCameraTo(position: myPosition, zoom: 15);
+                  }
+                }),
             const SizedBox(height: 20),
             MapButton(
               image: threeBarIconPng,
-              function: () => showMapTypeBottomSheet(
+              onTap: () => showMapTypeBottomSheet(
                   context: context, mapType: _currentMapType),
             ),
             const SizedBox(height: 105),
@@ -252,7 +266,9 @@ class _MapScreenState extends State<MapScreen> {
             actions: [
               ElevatedButton(
                   onPressed: () {
-                    openAppSettings();
+                    if (!kIsWeb) {
+                      openAppSettings();
+                    }
                     Navigator.of(context).pop();
                   },
                   child: const Text('Accept')),
@@ -346,8 +362,8 @@ void showStationInfoBottomSheet({
 
 class MapButton extends StatelessWidget {
   final String image;
-  final Function() function;
-  const MapButton({super.key, required this.image, required this.function});
+  final Function() onTap;
+  const MapButton({super.key, required this.image, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -356,7 +372,7 @@ class MapButton extends StatelessWidget {
       width: 55,
       alignment: Alignment.topCenter,
       child: GestureDetector(
-        onTap: function,
+        onTap: onTap,
         child: Container(
             width: 55,
             height: 55,

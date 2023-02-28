@@ -15,7 +15,10 @@ class SplashScreenState extends State<SplashScreen> {
       Future.delayed(
         const Duration(seconds: 2),
         () => Navigator.pushReplacementNamed(
-            context, mapMainScreenRoute /*homeScreenRoute*/),
+            context,
+            //
+            mapMainScreenRoute),
+        // homeScreenRoute),
       );
     });
   }
