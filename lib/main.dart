@@ -15,12 +15,6 @@ import 'firebase_options.dart';
 import 'utils/application_utils.dart';
 import 'utils/logger.dart';
 
-// class EnvironmentConfig {
-//   static const ANDROID_KEY = String.fromEnvironment('DEFINE_ANDROID_KEY');
-//   static const IOS_KEY = String.fromEnvironment('DEFINE_IOS_KEY');
-//   static const WEB_KEY = String.fromEnvironment('DEFINE_WEB_KEY');
-// }
-
 const isProductionEnvKey = 'IS_PRODUCTION';
 const englishLocale = Locale('en', 'US');
 const ukrainianLocale = Locale('uk', 'UA');
@@ -28,11 +22,6 @@ const ukrainianLocale = Locale('uk', 'UA');
 bool isProduction = false;
 
 Future<void> main() async {
-  // //To expone the dart variable to global js code
-  // js.context['define_web_key'] = const String.fromEnvironment('define_web_key');
-  // //Custom DOM event to signal to js the execution of the dart code
-  // html.document.dispatchEvent(html.CustomEvent('dart_loaded'));
-
   createScriptElement();
 
   WidgetsFlutterBinding.ensureInitialized();

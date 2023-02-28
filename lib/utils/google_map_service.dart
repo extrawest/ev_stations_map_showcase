@@ -119,7 +119,7 @@ Future<BitmapDescriptor> getCountMarkerBitmap(int size, {String? text}) async {
 void setMarkersIcon({required Function() onFinish}) {
   BitmapDescriptor.fromAssetImage(
     const ImageConfiguration(size: Size(30, 30)),
-    Platform.isAndroid ? myMarkerPng : oneMarker,
+    kIsWeb || Platform.isAndroid ? myMarkerPng : oneMarker,
   ).then(
     (icon) {
       myMarkerIcon = icon;
@@ -127,7 +127,7 @@ void setMarkersIcon({required Function() onFinish}) {
   );
   BitmapDescriptor.fromAssetImage(
     const ImageConfiguration(size: Size(100, 100)),
-    Platform.isAndroid ? redMarkerPng3x : redMarkerPng,
+    kIsWeb || Platform.isAndroid ? redMarkerPng3x : redMarkerPng,
   ).then(
     (icon) {
       redMarkerIcon = icon;
@@ -135,7 +135,7 @@ void setMarkersIcon({required Function() onFinish}) {
   );
   BitmapDescriptor.fromAssetImage(
     const ImageConfiguration(size: Size(100, 100)),
-    Platform.isAndroid ? greenMarkerPng3x : greenMarkerPng,
+    kIsWeb || Platform.isAndroid ? greenMarkerPng3x : greenMarkerPng,
   ).then(
     (icon) {
       greenMarkerIcon = icon;
@@ -143,7 +143,7 @@ void setMarkersIcon({required Function() onFinish}) {
   );
   BitmapDescriptor.fromAssetImage(
     const ImageConfiguration(size: Size(100, 100)),
-    Platform.isAndroid ? yellowMarkerPng3x : yellowMarkerPng,
+    kIsWeb || Platform.isAndroid ? yellowMarkerPng3x : yellowMarkerPng,
   ).then(
     (icon) {
       yellowMarkerIcon = icon;
@@ -151,7 +151,7 @@ void setMarkersIcon({required Function() onFinish}) {
   );
   BitmapDescriptor.fromAssetImage(
     const ImageConfiguration(size: Size(100, 100)),
-    Platform.isAndroid ? blackMarkerPng3x : blackMarkerPng,
+    kIsWeb || Platform.isAndroid ? blackMarkerPng3x : blackMarkerPng,
   ).then(
     (icon) {
       blackMarkerIcon = icon;

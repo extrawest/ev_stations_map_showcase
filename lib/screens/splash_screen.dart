@@ -16,8 +16,9 @@ class SplashScreenState extends State<SplashScreen> {
         const Duration(seconds: 2),
         () => Navigator.pushReplacementNamed(
             context,
-            // mapMainScreenRoute),
-            homeScreenRoute),
+            //
+            mapMainScreenRoute),
+        // homeScreenRoute),
       );
     });
   }
