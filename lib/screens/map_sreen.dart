@@ -203,7 +203,7 @@ class _MapScreenState extends State<MapScreen> {
           children: [
             MapButton(
               image: searchLocPng,
-              function: () => requestPermission(
+              onTap: () => requestPermission(
                 () {
                   showPermissionDialog(context);
                 },
@@ -212,7 +212,7 @@ class _MapScreenState extends State<MapScreen> {
             const SizedBox(height: 20),
             MapButton(
               image: threeBarIconPng,
-              function: () => showMapTypeBottomSheet(
+              onTap: () => showMapTypeBottomSheet(
                   context: context, mapType: _currentMapType),
             ),
             const SizedBox(height: 105),
@@ -346,8 +346,8 @@ void showStationInfoBottomSheet({
 
 class MapButton extends StatelessWidget {
   final String image;
-  final Function() function;
-  const MapButton({super.key, required this.image, required this.function});
+  final Function() onTap;
+  const MapButton({super.key, required this.image, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -356,7 +356,7 @@ class MapButton extends StatelessWidget {
       width: 55,
       alignment: Alignment.topCenter,
       child: GestureDetector(
-        onTap: function,
+        onTap: onTap,
         child: Container(
             width: 55,
             height: 55,

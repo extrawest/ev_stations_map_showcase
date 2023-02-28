@@ -25,7 +25,7 @@ class HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             ElevatedButton(
               onPressed: () async {
-                Navigator.pushNamed(context, mapScreenRoute);
+                Navigator.pushNamed(context, webMap);
               },
               child: const Text('Google map'),
             ),
