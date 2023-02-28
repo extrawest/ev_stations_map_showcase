@@ -1,3 +1,6 @@
+import 'dart:html' as html;
+import 'dart:js' as js;
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:volkhov_maps_app/app.dart';
 import 'package:volkhov_maps_app/simple_bloc_observer.dart';
 import 'package:volkhov_maps_app/theme/assets.dart';
+import 'package:volkhov_maps_app/utils/html_utils.dart';
 
 import 'firebase_options.dart';
 import 'utils/application_utils.dart';
@@ -24,6 +28,13 @@ const ukrainianLocale = Locale('uk', 'UA');
 bool isProduction = false;
 
 Future<void> main() async {
+  // //To expone the dart variable to global js code
+  // js.context['define_web_key'] = const String.fromEnvironment('define_web_key');
+  // //Custom DOM event to signal to js the execution of the dart code
+  // html.document.dispatchEvent(html.CustomEvent('dart_loaded'));
+
+  createScriptElement();
+
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(
