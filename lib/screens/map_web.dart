@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:google_maps_flutter_web/google_maps_flutter_web.dart'
-    as web_map;
 
 import '../models/models.dart';
 import '../utils/utils.dart';
-import '../widgets/widgets.dart';
 
 class WebMap extends StatefulWidget {
   const WebMap({super.key});

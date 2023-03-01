@@ -8,7 +8,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_cluster_manager/google_maps_cluster_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:permission_handler_web/permission_handler_web.dart';
+// import 'package:permission_handler_web/permission_handler_web.dart';
 
 import 'package:volkhov_maps_app/widgets/widgets.dart';
 

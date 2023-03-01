@@ -7,10 +7,9 @@ import 'package:volkhov_maps_app/app.dart';
 import 'package:volkhov_maps_app/simple_bloc_observer.dart';
 import 'package:volkhov_maps_app/theme/assets.dart';
 
-// import 'package:volkhov_maps_app/utils/-html_utils.dart-';
-
 import 'firebase_options.dart';
 
+// import 'utils/html_utils.dart';
 import 'utils/utils.dart';
 
 const isProductionEnvKey = 'IS_PRODUCTION';
@@ -21,6 +20,7 @@ bool isProduction = false;
 
 Future<void> main() async {
   PlatformSelector().createScriptElement();
+  // createScriptElement();
 
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
