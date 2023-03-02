@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "552264685697-ps0o22nrnrbpgsiqppbganvbd2qkakut.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.extrawest.volkhov_maps_app",
+            "certificate_hash": "f1fcfd54917e0dc709b7c0a95ee7f09eff230b5a"
+          }
+        },
+        {
           "client_id": "552264685697-4kbrrra1bvrl8fnsbk4rhetvdcnpk7kt.apps.googleusercontent.com",
           "client_type": 3
         }
