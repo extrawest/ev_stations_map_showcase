@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:google_sign_in_web/google_sign_in_web.dart';
 
 import 'logger.dart';
 
@@ -27,9 +28,8 @@ class GoogleAuth {
           try {
             final googleUser = await GoogleSignIn(
               clientId:
+                  // Optional clientId
                   '18921772410-u536t0v0p70m8p50ma0mdiu8k8l35775.apps.googleusercontent.com',
-              // Optional clientId
-              // clientId: '479882132969-9i9aqik3jfjd7qhci1nqf0bm2g71rm1u.apps.googleusercontent.com',
               scopes: <String>[
                 'email',
                 'https://www.googleapis.com/auth/contacts.readonly',

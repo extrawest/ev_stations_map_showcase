@@ -1,4 +1,4 @@
-import 'dart:html';
+import 'package:universal_html/html.dart';
 import 'package:volkhov_maps_app/utils/utils.dart';
 
 import 'platform_selector.dart';
@@ -16,14 +16,6 @@ class WebSystem implements PlatformSelector {
         'https://maps.googleapis.com/maps/api/js?key=${getDartDefineWebKey()}';
     script.id = 'super-script';
     document.head?.append(script);
-
-    final MetaElement meta = MetaElement();
-    final clientId = getDartDefineClientId();
-    meta.name = 'google-signin-client_id';
-    meta.content = clientId;
-    document.head?.append(meta);
-
-//      '<meta name="google-signin-client_id" content="$clientId">'
   }
 
   String getDartDefineWebKey() {
