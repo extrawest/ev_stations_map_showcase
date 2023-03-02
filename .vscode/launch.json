@@ -34,7 +34,11 @@
                 "--dart-define",
                 "DEFINE_WEB_KEY=AIzaSyCxRvi4_4hyAw49PObPVtOq9iPqdvCFWKw",
                 "--dart-define",
-                "CLIENT_ID=18921772410-u536t0v0p70m8p50ma0mdiu8k8l35775.apps.googleusercontent.com"
+                "CLIENT_ID=18921772410-u536t0v0p70m8p50ma0mdiu8k8l35775.apps.googleusercontent.com",
+                "--web-hostname",
+                "localhost",
+                "--web-port",
+                "7357"
             ]
         }
     ]
