@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'platform_selector.dart';
 
 PlatformSelector createSelectorObject() => MobileSystem();
