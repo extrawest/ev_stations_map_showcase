@@ -22,13 +22,30 @@ class GoogleAuth {
                 .currentUser;
       } else {
         if (kIsWeb) {
-          final GoogleAuthProvider authProvider = GoogleAuthProvider();
+          // final GoogleAuthProvider authProvider = GoogleAuthProvider();
 
           try {
-            final UserCredential userCredential =
-                await firebaseAuth.signInWithPopup(authProvider);
+            final googleUser = await GoogleSignIn(
+                    clientId:
+                        '18921772410-u536t0v0p70m8p50ma0mdiu8k8l35775.apps.googleusercontent.com')
+                .signIn();
 
-            firebaseUser = userCredential.user;
+            final GoogleSignInAuthentication? googleAuth =
+                await googleUser?.authentication;
+
+            final credential = GoogleAuthProvider.credential(
+              accessToken: googleAuth?.accessToken,
+              idToken: googleAuth?.idToken,
+            );
+
+            firebaseUser = (await FirebaseAuth.instanceFor(
+                        app: await Firebase.initializeApp())
+                    .signInWithCredential(credential))
+                .user;
+            // final UserCredential userCredential =
+            //     await firebaseAuth.signInWithPopup(authProvider);
+
+            // firebaseUser = userCredential.user;
           } catch (e) {
             log.fine(e);
           }

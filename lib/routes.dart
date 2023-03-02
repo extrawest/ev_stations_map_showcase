@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:volkhov_maps_app/screens/map_web.dart';
 
 import 'screens/screens.dart';
 
@@ -14,7 +13,6 @@ const String searchScreenRoute = '/search_screen';
 const String accountScreenRoute = '/account_screen';
 const String favoritesScreenRoute = '/favorites_screen';
 const String signInScreen = '/sign_in_screen';
-const String webMap = '/web_map';
 
 Map<String, WidgetBuilder> applicationRoutes = <String, WidgetBuilder>{
   splashScreenRoute: (context) => SplashScreen(),
@@ -26,5 +24,4 @@ Map<String, WidgetBuilder> applicationRoutes = <String, WidgetBuilder>{
   accountScreenRoute: (context) => const AccountScreen(),
   favoritesScreenRoute: (context) => const FavoritesScreen(),
   signInScreen: (context) => const SignInScreen(),
-  webMap: (context) => const WebMap(),
 };
