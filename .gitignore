@@ -41,3 +41,4 @@ google-services.json
 GoogleService-Info.plist
 firebase_options.dart
 ios/build/ios/Pods.build/
+launch.json
