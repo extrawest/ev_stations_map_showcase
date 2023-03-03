@@ -32,16 +32,11 @@ class _MapScreenState extends State<MapScreen> {
 
   late LatLng myPosition;
 
-  // ignore: cancel_subscriptions
-  late StreamSubscription<Position> positionStream;
-
   late Marker marker;
 
   Set<Marker> markers = {};
 
   List<Place> placeItems = [];
-
-  bool _mapCreated = false;
 
   double _currentZoom = 12.0;
 
@@ -52,14 +47,19 @@ class _MapScreenState extends State<MapScreen> {
     distanceFilter: 100,
   );
 
-  void _onMapCreated(GoogleMapController controller) {
+  Future<void> _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
     _controller.complete(controller);
     _manager.setMapId(controller.mapId);
-
-    setState(() {
-      _mapCreated = true;
-    });
+    if (!kIsWeb) {
+      await requestPermission(() {
+        showPermissionDialog(context);
+      });
+    } else {
+      await getPosition();
+      await moveCameraTo(position: myPosition, zoom: 15);
+    }
+    setState(() {});
   }
 
   Future<void> getLastPosition() async {
@@ -91,32 +91,6 @@ class _MapScreenState extends State<MapScreen> {
     _manager = _initClusterManager();
 
     myPosition = const LatLng(45.521563, -122.677433);
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if (!kIsWeb) {
-        await requestPermission(() {
-          showPermissionDialog(context);
-        });
-      } else {
-        await getPosition();
-        await moveCameraTo(position: myPosition, zoom: 15);
-        setState(() {});
-      }
-
-      positionStream = Geolocator.getPositionStream(
-        locationSettings: locationSettings,
-      ).listen((Position position) {
-        myPosition = LatLng(
-          position.latitude,
-          position.longitude,
-        );
-
-        if (_mapCreated) {
-          moveCameraTo(position: myPosition);
-          setState(() {});
-        }
-      });
-    });
 
     super.initState();
   }
@@ -157,7 +131,6 @@ class _MapScreenState extends State<MapScreen> {
                   onMapCreated: (GoogleMapController controller) {
                     _onMapCreated(controller);
                     placeItems.addAll(setPlaceItems(state.stationslist));
-                    moveCameraTo(position: myPosition);
                   },
                   initialCameraPosition: CameraPosition(
                     target: LatLng(
