@@ -36,9 +36,8 @@ class SearchStationBloc extends Bloc<SearchStationEvent, SearchStationState> {
     SearchStationEvent event,
     Emitter<SearchStationState> emit,
   ) async {
-    emit(SearchStationLoading());
     try {
-      emit(const SearchStationFound(foundStations: []));
+      emit(SearchStationInitial());
     } catch (e) {
       emit(SearchStationError(
         'Search chargestation error :${e.toString()}',

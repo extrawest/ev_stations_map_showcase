@@ -81,10 +81,11 @@ class CustomTextField extends StatelessWidget {
                       ),
                       child: IconButton(
                         onPressed: onCancelTap,
-                        icon: const Icon(Icons.cancel_outlined),
-                      )
-                      // child: suffixIcon),
-                      )
+                        icon: const Icon(
+                          Icons.cancel_outlined,
+                          color: AppColors.lightGrey,
+                        ),
+                      ))
                   : null,
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(

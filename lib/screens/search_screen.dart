@@ -17,6 +17,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final focus = FocusNode();
   final TextEditingController _textController = TextEditingController();
+  List<ChargestationsModel> stations = [];
 
   @override
   void initState() {
@@ -38,7 +39,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<ChargestationsModel> stations = [];
     final searchBloc = context.read<SearchStationBloc>();
 
     return Scaffold(
@@ -54,56 +54,57 @@ class _SearchScreenState extends State<SearchScreen> {
             stations = state.stationslist;
           }
         },
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
-              child: CustomTextField(
-                textEditingController: _textController,
-                focusNode: focus,
-                suffixIcon: SvgPicture.asset(
-                  cancelIcon,
-                  color: AppColors.lightGrey,
+        child: BlocBuilder<SearchStationBloc, SearchStationState>(
+          builder: (context, state) {
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ),
+                  child: CustomTextField(
+                    textEditingController: _textController,
+                    focusNode: focus,
+                    onCancelTap: () => setState(() {
+                      _textController.clear();
+                      searchBloc.add(const SearchStationClearSearch());
+                    }),
+                    onChanged: (input) {
+                      searchBloc.add(SearchStationFindItem(
+                        searchString: input,
+                        stations: stations,
+                      ));
+                    },
+                  ),
                 ),
-                onCancelTap: () => setState(() {
-                  _textController.clear();
-                  searchBloc.add(const SearchStationClearSearch());
-                }),
-                onChanged: (input) {
-                  searchBloc.add(SearchStationFindItem(
-                    searchString: input,
-                    stations: stations,
-                  ));
-                },
-              ),
-            ),
-            BlocBuilder<SearchStationBloc, SearchStationState>(
-              builder: (context, searchState) {
-                if (searchState is SearchStationLoading) {
-                  return const LoadingSpinner();
-                } else if (searchState is SearchStationInitial) {
-                  return const SizedBox();
-                } else if (searchState is SearchStationError) {
-                  return const Center(child: Text('error'));
-                } else if (searchState is SearchStationFound) {
-                  return searchState.foundStations.isEmpty
-                      ? const SearchNoResultWidget()
-                      : Expanded(
-                          child: ListView.builder(
-                            itemCount: searchState.foundStations.length,
-                            itemBuilder: (context, index) => SearchResultItem(
-                              station: searchState.foundStations[index],
-                            ),
-                          ),
-                        );
-                } else {
-                  return const SizedBox();
-                }
-              },
-            ),
-          ],
+                BlocBuilder<SearchStationBloc, SearchStationState>(
+                  builder: (context, searchState) {
+                    if (searchState is SearchStationLoading) {
+                      return const LoadingSpinner();
+                    } else if (searchState is SearchStationInitial) {
+                      return const SizedBox();
+                    } else if (searchState is SearchStationError) {
+                      return const Center(child: Text('error'));
+                    } else if (searchState is SearchStationFound) {
+                      return searchState.foundStations.isEmpty
+                          ? const SearchNoResultWidget()
+                          : Expanded(
+                              child: ListView.builder(
+                                itemCount: searchState.foundStations.length,
+                                itemBuilder: (context, index) =>
+                                    SearchResultItem(
+                                  station: searchState.foundStations[index],
+                                ),
+                              ),
+                            );
+                    } else {
+                      return const SizedBox();
+                    }
+                  },
+                ),
+              ],
+            );
+          },
         ),
       ),
     );
