@@ -205,10 +205,26 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "7a03456c3490394c8e7665890333e91ae8a49be43542b616e414449ac358acd4"
+      sha256: "5be16bf1707658e4c03078d4a9b90208ded217fb02c163e207d334082412f2fb"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.4"
+    version: "2.2.5"
+  device_frame:
+    dependency: transitive
+    description:
+      name: device_frame
+      sha256: afe76182aec178d171953d9b4a50a43c57c7cf3c77d8b09a48bf30c8fa04dd9d
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
+  device_preview:
+    dependency: "direct main"
+    description:
+      name: device_preview
+      sha256: "2f097bf31b929e15e6756dbe0ec1bcb63952ab9ed51c25dc5a2c722d2b21fdaf"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   easy_localization:
     dependency: "direct main"
     description:
@@ -343,10 +359,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_plugin_android_lifecycle
-      sha256: "4bef634684b2c7f3468c77c766c831229af829a0cd2d4ee6c1b99558bd14e5d2"
+      sha256: c224ac897bed083dabf11f238dd11a239809b446740be0c2044608c50029ffdf
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.8"
+    version: "2.0.9"
   flutter_secure_storage:
     dependency: "direct main"
     description:
@@ -421,6 +437,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  freezed_annotation:
+    dependency: transitive
+    description:
+      name: freezed_annotation
+      sha256: aeac15850ef1b38ee368d4c53ba9a847e900bb2c53a4db3f6881cbb3cb684338
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.0"
   frontend_server_client:
     dependency: transitive
     description:
@@ -521,26 +545,26 @@ packages:
     dependency: "direct main"
     description:
       name: google_maps_flutter
-      sha256: e4f117747e210e68fe34196c93040e0712ba8aa91f8813fe8cb3f52ad667e70b
+      sha256: "24392ef192f3b00bcd93151375676805a9933574423a5bd5509a0ead2e8a4215"
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.4"
+    version: "2.2.5"
   google_maps_flutter_android:
     dependency: transitive
     description:
       name: google_maps_flutter_android
-      sha256: "69bac3fd18db5638763b06e04c2f2ff2e65e0a76fe93e0e211d8a77afaca033f"
+      sha256: "7829c13b90edb8b31861bf496616cf8582618f617951d16cb1e191699c586dfc"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.6"
+    version: "2.4.7"
   google_maps_flutter_ios:
     dependency: transitive
     description:
       name: google_maps_flutter_ios
-      sha256: "7ed57e6f1351aebf1442dea0028f2c880989ead866eaf25e9121237c622d4af0"
+      sha256: "3a69e04df77afb60587b5270baf43dc51f1c254c79f69ddf1d9546f758d9f709"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.14"
+    version: "2.2.0"
   google_maps_flutter_platform_interface:
     dependency: transitive
     description:
@@ -561,10 +585,10 @@ packages:
     dependency: "direct main"
     description:
       name: google_sign_in
-      sha256: "71c5311a19a2406498028a54fcac81351827297fa8cf5abbf51b7e0fa1bc64f5"
+      sha256: "750d08ffb4cd469f13068d15844ffd1d60c7ac1ca3c815918ba4ce4af22a2ddb"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.1"
+    version: "6.0.2"
   google_sign_in_android:
     dependency: transitive
     description:
@@ -577,10 +601,10 @@ packages:
     dependency: transitive
     description:
       name: google_sign_in_ios
-      sha256: eca3433737cfe8b231127d43a3e6527e07d5f8e4a0c00ce593aaaf7bc92bb135
+      sha256: "2575ef0d06dbe6923cedf39766da8305d407bb891d9f4a59502c642719776c5c"
       url: "https://pub.dev"
     source: hosted
-    version: "5.5.2"
+    version: "5.6.0"
   google_sign_in_platform_interface:
     dependency: transitive
     description:
@@ -609,10 +633,10 @@ packages:
     dependency: transitive
     description:
       name: html
-      sha256: d9793e10dbe0e6c364f4c59bf3e01fb33a9b2a674bc7a1081693dba0614b6269
+      sha256: "79d498e6d6761925a34ee5ea8fa6dfef38607781d2fa91e37523474282af55cb"
       url: "https://pub.dev"
     source: hosted
-    version: "0.15.1"
+    version: "0.15.2"
   http:
     dependency: transitive
     description:
@@ -1180,4 +1204,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=2.19.0 <4.0.0"
-  flutter: ">=3.0.0"
+  flutter: ">=3.3.0"
