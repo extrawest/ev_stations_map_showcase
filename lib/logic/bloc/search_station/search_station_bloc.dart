@@ -8,7 +8,8 @@ part 'search_station_state.dart';
 
 class SearchStationBloc extends Bloc<SearchStationEvent, SearchStationState> {
   SearchStationBloc() : super(SearchStationInitial()) {
-    on<SearchStationEvent>(_onFindItem);
+    on<SearchStationFindItem>(_onFindItem);
+    on<SearchStationClearSearch>(_onClearSearch);
   }
 
   Future<void> _onFindItem(
@@ -24,6 +25,20 @@ class SearchStationBloc extends Bloc<SearchStationEvent, SearchStationState> {
             .where((element) => element.stationId.contains(searchString))
       ];
       emit(SearchStationFound(foundStations: result));
+    } catch (e) {
+      emit(SearchStationError(
+        'Search chargestation error :${e.toString()}',
+      ));
+    }
+  }
+
+  Future<void> _onClearSearch(
+    SearchStationEvent event,
+    Emitter<SearchStationState> emit,
+  ) async {
+    emit(SearchStationLoading());
+    try {
+      emit(const SearchStationFound(foundStations: []));
     } catch (e) {
       emit(SearchStationError(
         'Search chargestation error :${e.toString()}',

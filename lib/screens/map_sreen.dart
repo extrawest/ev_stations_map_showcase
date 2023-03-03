@@ -152,6 +152,7 @@ class _MapScreenState extends State<MapScreen> {
                 return const Center(child: CircularProgressIndicator());
               } else if (state is ChargestationsLoaded) {
                 return GoogleMap(
+                  zoomControlsEnabled: false,
                   mapType: _currentMapType,
                   onMapCreated: (GoogleMapController controller) {
                     _onMapCreated(controller);

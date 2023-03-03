@@ -38,7 +38,6 @@ class _MapMainScreenState extends State<MapMainScreen> {
           physics: const NeverScrollableScrollPhysics(),
           controller: myPage,
           children: const [
-            StaticMainScreenWidget(),
             MapScreen(),
             FavoritesScreen(),
             WalletScreen(),
@@ -111,9 +110,6 @@ class _MapMainScreenState extends State<MapMainScreen> {
   BottomTabBarItem getBottomTabBarEnumItem() {
     BottomTabBarItem result;
     switch (currentTabIndex) {
-      case 1:
-        result = BottomTabBarItem.map;
-        break;
       case 2:
         result = BottomTabBarItem.favorites;
         break;
@@ -127,7 +123,7 @@ class _MapMainScreenState extends State<MapMainScreen> {
         result = BottomTabBarItem.charging;
         break;
       default:
-        result = BottomTabBarItem.none;
+        result = BottomTabBarItem.map;
         break;
     }
     return result;

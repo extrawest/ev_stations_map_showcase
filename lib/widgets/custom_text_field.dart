@@ -12,6 +12,7 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController? textEditingController;
   final String? Function(String?)? validator;
   final void Function()? ontap;
+  final Function()? onCancelTap;
   final double? cursorHeight;
   final EdgeInsets? contentPadding;
   final void Function(String)? onChanged;
@@ -38,6 +39,7 @@ class CustomTextField extends StatelessWidget {
       this.textEditingController,
       this.validator,
       this.ontap,
+      this.onCancelTap,
       this.cursorHeight,
       this.contentPadding,
       this.onChanged,
@@ -77,8 +79,12 @@ class CustomTextField extends StatelessWidget {
                         vertical: 14,
                         horizontal: 12,
                       ),
-                      child: suffixIcon,
-                    )
+                      child: IconButton(
+                        onPressed: onCancelTap,
+                        icon: const Icon(Icons.cancel_outlined),
+                      )
+                      // child: suffixIcon),
+                      )
                   : null,
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(

@@ -16,6 +16,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   final focus = FocusNode();
+  final TextEditingController _textController = TextEditingController();
 
   @override
   void initState() {
@@ -31,12 +32,14 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void dispose() {
     focus.dispose();
+    _textController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     List<ChargestationsModel> stations = [];
+    final searchBloc = context.read<SearchStationBloc>();
 
     return Scaffold(
       appBar: AppBar(
@@ -58,13 +61,17 @@ class _SearchScreenState extends State<SearchScreen> {
                 horizontal: 16,
               ),
               child: CustomTextField(
+                textEditingController: _textController,
                 focusNode: focus,
                 suffixIcon: SvgPicture.asset(
                   cancelIcon,
                   color: AppColors.lightGrey,
                 ),
+                onCancelTap: () => setState(() {
+                  _textController.clear();
+                  searchBloc.add(const SearchStationClearSearch());
+                }),
                 onChanged: (input) {
-                  final searchBloc = context.read<SearchStationBloc>();
                   searchBloc.add(SearchStationFindItem(
                     searchString: input,
                     stations: stations,

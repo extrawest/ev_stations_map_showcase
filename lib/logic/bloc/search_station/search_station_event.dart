@@ -13,3 +13,9 @@ class SearchStationFindItem extends SearchStationEvent {
   @override
   List<Object> get props => [];
 }
+
+class SearchStationClearSearch extends SearchStationEvent {
+  const SearchStationClearSearch();
+  @override
+  List<Object> get props => [];
+}
