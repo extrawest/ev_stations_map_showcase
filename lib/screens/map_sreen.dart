@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -32,34 +33,41 @@ class _MapScreenState extends State<MapScreen> {
 
   late LatLng myPosition;
 
-  // ignore: cancel_subscriptions
-  late StreamSubscription<Position> positionStream;
-
   late Marker marker;
 
   Set<Marker> markers = {};
 
   List<Place> placeItems = [];
 
-  bool _mapCreated = false;
-
   double _currentZoom = 12.0;
 
   MapType _currentMapType = MapType.normal;
+
+  bool isIgnorePointer = false;
 
   final LocationSettings locationSettings = const LocationSettings(
     accuracy: LocationAccuracy.high,
     distanceFilter: 100,
   );
 
-  void _onMapCreated(GoogleMapController controller) {
+  void setIgnorePointer(bool ignorePointer) {
+    isIgnorePointer = ignorePointer;
+
+    setState(() {});
+  }
+
+  Future<void> _onMapCreated(GoogleMapController controller) async {
     mapController = controller;
     _controller.complete(controller);
     _manager.setMapId(controller.mapId);
-
-    setState(() {
-      _mapCreated = true;
-    });
+    if (!kIsWeb) {
+      await requestPermission(() {
+        showPermissionDialog(context);
+      });
+    } else {
+      await getPosition();
+      await moveCameraTo(position: myPosition, zoom: 15);
+    }
   }
 
   Future<void> getLastPosition() async {
@@ -79,6 +87,7 @@ class _MapScreenState extends State<MapScreen> {
       position.latitude,
       position.longitude,
     );
+    setState(() {});
   }
 
   @override
@@ -90,33 +99,7 @@ class _MapScreenState extends State<MapScreen> {
 
     _manager = _initClusterManager();
 
-    myPosition = const LatLng(45.521563, -122.677433);
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if (!kIsWeb) {
-        await requestPermission(() {
-          showPermissionDialog(context);
-        });
-      } else {
-        await getPosition();
-        await moveCameraTo(position: myPosition, zoom: 15);
-        setState(() {});
-      }
-
-      positionStream = Geolocator.getPositionStream(
-        locationSettings: locationSettings,
-      ).listen((Position position) {
-        myPosition = LatLng(
-          position.latitude,
-          position.longitude,
-        );
-
-        if (_mapCreated) {
-          moveCameraTo(position: myPosition);
-          setState(() {});
-        }
-      });
-    });
+    myPosition = const LatLng(0, 0);
 
     super.initState();
   }
@@ -145,65 +128,76 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: Stack(children: [
-          BlocBuilder<ChargestationsBloc, ChargestationsState>(
-            builder: (context, state) {
-              if (state is ChargestationsLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is ChargestationsLoaded) {
-                return GoogleMap(
-                  zoomControlsEnabled: false,
-                  mapType: _currentMapType,
-                  onMapCreated: (GoogleMapController controller) {
-                    _onMapCreated(controller);
-                    placeItems.addAll(setPlaceItems(state.stationslist));
-                    moveCameraTo(position: myPosition);
-                  },
-                  initialCameraPosition: CameraPosition(
-                    target: LatLng(
-                      myPosition.latitude,
-                      myPosition.longitude,
-                    ),
-                    zoom: 11.0,
-                  ),
-                  markers: {
-                    Marker(
-                        markerId: const MarkerId('myPosition'),
-                        position: LatLng(
-                          myPosition.latitude,
-                          myPosition.longitude,
-                        ),
-                        draggable: true,
-                        onDragEnd: (value) {},
-                        onTap: null,
-                        icon: myMarkerIcon),
-                    ...markers,
-                  },
-                  myLocationButtonEnabled: false,
-                  onCameraMove: _onCameraMove,
-                  onCameraIdle: _manager.updateMap,
-                );
-              } else {
-                return const Center(
-                  child: Text('Error ChargestationsBloc'),
-                );
-              }
-            },
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-              vertical: 43,
+        body: Stack(
+          children: [
+            BlocBuilder<ChargestationsBloc, ChargestationsState>(
+              builder: (context, state) {
+                if (state is ChargestationsLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is ChargestationsLoaded) {
+                  return myPosition.latitude == 0 && myPosition.longitude == 0
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : GoogleMap(
+                          scrollGesturesEnabled: !isIgnorePointer,
+                          gestureRecognizers: {
+                            Factory<OneSequenceGestureRecognizer>(
+                                () => ScaleGestureRecognizer()),
+                          },
+                          zoomControlsEnabled: false,
+                          mapType: _currentMapType,
+                          onMapCreated: (GoogleMapController controller) {
+                            _onMapCreated(controller);
+                            placeItems
+                                .addAll(setPlaceItems(state.stationslist));
+                          },
+                          initialCameraPosition: CameraPosition(
+                            target: LatLng(
+                              myPosition.latitude,
+                              myPosition.longitude,
+                            ),
+                            zoom: 11.0,
+                          ),
+                          markers: {
+                            Marker(
+                                markerId: const MarkerId('myPosition'),
+                                position: LatLng(
+                                  myPosition.latitude,
+                                  myPosition.longitude,
+                                ),
+                                draggable: true,
+                                onDragEnd: (value) {},
+                                onTap: null,
+                                icon: myMarkerIcon),
+                            ...markers,
+                          },
+                          myLocationButtonEnabled: false,
+                          onCameraMove: _onCameraMove,
+                          onCameraIdle: _manager.updateMap,
+                        );
+                } else {
+                  return const Center(
+                    child: Text('Error ChargestationsBloc'),
+                  );
+                }
+              },
             ),
-            child: CustomTextField(
-              readOnly: true,
-              ontap: () => openScreenWithFade(context, const SearchScreen()),
-              hint: 'Type here',
-              prefixIcon: SvgPicture.asset(searchIcon),
-              suffixIcon: SvgPicture.asset(cancelIcon),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 43,
+              ),
+              child: CustomTextField(
+                readOnly: true,
+                ontap: () => openScreenWithFade(context, const SearchScreen()),
+                hint: 'Type here',
+                prefixIcon: SvgPicture.asset(searchIcon),
+                suffixIcon: SvgPicture.asset(cancelIcon),
+              ),
             ),
-          ),
-        ]),
+          ],
+        ),
         floatingActionButton: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           mainAxisAlignment: MainAxisAlignment.end,
@@ -221,13 +215,20 @@ class _MapScreenState extends State<MapScreen> {
                     await getPosition();
                     await moveCameraTo(position: myPosition, zoom: 15);
                   }
+                  setIgnorePointer(true);
                 }),
             const SizedBox(height: 20),
             MapButton(
-              image: threeBarIconPng,
-              onTap: () => showMapTypeBottomSheet(
-                  context: context, mapType: _currentMapType),
-            ),
+                image: threeBarIconPng,
+                onTap: () {
+                  setState(() {
+                    setIgnorePointer(true);
+                  });
+                  showMapTypeBottomSheet(
+                    context: context,
+                    mapType: _currentMapType,
+                  );
+                }),
             const SizedBox(height: 105),
           ],
         ),
@@ -246,6 +247,8 @@ class _MapScreenState extends State<MapScreen> {
         context: context,
         builder: (builder) {
           return BodyBottomSheetWidget(
+            onClose: () => WidgetsBinding.instance
+                .addPostFrameCallback((_) => setIgnorePointer(false)),
             mapType: mapType,
           );
         });
@@ -325,9 +328,17 @@ class _MapScreenState extends State<MapScreen> {
                   moveCameraTo(position: cluster.location);
                 }
               : () {
-                  final station = cluster.items.first;
-                  showStationInfoBottomSheet(
-                      context: context, station: station);
+                  if (!isIgnorePointer) {
+                    final station = cluster.items.first;
+                    WidgetsBinding.instance
+                        .addPostFrameCallback((_) => setIgnorePointer(true));
+                    showStationInfoBottomSheet(
+                        onClose: () => WidgetsBinding.instance
+                            .addPostFrameCallback(
+                                (_) => setIgnorePointer(false)),
+                        context: context,
+                        station: station);
+                  }
                 },
           icon: cluster.isMultiple
               ? await getCountMarkerBitmap(
@@ -342,6 +353,7 @@ class _MapScreenState extends State<MapScreen> {
 void showStationInfoBottomSheet({
   required BuildContext context,
   required Place station,
+  Function()? onClose,
   Function()? addRemoveFavorite,
 }) {
   showModalBottomSheet(
@@ -353,6 +365,7 @@ void showStationInfoBottomSheet({
       context: context,
       builder: (builder) {
         return StationInfoBottomWidget(
+          onClose: onClose,
           station: station,
           addRemoveFavorite: addRemoveFavorite,
         );

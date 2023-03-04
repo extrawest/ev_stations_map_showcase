@@ -39,6 +39,7 @@ class _MapMainScreenState extends State<MapMainScreen> {
           controller: myPage,
           children: const [
             MapScreen(),
+            MapScreen(),
             FavoritesScreen(),
             WalletScreen(),
             AccountScreen(),
