@@ -2,7 +2,11 @@ import 'package:volkhov_maps_app/models/post.dart';
 import 'package:volkhov_maps_app/network/api_client.dart';
 import 'package:volkhov_maps_app/utils/logger.dart';
 
+import '../models/models.dart';
+
 const String postsPath = '/posts';
+const String stationslist = '/stationslist';
+const String walletData = '/wallet-info';
 
 class ApiService {
   late ApiClient _apiClient;
@@ -31,6 +35,27 @@ class ApiService {
       return PostModel.fromJson(response);
     } catch (e) {
       log.severe('publishPostData error: $e');
+      rethrow;
+    }
+  }
+
+  Future<List<ChargestationsModel>> fetchChargestations() async {
+    try {
+      final response = await _apiClient.get(stationslist);
+      return List<ChargestationsModel>.from(
+          response.map((element) => ChargestationsModel.fromJson(element)));
+    } catch (e) {
+      log.severe('chargestationsData error: $e');
+      rethrow;
+    }
+  }
+
+  Future<WalletModel> fetchWalletData() async {
+    try {
+      final response = await _apiClient.get(walletData);
+      return WalletModel.fromJson(response);
+    } catch (e) {
+      log.severe('WalletData error: $e');
       rethrow;
     }
   }

@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_udid/flutter_udid.dart';
-import 'package:package_info/package_info.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:volkhov_maps_app/theme/assets.dart';
 
 import '../main.dart';
@@ -54,14 +55,28 @@ Future<String> getApplicationVersion() async {
 
 Future<Credentials> loadCredentials() async {
   try {
-    const _isProd =
+    const isProd =
         bool.fromEnvironment(isProductionEnvKey, defaultValue: false);
     final credentials = await CredentialsLoader(
-            pathToFile: _isProd ? credentialsProdFile : credentialsDevFile)
+            pathToFile: isProd ? credentialsProdFile : credentialsDevFile)
         .load();
     return credentials;
   } catch (e) {
     log.fine('loadCredentials error: $e');
     return await CredentialsLoader(pathToFile: credentialsDevFile).load();
   }
+}
+
+void openScreenWithFade(BuildContext context, Widget screen) {
+  Navigator.of(context).push(PageRouteBuilder(
+      pageBuilder: (context, animation, anotherAnimation) {
+        return screen;
+      },
+      transitionDuration: const Duration(milliseconds: 600),
+      transitionsBuilder: (context, animation, anotherAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      }));
 }

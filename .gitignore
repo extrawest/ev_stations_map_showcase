@@ -31,10 +31,14 @@
 /build/
 
 # Web related
-lib/generated_plugin_registrant.dart
 
 # Exceptions to above rules.
 !/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
 assets/credentials_production.json
 assets/credentials_development.json
 my_README.md
+google-services.json
+GoogleService-Info.plist
+firebase_options.dart
+ios/build/ios/Pods.build/
+launch.json

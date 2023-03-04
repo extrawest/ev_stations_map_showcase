@@ -21,23 +21,12 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-// def dartEnvironmentVariables = [
-//     DEFINE_ANDROID_KEY: '',
-//     DEFINE_IOS_KEY: '',
-//     DEFINE_WEB_KEY: ''
-// ];
-// if (project.hasProperty('dart-defines')) {
-//     dartEnvironmentVariables = dartEnvironmentVariables + project.property('dart-defines')
-//         .split(',')
-//         .collectEntries { entry ->
-//             def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
-//             [(pair.first()): pair.last()]
-//         }
-// }
 
-def dartEnvironmentVariables = []
+def dartEnvironmentVariables = [
+    DEFINE_ANDROID_KEY: '',
+]
 if (project.hasProperty('dart-defines')) {
-    dartEnvironmentVariables = project.property('dart-defines')
+    dartEnvironmentVariables = dartEnvironmentVariables + project.property('dart-defines')
         .split(',')
         .collectEntries { entry ->
             def pair = new String(entry.decodeBase64(), 'UTF-8').split('=')
@@ -48,9 +37,13 @@ if (project.hasProperty('dart-defines')) {
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+// START: FlutterFire Configuration
+apply plugin: 'com.google.gms.google-services'
+// END: FlutterFire Configuration
+
 
 android {
-    compileSdkVersion 31
+    compileSdkVersion 33
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -67,15 +60,14 @@ android {
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        resValue "string", "android_key", dartEnvironmentVariables.DEFINE_ANDROID_KEY
-        // resValue "string", "ios_key", dartEnvironmentVariables.DEFINE_IOS_KEY
-        // resValue "string", "web_key", dartEnvironmentVariables.DEFINE_WEB_KEY
-        manifestPlaceholders = [DEFINE_ANDROID_KEY: dartEnvironmentVariables.DEFINE_ANDROID_KEY ]
+        resValue "string", "DEFINE_ANDROID_KEY", dartEnvironmentVariables.DEFINE_ANDROID_KEY
+        manifestPlaceholders = [DEFINE_ANDROID_KEY: dartEnvironmentVariables.DEFINE_ANDROID_KEY]
+        multiDexEnabled true
     }
 
     buildTypes {
         release {
-            
+            crunchPngs false // or true
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
         }
@@ -87,8 +79,10 @@ flutter {
 }
 
 dependencies {
+    implementation platform ('com.google.firebase:firebase-bom:31.2.2')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
+    implementation 'com.android.support:multidex:1.0.3'
 }

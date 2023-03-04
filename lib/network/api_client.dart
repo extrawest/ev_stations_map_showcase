@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+// ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
 import 'package:volkhov_maps_app/network/exception.dart';
 import 'package:volkhov_maps_app/utils/logger.dart';

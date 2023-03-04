@@ -1,19 +1,15 @@
+import 'package:device_preview/device_preview.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:volkhov_maps_app/app.dart';
 import 'package:volkhov_maps_app/theme/assets.dart';
-import 'package:volkhov_maps_app/view_models/theme_view_model.dart';
 
-import 'utils/application_utils.dart';
-import 'utils/logger.dart';
+import 'firebase_options.dart';
 
-class EnvironmentConfig {
-  static const ANDROID_KEY = String.fromEnvironment('DEFINE_ANDROID_KEY');
-  static const IOS_KEY = String.fromEnvironment('DEFINE_IOS_KEY');
-  static const WEB_KEY = String.fromEnvironment('DEFINE_WEB_KEY');
-}
+import 'utils/utils.dart';
 
 const isProductionEnvKey = 'IS_PRODUCTION';
 const englishLocale = Locale('en', 'US');
@@ -22,8 +18,13 @@ const ukrainianLocale = Locale('uk', 'UA');
 bool isProduction = false;
 
 Future<void> main() async {
+  PlatformSelector().createScriptElement();
+
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   isProduction =
       const bool.fromEnvironment(isProductionEnvKey, defaultValue: false);
@@ -31,9 +32,6 @@ Future<void> main() async {
   if (isProduction) {
     EasyLocalization.logger.enableBuildModes = [];
   }
-
-  final themeViewModel = ThemeViewModel();
-  await themeViewModel.init();
 
   setupLogger();
 
@@ -48,11 +46,16 @@ Future<void> main() async {
     supportedLocales: const [englishLocale, ukrainianLocale],
     path: translationsFolderPath,
     fallbackLocale: englishLocale,
-    child: ChangeNotifierProvider.value(
-      value: themeViewModel,
-      child: Application(credentials),
-    ),
+    child: Application(credentials),
   );
 
-  runApp(app);
+  runApp(DevicePreview(
+    enabled: kIsWeb,
+    builder: (context) => app,
+    isToolbarVisible: false,
+    data: DevicePreviewData(
+      deviceIdentifier: Devices.android.onePlus8Pro.toString(),
+      isFrameVisible: false,
+    ),
+  ));
 }

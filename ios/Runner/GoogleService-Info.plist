@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>552264685697-jf5hc4g2ul7jj1581v5d7blv2o08ovmb.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.552264685697-jf5hc4g2ul7jj1581v5d7blv2o08ovmb</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCs6nOnzprsyKxQzNS1eUr5YyBd8hkjrlo</string>
+	<key>GCM_SENDER_ID</key>
+	<string>552264685697</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.extrawest.providerStarterApp</string>
+	<key>PROJECT_ID</key>
+	<string>volkhov-map</string>
+	<key>STORAGE_BUCKET</key>
+	<string>volkhov-map.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:552264685697:ios:70378c9d77904d84d2d580</string>
+</dict>
+</plist>

@@ -14,43 +14,48 @@ description: A new Flutter application starter.
 version: 0.0.1
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=2.18.0 <3.0.0'
 
 dependencies:
+  bloc: ^8.1.1
+  cupertino_icons: ^1.0.3
+  device_preview: ^1.1.0
+  easy_localization: ^3.0.1
+  equatable: ^2.0.5
+  firebase_auth: ^4.2.8
+  firebase_auth_web: ^5.2.8
+  firebase_core: ^2.6.1
+  firebase_core_web: ^2.2.1
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.1
   flutter_localizations:
     sdk: flutter
-
-  provider: ^6.0.2
-  sembast: 3.1.2
-  sembast_web: ^2.0.1+1
-  path_provider: ^2.0.9
-  shared_preferences: ^2.0.13
-  package_info: ^2.0.2
-  device_info_plus: ^4.0.1
+  flutter_secure_storage: ^7.0.1
+  flutter_svg: ^1.1.6
   flutter_udid: ^2.0.0
-  flutter_secure_storage: ^5.0.2
+  geolocator: ^9.0.2
   google_fonts: 2.1.0
-  logging: ^1.0.2
-  easy_localization: ^3.0.1
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.3
+  google_maps_cluster_manager: ^3.0.0+1
   google_maps_flutter: ^2.2.3
-  google_maps_flutter_web: ^0.4.0+5
-
+  google_maps_flutter_web: ^0.4.0+6
+  google_sign_in: ^6.0.0
+  google_sign_in_web: ^0.11.0+1
+  logging: ^1.0.2
+  package_info_plus: ^3.0.3
+  permission_handler: ^10.2.0
+  permission_handler_web: ^0.0.2
+  shared_preferences: ^2.0.13
+  universal_html: ^2.0.9
 
 dev_dependencies:
+  build_runner: ^2.1.4
+  flutter_lints: null
   flutter_test:
     sdk: flutter
-  build_runner: ^2.1.4
-  flutter_lints:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
 
@@ -63,6 +68,7 @@ flutter:
   assets:
     - assets/i18n/
     - assets/images/
+    - assets/icons/
     - assets/fonts/
     - assets/
 
@@ -88,13 +94,10 @@ flutter:
           weight: 800
         - asset: assets/fonts/SFUIDisplay-Black.ttf
           weight: 900
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a
