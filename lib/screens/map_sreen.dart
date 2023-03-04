@@ -51,9 +51,9 @@ class _MapScreenState extends State<MapScreen> {
   );
 
   void setIgnorePointer(bool ignorePointer) {
-    setState(() {
-      isIgnorePointer = ignorePointer;
-    });
+    isIgnorePointer = ignorePointer;
+
+    setState(() {});
   }
 
   Future<void> _onMapCreated(GoogleMapController controller) async {
@@ -128,9 +128,8 @@ class _MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: AbsorbPointer(
-          absorbing: isIgnorePointer,
-          child: Stack(children: [
+        body: Stack(
+          children: [
             BlocBuilder<ChargestationsBloc, ChargestationsState>(
               builder: (context, state) {
                 if (state is ChargestationsLoading) {
@@ -141,6 +140,7 @@ class _MapScreenState extends State<MapScreen> {
                           child: CircularProgressIndicator(),
                         )
                       : GoogleMap(
+                          scrollGesturesEnabled: !isIgnorePointer,
                           gestureRecognizers: {
                             Factory<OneSequenceGestureRecognizer>(
                                 () => ScaleGestureRecognizer()),
@@ -196,7 +196,7 @@ class _MapScreenState extends State<MapScreen> {
                 suffixIcon: SvgPicture.asset(cancelIcon),
               ),
             ),
-          ]),
+          ],
         ),
         floatingActionButton: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -247,7 +247,8 @@ class _MapScreenState extends State<MapScreen> {
         context: context,
         builder: (builder) {
           return BodyBottomSheetWidget(
-            onClose: () => setIgnorePointer(false),
+            onClose: () => WidgetsBinding.instance
+                .addPostFrameCallback((_) => setIgnorePointer(false)),
             mapType: mapType,
           );
         });
@@ -327,9 +328,17 @@ class _MapScreenState extends State<MapScreen> {
                   moveCameraTo(position: cluster.location);
                 }
               : () {
-                  final station = cluster.items.first;
-                  showStationInfoBottomSheet(
-                      context: context, station: station);
+                  if (!isIgnorePointer) {
+                    final station = cluster.items.first;
+                    WidgetsBinding.instance
+                        .addPostFrameCallback((_) => setIgnorePointer(true));
+                    showStationInfoBottomSheet(
+                        onClose: () => WidgetsBinding.instance
+                            .addPostFrameCallback(
+                                (_) => setIgnorePointer(false)),
+                        context: context,
+                        station: station);
+                  }
                 },
           icon: cluster.isMultiple
               ? await getCountMarkerBitmap(
@@ -344,6 +353,7 @@ class _MapScreenState extends State<MapScreen> {
 void showStationInfoBottomSheet({
   required BuildContext context,
   required Place station,
+  Function()? onClose,
   Function()? addRemoveFavorite,
 }) {
   showModalBottomSheet(
@@ -355,6 +365,7 @@ void showStationInfoBottomSheet({
       context: context,
       builder: (builder) {
         return StationInfoBottomWidget(
+          onClose: onClose,
           station: station,
           addRemoveFavorite: addRemoveFavorite,
         );

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,15 +9,31 @@ import '../routes.dart';
 import '../theme/themes.dart';
 import 'widgets.dart';
 
-class StationInfoBottomWidget extends StatelessWidget {
+class StationInfoBottomWidget extends StatefulWidget {
   final Place station;
   final Function()? addRemoveFavorite;
+  final Function()? onClose;
 
   const StationInfoBottomWidget({
     Key? key,
     required this.station,
     this.addRemoveFavorite,
+    this.onClose,
   }) : super(key: key);
+
+  @override
+  State<StationInfoBottomWidget> createState() =>
+      _StationInfoBottomWidgetState();
+}
+
+class _StationInfoBottomWidgetState extends State<StationInfoBottomWidget> {
+  @override
+  void dispose() {
+    if (widget.onClose != null) {
+      widget.onClose!();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +41,7 @@ class StationInfoBottomWidget extends StatelessWidget {
     final authState = context.read<AuthBloc>().state;
     if (chargestationsState is ChargestationsLoaded) {
       final stationInfo = chargestationsState.stationslist
-          .firstWhere((st) => st.stationId == station.stationId);
+          .firstWhere((st) => st.stationId == widget.station.stationId);
 
       final favoritesBloc = context.watch<FavoritesBloc>();
       final favoriteState = favoritesBloc.state;
@@ -32,7 +49,7 @@ class StationInfoBottomWidget extends StatelessWidget {
       if (favoriteState is FavoritesLoaded) {
         favoriteIds = favoriteState.favoriteIds;
       }
-      final isFavorite = isIdFavorite(favoriteIds, station.stationId);
+      final isFavorite = isIdFavorite(favoriteIds, widget.station.stationId);
 
       return Container(
           padding: const EdgeInsets.all(16),
@@ -74,8 +91,8 @@ class StationInfoBottomWidget extends StatelessWidget {
                     onTap: () {
                       // if (GoogleAuth.firebaseUser != null) {
                       if (authState is AuthAutorized) {
-                        favoritesBloc
-                            .add(FavoritesWrite(stationId: station.stationId));
+                        favoritesBloc.add(FavoritesWrite(
+                            stationId: widget.station.stationId));
                       } else {
                         Navigator.pushNamed(context, signInScreen);
                       }

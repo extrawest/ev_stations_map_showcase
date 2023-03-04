@@ -87,7 +87,7 @@ class SearchResultItem extends StatelessWidget {
     showStationInfoBottomSheet(
       context: context,
       station: stationPlace,
-      addRemoveFavorite: onFavoriteTap, //() => print(station.stationId),
+      addRemoveFavorite: onFavoriteTap,
     );
   }
 }
