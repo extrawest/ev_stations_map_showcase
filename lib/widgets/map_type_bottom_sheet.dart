@@ -7,7 +7,12 @@ import 'widgets.dart';
 
 class BodyBottomSheetWidget extends StatefulWidget {
   final MapType mapType;
-  const BodyBottomSheetWidget({super.key, thi, required this.mapType});
+  final Function() onClose;
+  const BodyBottomSheetWidget({
+    Key? key,
+    required this.mapType,
+    required this.onClose,
+  }) : super(key: key);
 
   @override
   State<BodyBottomSheetWidget> createState() => _BodyBottomSheetWidgetState();
@@ -20,6 +25,12 @@ class _BodyBottomSheetWidgetState extends State<BodyBottomSheetWidget> {
   void initState() {
     selectedtype = widget.mapType;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    widget.onClose();
+    super.dispose();
   }
 
   @override
