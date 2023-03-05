@@ -194,7 +194,6 @@ class _MapScreenState extends State<MapScreen> {
                 ontap: () => openScreenWithFade(context, const SearchScreen()),
                 hint: 'Type here',
                 prefixIcon: SvgPicture.asset(searchIcon),
-                suffixIcon: SvgPicture.asset(cancelIcon),
               ),
             ),
           ],

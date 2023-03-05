@@ -18,7 +18,6 @@ class CustomTextField extends StatelessWidget {
   final void Function(String)? onChanged;
   final String? errorText;
   final Widget? prefixIcon;
-  final Widget? suffixIcon;
   final Color? fillColor;
   final bool readOnly;
 
@@ -45,7 +44,6 @@ class CustomTextField extends StatelessWidget {
       this.onChanged,
       this.errorText,
       this.prefixIcon,
-      this.suffixIcon,
       this.fillColor,
       this.readOnly = false,
       this.focusNode})
@@ -73,20 +71,19 @@ class CustomTextField extends StatelessWidget {
                       child: prefixIcon,
                     )
                   : null,
-              suffixIcon: suffixIcon != null
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: 14,
-                        horizontal: 12,
-                      ),
-                      child: IconButton(
-                        onPressed: onCancelTap,
-                        icon: const Icon(
-                          Icons.cancel_outlined,
-                          color: AppColors.lightGrey,
-                        ),
-                      ))
-                  : null,
+              suffixIcon: Padding(
+                padding: const EdgeInsets.symmetric(
+                  vertical: 14,
+                  horizontal: 12,
+                ),
+                child: IconButton(
+                  onPressed: onCancelTap,
+                  icon: const Icon(
+                    Icons.cancel_outlined,
+                    color: AppColors.lightGrey,
+                  ),
+                ),
+              ),
               enabledBorder: OutlineInputBorder(
                 borderSide: const BorderSide(
                   color: AppColors.lightGrey,
