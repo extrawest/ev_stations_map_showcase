@@ -216,7 +216,6 @@ class _MapScreenState extends State<MapScreen> {
                     await getPosition();
                     await moveCameraTo(position: myPosition, zoom: 15);
                   }
-                  setIgnorePointer(true);
                 }),
             const SizedBox(height: 20),
             MapButton(
