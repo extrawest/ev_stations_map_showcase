@@ -77,6 +77,7 @@ class _MapScreenState extends State<MapScreen> {
         position.latitude,
         position.longitude,
       );
+      setState(() {});
     }
   }
 
