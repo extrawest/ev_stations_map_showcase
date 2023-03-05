@@ -194,7 +194,6 @@ class _MapScreenState extends State<MapScreen> {
                 ontap: () => openScreenWithFade(context, const SearchScreen()),
                 hint: 'Type here',
                 prefixIcon: SvgPicture.asset(searchIcon),
-                suffixIcon: SvgPicture.asset(cancelIcon),
               ),
             ),
           ],
@@ -216,7 +215,6 @@ class _MapScreenState extends State<MapScreen> {
                     await getPosition();
                     await moveCameraTo(position: myPosition, zoom: 15);
                   }
-                  setIgnorePointer(true);
                 }),
             const SizedBox(height: 20),
             MapButton(

@@ -77,7 +77,6 @@ class MapBodyWidget extends StatelessWidget {
             readOnly: true,
             hint: 'Type here',
             prefixIcon: SvgPicture.asset(searchIcon),
-            suffixIcon: SvgPicture.asset(cancelIcon),
           ),
         ),
         const Expanded(
