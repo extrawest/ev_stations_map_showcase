@@ -23,41 +23,68 @@ class BottomTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        BottomTabBarMenuItem(
-            onTapMap: onTapMap,
-            active: tabBarItem == BottomTabBarItem.map,
-            image: earth,
-            name: 'MAP'),
-        BottomTabBarMenuItem(
-          onTapMap: onTapFavorites,
-          active: tabBarItem == BottomTabBarItem.favorites,
-          image: greyStar,
-          name: 'FavoriteS'.toUpperCase(),
+        const SizedBox.shrink(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            BottomTabBarMenuItem(
+                onTapMap: onTapMap,
+                active: tabBarItem == BottomTabBarItem.map,
+                image: earth,
+                name: 'MAP'),
+            BottomTabBarMenuItem(
+              onTapMap: onTapFavorites,
+              active: tabBarItem == BottomTabBarItem.favorites,
+              image: greyStar,
+              name: 'FavoriteS'.toUpperCase(),
+            ),
+            const SizedBox(
+              width: 30,
+            ),
+            BlocBuilder<WalletBloc, WalletState>(builder: (context, state) {
+              double balance = 0;
+              if (state is WalletLoaded) {
+                balance = state.walletData.balance;
+              }
+              return BottomTabBarMenuItem(
+                onTapMap: onTapWallet,
+                active: tabBarItem == BottomTabBarItem.wallet,
+                image: wallet,
+                name: '\$$balance'.toUpperCase(),
+              );
+            }),
+            BottomTabBarMenuItem(
+              onTapMap: onTapAccount,
+              active: tabBarItem == BottomTabBarItem.account,
+              image: roundPerson,
+              name: 'Account'.toUpperCase(),
+            ),
+          ],
         ),
-        const SizedBox(
-          width: 30,
+        SizedBox(
+          height: 25,
+          child: TextButton(
+            // style: TextButtonTheme(),
+            child: Text(
+              'Made by Extrawest',
+              style: TextStyles.smallTextStyle.copyWith(
+                  color: AppColors.activeBottomBarButton,
+                  fontWeight: FontWeight.w700,
+                  height: 0.7),
+            ),
+            onPressed: () => ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                const SnackBar(
+                  content: Text('\'Made by Extrawest\' button pressed'),
+                ),
+              ),
+          ),
         ),
-        BlocBuilder<WalletBloc, WalletState>(builder: (context, state) {
-          double balance = 0;
-          if (state is WalletLoaded) {
-            balance = state.walletData.balance;
-          }
-          return BottomTabBarMenuItem(
-            onTapMap: onTapWallet,
-            active: tabBarItem == BottomTabBarItem.wallet,
-            image: wallet,
-            name: '\$$balance'.toUpperCase(),
-          );
-        }),
-        BottomTabBarMenuItem(
-          onTapMap: onTapAccount,
-          active: tabBarItem == BottomTabBarItem.account,
-          image: roundPerson,
-          name: 'Account'.toUpperCase(),
-        ),
+        const SizedBox.shrink(),
       ],
     );
   }
