@@ -52,9 +52,9 @@ Future<void> main() async {
   runApp(DevicePreview(
     enabled: kIsWeb,
     builder: (context) => app,
-    isToolbarVisible: false,
+    isToolbarVisible: true,
     data: DevicePreviewData(
-      deviceIdentifier: Devices.android.onePlus8Pro.toString(),
+      deviceIdentifier: Devices.ios.iPhone13.toString(),
       isFrameVisible: false,
     ),
   ));

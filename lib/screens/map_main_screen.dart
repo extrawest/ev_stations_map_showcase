@@ -55,7 +55,7 @@ class _MapMainScreenState extends State<MapMainScreen> {
             notchMargin: 14,
             color: AppColors.whiteColor,
             child: Container(
-              height: 70,
+              height: 90,
               alignment: Alignment.center,
               child: BottomTabBar(
                 tabBarItem: getBottomTabBarEnumItem(),

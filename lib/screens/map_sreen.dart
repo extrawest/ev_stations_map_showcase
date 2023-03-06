@@ -61,6 +61,14 @@ class _MapScreenState extends State<MapScreen> {
 
     myPosition = const LatLng(0, 0);
 
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      if (!kIsWeb) {
+        await requestPermission(() {
+          showPermissionDialog(context);
+        });
+      }
+    });
+
     super.initState();
   }
 
@@ -93,8 +101,8 @@ class _MapScreenState extends State<MapScreen> {
                           },
                           zoomControlsEnabled: false,
                           mapType: _currentMapType,
-                          onMapCreated: (GoogleMapController controller) {
-                            _onMapCreated(controller);
+                          onMapCreated: (GoogleMapController controller) async {
+                            await _onMapCreated(controller);
                             placeItems
                                 .addAll(setPlaceItems(state.stationslist));
                           },
@@ -189,11 +197,12 @@ class _MapScreenState extends State<MapScreen> {
     mapController = controller;
     _controller.complete(controller);
     _manager.setMapId(controller.mapId);
-    if (!kIsWeb) {
-      await requestPermission(() {
-        showPermissionDialog(context);
-      });
-    } else {
+    // if (!kIsWeb) {
+    //   await requestPermission(() {
+    //     showPermissionDialog(context);
+    //   });
+    // } else {
+    if (kIsWeb) {
       await getPosition();
       await moveCameraTo(position: myPosition, zoom: 15);
     }

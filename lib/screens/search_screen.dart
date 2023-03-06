@@ -42,7 +42,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search station'),
+        // title: const Text('Search station'),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         foregroundColor: AppColors.blackColor,
         shadowColor: Colors.transparent,
