@@ -50,47 +50,6 @@ class _MapScreenState extends State<MapScreen> {
     distanceFilter: 100,
   );
 
-  void setIgnorePointer(bool ignorePointer) {
-    isIgnorePointer = ignorePointer;
-
-    setState(() {});
-  }
-
-  Future<void> _onMapCreated(GoogleMapController controller) async {
-    mapController = controller;
-    _controller.complete(controller);
-    _manager.setMapId(controller.mapId);
-    if (!kIsWeb) {
-      await requestPermission(() {
-        showPermissionDialog(context);
-      });
-    } else {
-      await getPosition();
-      await moveCameraTo(position: myPosition, zoom: 15);
-    }
-  }
-
-  Future<void> getLastPosition() async {
-    final Position? position = await Geolocator.getLastKnownPosition();
-    if (position != null) {
-      myPosition = LatLng(
-        position.latitude,
-        position.longitude,
-      );
-      setState(() {});
-    }
-  }
-
-  Future<void> getPosition() async {
-    final Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    myPosition = LatLng(
-      position.latitude,
-      position.longitude,
-    );
-    setState(() {});
-  }
-
   @override
   void initState() {
     _currentMapType = MapType.normal;
@@ -103,20 +62,6 @@ class _MapScreenState extends State<MapScreen> {
     myPosition = const LatLng(0, 0);
 
     super.initState();
-  }
-
-  Future<void> moveCameraTo({required LatLng position, double? zoom}) {
-    return mapController.animateCamera(
-      CameraUpdate.newCameraPosition(
-        CameraPosition(
-          target: LatLng(
-            position.latitude,
-            position.longitude,
-          ),
-          zoom: zoom ?? _currentZoom,
-        ),
-      ),
-    );
   }
 
   @override
@@ -235,6 +180,60 @@ class _MapScreenState extends State<MapScreen> {
     );
   }
 
+  void setIgnorePointer(bool ignorePointer) {
+    isIgnorePointer = ignorePointer;
+    setState(() {});
+  }
+
+  Future<void> _onMapCreated(GoogleMapController controller) async {
+    mapController = controller;
+    _controller.complete(controller);
+    _manager.setMapId(controller.mapId);
+    if (!kIsWeb) {
+      await requestPermission(() {
+        showPermissionDialog(context);
+      });
+    } else {
+      await getPosition();
+      await moveCameraTo(position: myPosition, zoom: 15);
+    }
+  }
+
+  Future<void> getLastPosition() async {
+    final Position? position = await Geolocator.getLastKnownPosition();
+    if (position != null) {
+      myPosition = LatLng(
+        position.latitude,
+        position.longitude,
+      );
+      setState(() {});
+    }
+  }
+
+  Future<void> getPosition() async {
+    final Position position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    myPosition = LatLng(
+      position.latitude,
+      position.longitude,
+    );
+    setState(() {});
+  }
+
+  Future<void> moveCameraTo({required LatLng position, double? zoom}) {
+    return mapController.animateCamera(
+      CameraUpdate.newCameraPosition(
+        CameraPosition(
+          target: LatLng(
+            position.latitude,
+            position.longitude,
+          ),
+          zoom: zoom ?? _currentZoom,
+        ),
+      ),
+    );
+  }
+
   Future<void> showMapTypeBottomSheet({
     required BuildContext context,
     required MapType mapType,
@@ -323,7 +322,6 @@ class _MapScreenState extends State<MapScreen> {
           position: cluster.location,
           onTap: cluster.isMultiple
               ? () {
-                  log.fine('---- $cluster');
                   moveCameraTo(position: cluster.location);
                 }
               : () {
@@ -369,40 +367,4 @@ void showStationInfoBottomSheet({
           addRemoveFavorite: addRemoveFavorite,
         );
       });
-}
-
-class MapButton extends StatelessWidget {
-  final String image;
-  final Function() onTap;
-  const MapButton({super.key, required this.image, required this.onTap});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 55,
-      width: 55,
-      alignment: Alignment.topCenter,
-      child: GestureDetector(
-        onTap: onTap,
-        child: Container(
-            width: 55,
-            height: 55,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(28),
-              color: AppColors.whiteColor,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.5),
-                  spreadRadius: 1,
-                  blurRadius: 7,
-                  offset: const Offset(0, 1),
-                ),
-              ],
-            ),
-            child: Image.asset(
-              image,
-            )),
-      ),
-    );
-  }
 }

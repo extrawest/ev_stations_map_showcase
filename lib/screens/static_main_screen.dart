@@ -97,7 +97,6 @@ class MapBodyWidget extends StatelessWidget {
           ),
           padding: const EdgeInsets.all(16),
           width: screenWidth,
-          // height: 20,
           decoration: BoxDecoration(
               color: AppColors.whiteColor,
               borderRadius: BorderRadius.circular(16)),
