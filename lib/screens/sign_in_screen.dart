@@ -28,6 +28,8 @@ class SignInScreen extends StatelessWidget {
                     content: Text('Error: ${listenState.error}'),
                   ),
                 );
+            } else if (listenState is AuthAutorized) {
+              Navigator.of(context).pop();
             }
           },
           child: SignUpWidget(

@@ -38,7 +38,7 @@ class _StationInfoBottomWidgetState extends State<StationInfoBottomWidget> {
   @override
   Widget build(BuildContext context) {
     final chargestationsState = context.read<ChargestationsBloc>().state;
-    final authState = context.read<AuthBloc>().state;
+    final authState = context.watch<AuthBloc>().state;
     if (chargestationsState is ChargestationsLoaded) {
       final stationInfo = chargestationsState.stationslist
           .firstWhere((st) => st.stationId == widget.station.stationId);

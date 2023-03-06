@@ -11,9 +11,17 @@ class ChargingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Charging session',
-          style: TextStyles.appBarTextStyle,
+        title: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: const [
+            SizedBox(
+              height: 30,
+            ),
+            Text(
+              'Charging session',
+              style: TextStyles.appBarTextStyle,
+            ),
+          ],
         ),
         backgroundColor: AppColors.whiteColor,
         leading: IconButton(
