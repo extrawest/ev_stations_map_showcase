@@ -21,6 +21,8 @@ class HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            //* This commented part only for testing
+
             // ElevatedButton(
             //   onPressed: () async {
             //     Navigator.pushNamed(context, webMap);

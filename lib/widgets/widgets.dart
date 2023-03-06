@@ -12,6 +12,7 @@ export './favorite_outlet_widget.dart';
 export './favorite_station_name_widget.dart';
 export './loading_spiner.dart';
 export './map_background.dart';
+export './map_button_widget.dart';
 export './map_type_bottom_sheet.dart';
 export './outlet_widget.dart';
 export './outlets_list_widget.dart';

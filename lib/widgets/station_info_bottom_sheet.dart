@@ -89,7 +89,6 @@ class _StationInfoBottomWidgetState extends State<StationInfoBottomWidget> {
                   const SizedBox(width: 6),
                   GestureDetector(
                     onTap: () {
-                      // if (GoogleAuth.firebaseUser != null) {
                       if (authState is AuthAutorized) {
                         favoritesBloc.add(FavoritesWrite(
                             stationId: widget.station.stationId));
