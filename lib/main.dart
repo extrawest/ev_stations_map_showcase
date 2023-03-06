@@ -52,10 +52,10 @@ Future<void> main() async {
   runApp(DevicePreview(
     enabled: kIsWeb,
     builder: (context) => app,
-    isToolbarVisible: true,
+    isToolbarVisible: false,
     data: DevicePreviewData(
       deviceIdentifier: Devices.ios.iPhone13.toString(),
-      isFrameVisible: false,
+      isFrameVisible: true,
     ),
   ));
 }
