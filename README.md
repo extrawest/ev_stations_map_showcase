@@ -19,6 +19,7 @@
 
 https://gitlab.extrawest.com/i-training/flutter/ruslan.volkhov_maps_app/-/blob/dev/video_2023-03-07_00-41-19.mp4
 
+[![Watch the video]](https://gitlab.extrawest.com/i-training/flutter/ruslan.volkhov_maps_app/-/blob/dev/video_2023-03-07_00-41-19.mp4)
 
 ## How to run the app
 - **Clone the project.**
