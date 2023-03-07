@@ -39,7 +39,6 @@ class _MapMainScreenState extends State<MapMainScreen> {
           controller: myPage,
           children: const [
             MapScreen(),
-            MapScreen(),
             FavoritesScreen(),
             WalletScreen(),
             AccountScreen(),
@@ -55,19 +54,19 @@ class _MapMainScreenState extends State<MapMainScreen> {
             notchMargin: 14,
             color: AppColors.whiteColor,
             child: Container(
-              height: 90,
+              height: 95,
               alignment: Alignment.center,
               child: BottomTabBar(
                 tabBarItem: getBottomTabBarEnumItem(),
                 onTapMap: () {
                   setState(() {
-                    currentTabIndex = 1;
+                    currentTabIndex = 0;
                     myPage.jumpToPage(currentTabIndex);
                   });
                 },
                 onTapFavorites: () {
                   setState(() {
-                    currentTabIndex = 2;
+                    currentTabIndex = 1;
                     if (authState is AuthAutorized) {
                       favoritesBloc.add(FavoritesRead());
                     }
@@ -76,13 +75,13 @@ class _MapMainScreenState extends State<MapMainScreen> {
                 },
                 onTapWallet: () {
                   setState(() {
-                    currentTabIndex = 3;
+                    currentTabIndex = 2;
                     myPage.jumpToPage(currentTabIndex);
                   });
                 },
                 onTapAccount: () {
                   setState(() {
-                    currentTabIndex = 4;
+                    currentTabIndex = 3;
                     myPage.jumpToPage(currentTabIndex);
                   });
                 },
@@ -96,9 +95,8 @@ class _MapMainScreenState extends State<MapMainScreen> {
           child: FittedBox(
             child: FloatingActionButton(
               backgroundColor: AppColors.whiteColor,
-              onPressed: () => setState(() {
-                Navigator.pushNamed(context, chargingScreenRoute);
-              }),
+              onPressed: () =>
+                  Navigator.pushNamed(context, chargingScreenRoute),
               child: SvgPicture.asset(greyFlash),
             ),
           ),

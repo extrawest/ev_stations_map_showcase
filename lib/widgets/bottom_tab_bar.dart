@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../common/common.dart';
 import '../logic/bloc/bloc.dart';
@@ -75,16 +76,12 @@ class BottomTabBar extends StatelessWidget {
                   fontWeight: FontWeight.w700,
                   height: 0.7),
             ),
-            onPressed: () => ScaffoldMessenger.of(context)
-              ..hideCurrentSnackBar()
-              ..showSnackBar(
-                const SnackBar(
-                  content: Text('\'Made by Extrawest\' button pressed'),
-                ),
-              ),
+            onPressed: () => _launchURL(),
           ),
         ),
-        const SizedBox.shrink(),
+        const SizedBox(
+          height: 5,
+        ),
       ],
     );
   }
@@ -134,5 +131,15 @@ class BottomTabBarMenuItem extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> _launchURL() async {
+  const url = 'https://www.extrawest.com/';
+  final uri = Uri.parse(url);
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri);
+  } else {
+    throw 'Could not launch $url';
   }
 }
