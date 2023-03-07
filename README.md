@@ -18,7 +18,7 @@
 [Stations Map App](https://volkhov-map.web.app)
 
 
-[![Watch the demo](https://gitlab.extrawest.com/i-training/flutter/ruslan.volkhov_maps_app/-/blob/dev/preview.jpg)](https://gitlab.extrawest.com/i-training/flutter/ruslan.volkhov_maps_app/-/blob/dev/video_2023-03-07_00-41-19.mp4)
+[![Watch the demo](https://gitlab.extrawest.com/i-training/flutter/ruslan.volkhov_maps_app/-/raw/8dde99e4509dea671e207c49e16004bc20398d6f/preview.jpg)](https://gitlab.extrawest.com/i-training/flutter/ruslan.volkhov_maps_app/-/blob/dev/video_2023-03-07_00-41-19.mp4)
 
 ## How to run the app
 - **Clone the project.**
