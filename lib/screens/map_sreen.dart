@@ -26,6 +26,7 @@ class MapScreen extends StatefulWidget {
 
 class _MapScreenState extends State<MapScreen> {
   late GoogleMapController mapController;
+  bool isMapControllerInitialized = false;
 
   late ClusterManager _manager;
 
@@ -59,15 +60,7 @@ class _MapScreenState extends State<MapScreen> {
 
     _manager = _initClusterManager();
 
-    myPosition = const LatLng(0, 0);
-
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if (!kIsWeb) {
-        await requestPermission(() {
-          showPermissionDialog(context);
-        });
-      }
-    });
+    myPosition = const LatLng(51.974059, 5.340242465576188);
 
     super.initState();
   }
@@ -84,57 +77,67 @@ class _MapScreenState extends State<MapScreen> {
       home: Scaffold(
         body: Stack(
           children: [
-            BlocBuilder<ChargestationsBloc, ChargestationsState>(
-              builder: (context, state) {
-                if (state is ChargestationsLoading) {
-                  return const Center(child: CircularProgressIndicator());
-                } else if (state is ChargestationsLoaded) {
-                  return myPosition.latitude == 0 && myPosition.longitude == 0
-                      ? const Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : GoogleMap(
-                          scrollGesturesEnabled: !isIgnorePointer,
-                          gestureRecognizers: {
-                            Factory<OneSequenceGestureRecognizer>(
-                                () => ScaleGestureRecognizer()),
-                          },
-                          zoomControlsEnabled: false,
-                          mapType: _currentMapType,
-                          onMapCreated: (GoogleMapController controller) async {
-                            await _onMapCreated(controller);
+            BlocConsumer<JumpToMarkerBloc, JumpToMarkerState>(
+              listener: (context, jumpState) {
+                if (jumpState is JumpToMarkerLoaded) {
+                  setState(() {
+                    myPosition = jumpState.position;
+                    moveCameraTo(position: myPosition, zoom: 15);
+                  });
+                }
+              },
+              builder: (context, jumpState) {
+                return BlocBuilder<ChargestationsBloc, ChargestationsState>(
+                  builder: (context, state) {
+                    if (state is ChargestationsLoading) {
+                      return const Center(child: CircularProgressIndicator());
+                    } else if (state is ChargestationsLoaded) {
+                      return GoogleMap(
+                        scrollGesturesEnabled: !isIgnorePointer,
+                        zoomControlsEnabled: isIgnorePointer,
+                        gestureRecognizers: {
+                          Factory<OneSequenceGestureRecognizer>(
+                              () => ScaleGestureRecognizer()),
+                        },
+                        mapType: _currentMapType,
+                        onMapCreated: (GoogleMapController controller) async {
+                          if (jumpState is! JumpToMarkerLoaded) {
+                            await _onMapCreated(controller, myPosition);
                             placeItems
                                 .addAll(setPlaceItems(state.stationslist));
-                          },
-                          initialCameraPosition: CameraPosition(
-                            target: LatLng(
-                              myPosition.latitude,
-                              myPosition.longitude,
-                            ),
-                            zoom: 11.0,
+                          }
+                        },
+                        initialCameraPosition: CameraPosition(
+                          target: LatLng(
+                            myPosition.latitude,
+                            myPosition.longitude,
                           ),
-                          markers: {
-                            Marker(
-                                markerId: const MarkerId('myPosition'),
-                                position: LatLng(
-                                  myPosition.latitude,
-                                  myPosition.longitude,
-                                ),
-                                draggable: true,
-                                onDragEnd: (value) {},
-                                onTap: null,
-                                icon: myMarkerIcon),
-                            ...markers,
-                          },
-                          myLocationButtonEnabled: false,
-                          onCameraMove: _onCameraMove,
-                          onCameraIdle: _manager.updateMap,
-                        );
-                } else {
-                  return const Center(
-                    child: Text('Error ChargestationsBloc'),
-                  );
-                }
+                          zoom: 11.0,
+                        ),
+                        markers: {
+                          Marker(
+                              markerId: const MarkerId('myPosition'),
+                              position: LatLng(
+                                myPosition.latitude,
+                                myPosition.longitude,
+                              ),
+                              draggable: true,
+                              onDragEnd: (value) {},
+                              onTap: null,
+                              icon: myMarkerIcon),
+                          ...markers,
+                        },
+                        myLocationButtonEnabled: false,
+                        onCameraMove: _onCameraMove,
+                        onCameraIdle: _manager.updateMap,
+                      );
+                    } else {
+                      return const Center(
+                        child: Text('Error ChargestationsBloc'),
+                      );
+                    }
+                  },
+                );
               },
             ),
             Padding(
@@ -144,7 +147,14 @@ class _MapScreenState extends State<MapScreen> {
               ),
               child: CustomTextField(
                 readOnly: true,
-                ontap: () => openScreenWithFade(context, const SearchScreen()),
+                ontap: () async => openScreenWithFade(
+                    context,
+                    const SearchScreen(
+                        // moveCameraTo: (searchPosition) => moveCameraTo(
+                        //   position: searchPosition,
+                        //   zoom: 15,
+                        // ),
+                        )),
                 hint: 'Type here',
                 prefixIcon: SvgPicture.asset(searchIcon),
               ),
@@ -193,17 +203,27 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {});
   }
 
-  Future<void> _onMapCreated(GoogleMapController controller) async {
-    mapController = controller;
-    _controller.complete(controller);
-    _manager.setMapId(controller.mapId);
+  Future<void> _onMapCreated(
+      GoogleMapController controller, LatLng? position) async {
+    if (isMapControllerInitialized == false) {
+      mapController = controller;
+      _controller.complete(controller);
+      _manager.setMapId(controller.mapId);
+
+      setState(() {
+        isMapControllerInitialized = true;
+      });
+    }
+
     // if (!kIsWeb) {
     //   await requestPermission(() {
     //     showPermissionDialog(context);
     //   });
     // } else {
     if (kIsWeb) {
-      await getPosition();
+      if (position == null) {
+        await getPosition();
+      }
       await moveCameraTo(position: myPosition, zoom: 15);
     }
   }
@@ -229,8 +249,8 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {});
   }
 
-  Future<void> moveCameraTo({required LatLng position, double? zoom}) {
-    return mapController.animateCamera(
+  Future<void> moveCameraTo({required LatLng position, double? zoom}) async {
+    return await mapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
           target: LatLng(

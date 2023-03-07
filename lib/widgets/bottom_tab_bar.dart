@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -138,7 +139,10 @@ Future<void> _launchURL() async {
   const url = 'https://www.extrawest.com/';
   final uri = Uri.parse(url);
   if (await canLaunchUrl(uri)) {
-    await launchUrl(uri);
+    await launchUrl(uri,
+        mode: kIsWeb
+            ? LaunchMode.externalApplication
+            : LaunchMode.platformDefault);
   } else {
     throw 'Could not launch $url';
   }

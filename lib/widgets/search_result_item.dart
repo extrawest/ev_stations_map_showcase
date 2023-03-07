@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -11,13 +12,17 @@ import '../utils/utils.dart';
 
 class SearchResultItem extends StatelessWidget {
   final ChargestationsModel station;
+  final void Function() onTap;
   const SearchResultItem({
-    super.key,
+    Key? key,
     required this.station,
-  });
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final jumpBloc = context.read<JumpToMarkerBloc>();
+
     return BlocBuilder<FavoritesBloc, FavoritesState>(
       builder: (context, state) {
         return GestureDetector(
@@ -60,9 +65,24 @@ class SearchResultItem extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 4),
-                      Container(
-                          padding: const EdgeInsets.all(5),
-                          child: SvgPicture.asset(rightSign)),
+                      GestureDetector(
+                        onTap: () {
+                          onTap();
+                          jumpBloc.add(JumpToMarkerWithCoordinates(
+                            LatLng(
+                              station.latitude ?? 0,
+                              station.longitude ?? 0,
+                            ),
+                          ));
+                        },
+                        // onTap(LatLng(
+                        //   station.latitude ?? 0,
+                        //   station.longitude ?? 0,
+                        // )),
+                        child: Container(
+                            padding: const EdgeInsets.all(5),
+                            child: SvgPicture.asset(rightSign)),
+                      ),
                     ],
                   ),
                 ],

@@ -109,16 +109,16 @@ class _MapMainScreenState extends State<MapMainScreen> {
   BottomTabBarItem getBottomTabBarEnumItem() {
     BottomTabBarItem result;
     switch (currentTabIndex) {
-      case 2:
+      case 1:
         result = BottomTabBarItem.favorites;
         break;
-      case 3:
+      case 2:
         result = BottomTabBarItem.wallet;
         break;
-      case 4:
+      case 3:
         result = BottomTabBarItem.account;
         break;
-      case 5:
+      case 4:
         result = BottomTabBarItem.charging;
         break;
       default:

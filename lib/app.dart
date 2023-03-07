@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:volkhov_maps_app/logic/bloc/jump_to_marker/jump_to_marker_bloc.dart';
 import 'package:volkhov_maps_app/routes.dart';
 import 'package:volkhov_maps_app/theme/theme.dart';
 
@@ -40,7 +41,10 @@ class Application extends StatelessWidget {
         ),
         BlocProvider(
           create: (_) => AuthBloc(authRepository: AuthGoogleImplement()),
-        )
+        ),
+        BlocProvider(
+          create: (_) => JumpToMarkerBloc(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Provider Starter',

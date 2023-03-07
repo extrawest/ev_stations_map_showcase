@@ -1,5 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../logic/bloc/bloc.dart';
 import '../models/models.dart';
@@ -7,7 +9,12 @@ import '../theme/themes.dart';
 import '../widgets/widgets.dart';
 
 class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+  // final Function(LatLng)? moveCameraTo;
+
+  const SearchScreen({
+    // this.moveCameraTo,
+    Key? key,
+  }) : super(key: key);
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -42,7 +49,6 @@ class _SearchScreenState extends State<SearchScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        // title: const Text('Search station'),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         foregroundColor: AppColors.blackColor,
         shadowColor: Colors.transparent,
@@ -92,6 +98,12 @@ class _SearchScreenState extends State<SearchScreen> {
                                 itemCount: searchState.foundStations.length,
                                 itemBuilder: (context, index) =>
                                     SearchResultItem(
+                                  onTap: () async {
+                                    Navigator.of(context).pop();
+                                    // if (widget.moveCameraTo != null) {
+                                    //   widget.moveCameraTo!(position);
+                                    // }
+                                  },
                                   station: searchState.foundStations[index],
                                 ),
                               ),
