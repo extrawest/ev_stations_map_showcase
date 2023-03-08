@@ -101,8 +101,10 @@ class _MapScreenState extends State<MapScreen> {
                         },
                         mapType: _currentMapType,
                         onMapCreated: (GoogleMapController controller) async {
-                          if (jumpState is! JumpToMarkerLoaded) {
-                            await _onMapCreated(controller, myPosition);
+                          if (jumpState is JumpToMarkerLoaded) {
+                            await _onMapCreated(controller, false);
+                          } else {
+                            await _onMapCreated(controller, true);
                             placeItems
                                 .addAll(setPlaceItems(state.stationslist));
                           }
@@ -204,7 +206,7 @@ class _MapScreenState extends State<MapScreen> {
   }
 
   Future<void> _onMapCreated(
-      GoogleMapController controller, LatLng? position) async {
+      GoogleMapController controller, bool shouldGetPosition) async {
     if (isMapControllerInitialized == false) {
       mapController = controller;
       _controller.complete(controller);
@@ -221,7 +223,7 @@ class _MapScreenState extends State<MapScreen> {
     //   });
     // } else {
     if (kIsWeb) {
-      if (position == null) {
+      if (shouldGetPosition) {
         await getPosition();
       }
       await moveCameraTo(position: myPosition, zoom: 15);
