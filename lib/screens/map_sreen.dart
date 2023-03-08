@@ -82,7 +82,7 @@ class _MapScreenState extends State<MapScreen> {
                 if (jumpState is JumpToMarkerLoaded) {
                   setState(() {
                     myPosition = jumpState.position;
-                    moveCameraTo(position: myPosition, zoom: 15);
+                    moveCameraTo(position: myPosition, zoom: 14);
                   });
                 }
               },
@@ -149,14 +149,8 @@ class _MapScreenState extends State<MapScreen> {
               ),
               child: CustomTextField(
                 readOnly: true,
-                ontap: () async => openScreenWithFade(
-                    context,
-                    const SearchScreen(
-                        // moveCameraTo: (searchPosition) => moveCameraTo(
-                        //   position: searchPosition,
-                        //   zoom: 15,
-                        // ),
-                        )),
+                ontap: () async =>
+                    openScreenWithFade(context, const SearchScreen()),
                 hint: 'Type here',
                 prefixIcon: SvgPicture.asset(searchIcon),
               ),

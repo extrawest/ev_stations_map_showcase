@@ -57,6 +57,10 @@ class FavoritesScreen extends StatelessWidget {
                   return FavoriteItemWidget(
                     item: favoriteItem,
                   );
+                } else if (favoriteState is FavoritesError) {
+                  return Text('Favorites error: ${favoriteState.error}');
+                } else {
+                  return const Center(child: CircularProgressIndicator());
                 }
               },
               childCount: (favoriteState is FavoritesLoaded)
