@@ -224,7 +224,7 @@ class _MapScreenState extends State<MapScreen> {
     // } else {
     if (kIsWeb) {
       if (shouldGetPosition) {
-        await getPosition();
+        getPosition();
       }
       await moveCameraTo(position: myPosition, zoom: 15);
     }
