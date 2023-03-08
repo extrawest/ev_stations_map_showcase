@@ -50,11 +50,14 @@ class FavoritesScreen extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                final favoriteItem = chargestationState.stationslist[index];
-
-                return FavoriteItemWidget(
-                  item: favoriteItem,
-                );
+                if (favoriteState is FavoritesLoaded) {
+                  final favoriteId = favoriteState.favoriteIds[index];
+                  final favoriteItem = chargestationState.stationslist
+                      .firstWhere((element) => element.stationId == favoriteId);
+                  return FavoriteItemWidget(
+                    item: favoriteItem,
+                  );
+                }
               },
               childCount: (favoriteState is FavoritesLoaded)
                   ? favoriteState.favoriteIds.length

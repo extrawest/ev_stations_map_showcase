@@ -26,12 +26,6 @@ class SearchResultItem extends StatelessWidget {
     return BlocBuilder<FavoritesBloc, FavoritesState>(
       builder: (context, state) {
         return GestureDetector(
-          // onTap: () {
-          //   showStationInfo(
-          //     context: context,
-          //     onFavoriteTap: () {},
-          //   );
-          // },
           child: Container(
               color: Colors.transparent,
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
@@ -75,10 +69,6 @@ class SearchResultItem extends StatelessWidget {
                             ),
                           ));
                         },
-                        // onTap(LatLng(
-                        //   station.latitude ?? 0,
-                        //   station.longitude ?? 0,
-                        // )),
                         child: Container(
                             padding: const EdgeInsets.all(5),
                             child: SvgPicture.asset(rightSign)),

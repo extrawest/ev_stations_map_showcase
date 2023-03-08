@@ -78,7 +78,7 @@ class _StationInfoBottomWidgetState extends State<StationInfoBottomWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        '${stationInfo.tenantId}',
+                        stationInfo.stationId,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                             fontSize: 16, fontWeight: FontWeight.w500),

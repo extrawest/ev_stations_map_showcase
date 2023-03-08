@@ -18,6 +18,8 @@ class FavoriteCoordinatesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final routingBloc = context.read<RoutingBloc>();
+    final jumpBloc = context.read<JumpToMarkerBloc>();
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 17),
       child: Row(
@@ -50,8 +52,15 @@ class FavoriteCoordinatesWidget extends StatelessWidget {
           ),
           const SizedBox(width: 11),
           GestureDetector(
-              onTap: () =>
-                  routingBloc.add(const RoutingTransition(pageIndex: 0)),
+              onTap: () {
+                routingBloc.add(const RoutingTransition(pageIndex: 0));
+                jumpBloc.add(JumpToMarkerWithCoordinates(
+                  LatLng(
+                    coordinate.latitude,
+                    coordinate.longitude,
+                  ),
+                ));
+              },
               child: SvgPicture.asset(rightSign))
         ],
       ),
