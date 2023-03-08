@@ -28,10 +28,6 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     focus.requestFocus();
-    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-    //   final chargeDtationBloc = context.read<ChargestationsBloc>();
-    //   chargeDtationBloc.add(ChargestationsStarted());
-    // });
 
     super.initState();
   }
@@ -56,15 +52,7 @@ class _SearchScreenState extends State<SearchScreen> {
         foregroundColor: AppColors.blackColor,
         shadowColor: Colors.transparent,
       ),
-      body:
-          // BlocListener<ChargestationsBloc, ChargestationsState>(
-          //   listener: (context, state) {
-          //     if (state is ChargestationsLoaded) {
-          //       stations = state.stationslist;
-          //     }
-          //   },
-          // child:
-          BlocBuilder<SearchStationBloc, SearchStationState>(
+      body: BlocBuilder<SearchStationBloc, SearchStationState>(
         builder: (context, state) {
           return Column(
             children: [

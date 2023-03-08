@@ -395,6 +395,7 @@ void showStationInfoBottomSheet({
         return StationInfoBottomWidget(
           onClose: onClose,
           station: station,
+          onJumpTap: () => Navigator.of(context, rootNavigator: true).pop(),
           addRemoveFavorite: addRemoveFavorite,
         );
       });

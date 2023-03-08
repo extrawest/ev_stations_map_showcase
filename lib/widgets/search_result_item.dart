@@ -26,12 +26,12 @@ class SearchResultItem extends StatelessWidget {
     return BlocBuilder<FavoritesBloc, FavoritesState>(
       builder: (context, state) {
         return GestureDetector(
-          onTap: () {
-            showStationInfo(
-              context: context,
-              onFavoriteTap: () {},
-            );
-          },
+          // onTap: () {
+          //   showStationInfo(
+          //     context: context,
+          //     onFavoriteTap: () {},
+          //   );
+          // },
           child: Container(
               color: Colors.transparent,
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),

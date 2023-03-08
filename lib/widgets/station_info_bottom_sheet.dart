@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../logic/bloc/bloc.dart';
 import '../models/models.dart';
@@ -13,12 +14,14 @@ class StationInfoBottomWidget extends StatefulWidget {
   final Place station;
   final Function()? addRemoveFavorite;
   final Function()? onClose;
+  final void Function()? onJumpTap;
 
   const StationInfoBottomWidget({
     Key? key,
     required this.station,
     this.addRemoveFavorite,
     this.onClose,
+    this.onJumpTap,
   }) : super(key: key);
 
   @override
@@ -50,6 +53,7 @@ class _StationInfoBottomWidgetState extends State<StationInfoBottomWidget> {
         favoriteIds = favoriteState.favoriteIds;
       }
       final isFavorite = isIdFavorite(favoriteIds, widget.station.stationId);
+      final jumpBloc = context.read<JumpToMarkerBloc>();
 
       return Container(
           padding: const EdgeInsets.all(16),
@@ -130,7 +134,21 @@ class _StationInfoBottomWidgetState extends State<StationInfoBottomWidget> {
                     style: TextStyles.textStyle,
                   ),
                   const SizedBox(width: 11),
-                  SvgPicture.asset(rightSign)
+                  GestureDetector(
+                      onTap: () {
+                        if (widget.onJumpTap != null) {
+                          widget.onJumpTap!();
+                        }
+                        jumpBloc.add(
+                          JumpToMarkerWithCoordinates(
+                            LatLng(
+                              stationInfo.latitude ?? 0,
+                              stationInfo.longitude ?? 0,
+                            ),
+                          ),
+                        );
+                      },
+                      child: SvgPicture.asset(rightSign))
                 ],
               ),
               const SizedBox(height: 25),
