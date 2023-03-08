@@ -61,7 +61,6 @@ class OutletWidget extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           Container(
-            // margin: const EdgeInsets.all(8),
             padding: const EdgeInsets.symmetric(vertical: 5),
             width: 76,
             decoration: BoxDecoration(

@@ -10,8 +10,11 @@ class LoadingSpinner extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.all(16),
-      child:
-          Center(child: CircularProgressIndicator(color: AppColors.blueColor)),
+      child: Center(
+        child: CircularProgressIndicator(
+          color: AppColors.blueColor,
+        ),
+      ),
     );
   }
 }

@@ -22,7 +22,10 @@ class FavoritesScreen extends StatelessWidget {
               const Align(
                 child: Padding(
                   padding: EdgeInsets.only(top: 52),
-                  child: Text('Favorites', style: TextStyles.headerTextStyle),
+                  child: Text(
+                    'Favorites',
+                    style: TextStyles.headerTextStyle,
+                  ),
                 ),
               ),
             ],

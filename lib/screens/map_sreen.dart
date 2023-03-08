@@ -211,11 +211,6 @@ class _MapScreenState extends State<MapScreen> {
       });
     }
 
-    // if (!kIsWeb) {
-    //   await requestPermission(() {
-    //     showPermissionDialog(context);
-    //   });
-    // } else {
     if (kIsWeb) {
       if (shouldGetPosition) {
         getPosition();
@@ -245,7 +240,10 @@ class _MapScreenState extends State<MapScreen> {
     setState(() {});
   }
 
-  Future<void> moveCameraTo({required LatLng position, double? zoom}) async {
+  Future<void> moveCameraTo({
+    required LatLng position,
+    double? zoom,
+  }) async {
     return await mapController.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
