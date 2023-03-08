@@ -45,6 +45,9 @@ class Application extends StatelessWidget {
         BlocProvider(
           create: (_) => JumpToMarkerBloc(),
         ),
+        BlocProvider(
+          create: (_) => RoutingBloc(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Provider Starter',

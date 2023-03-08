@@ -7,8 +7,6 @@ abstract class WalletState extends Equatable {
   List<Object> get props => [];
 }
 
-// class WalletInitial extends WalletState {}
-
 class WalletLoading extends WalletState {}
 
 class WalletLoaded extends WalletState {

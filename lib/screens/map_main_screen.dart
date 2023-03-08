@@ -28,8 +28,9 @@ class _MapMainScreenState extends State<MapMainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final favoritesBloc = context.read<FavoritesBloc>();
-    final authState = context.watch<AuthBloc>().state;
+    // final favoritesBloc = context.read<FavoritesBloc>();
+    // final authState = context.watch<AuthBloc>().state;
+    final routingBloc = context.read<RoutingBloc>();
 
     return MaterialApp(
       home: Scaffold(
@@ -49,42 +50,64 @@ class _MapMainScreenState extends State<MapMainScreen> {
             primaryColor: Colors.transparent,
             splashColor: Colors.transparent,
           ),
-          child: BottomAppBar(
-            shape: const CircularNotchedRectangle(),
-            notchMargin: 14,
-            color: AppColors.whiteColor,
-            child: Container(
-              height: 95,
-              alignment: Alignment.center,
-              child: BottomTabBar(
-                tabBarItem: getBottomTabBarEnumItem(),
-                onTapMap: () {
-                  setState(() {
-                    currentTabIndex = 0;
-                    myPage.jumpToPage(currentTabIndex);
-                  });
-                },
-                onTapFavorites: () {
-                  setState(() {
-                    currentTabIndex = 1;
-                    if (authState is AuthAutorized) {
-                      favoritesBloc.add(FavoritesRead());
-                    }
-                    myPage.jumpToPage(currentTabIndex);
-                  });
-                },
-                onTapWallet: () {
-                  setState(() {
-                    currentTabIndex = 2;
-                    myPage.jumpToPage(currentTabIndex);
-                  });
-                },
-                onTapAccount: () {
-                  setState(() {
-                    currentTabIndex = 3;
-                    myPage.jumpToPage(currentTabIndex);
-                  });
-                },
+          child: BlocListener<RoutingBloc, RoutingState>(
+            listener: (context, state) {
+              if (state is RoutingLoaded) {
+                setState(() {
+                  currentTabIndex = state.pageIndex;
+                  myPage.jumpToPage(currentTabIndex);
+                });
+              }
+            },
+            child: BottomAppBar(
+              shape: const CircularNotchedRectangle(),
+              notchMargin: 14,
+              color: AppColors.whiteColor,
+              child: Container(
+                height: 95,
+                alignment: Alignment.center,
+                child: BottomTabBar(
+                  tabBarItem: getBottomTabBarEnumItem(),
+                  onTapMap:
+                      // () {
+                      //   setState(() {
+                      //     currentTabIndex = 0;
+                      //     myPage.jumpToPage(currentTabIndex);
+                      //   });
+                      // }
+                      () => routingBloc
+                          .add(const RoutingTransition(pageIndex: 0)),
+                  onTapFavorites:
+                      // () {
+                      //   setState(() {
+                      //     currentTabIndex = 1;
+                      //     if (authState is AuthAutorized) {
+                      //       favoritesBloc.add(FavoritesRead());
+                      //     }
+                      //     myPage.jumpToPage(currentTabIndex);
+                      //   });
+                      // },
+                      () => routingBloc
+                          .add(const RoutingTransition(pageIndex: 1)),
+                  onTapWallet:
+                      // () {
+                      //   setState(() {
+                      //     currentTabIndex = 2;
+                      //     myPage.jumpToPage(currentTabIndex);
+                      //   });
+                      // },
+                      () => routingBloc
+                          .add(const RoutingTransition(pageIndex: 2)),
+                  onTapAccount:
+                      // () {
+                      //   setState(() {
+                      //     currentTabIndex = 3;
+                      //     myPage.jumpToPage(currentTabIndex);
+                      //   });
+                      // },
+                      () => routingBloc
+                          .add(const RoutingTransition(pageIndex: 3)),
+                ),
               ),
             ),
           ),
