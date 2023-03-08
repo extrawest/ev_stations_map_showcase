@@ -28,10 +28,10 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     focus.requestFocus();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      final chargeDtationBloc = context.read<ChargestationsBloc>();
-      chargeDtationBloc.add(ChargestationsStarted());
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+    //   final chargeDtationBloc = context.read<ChargestationsBloc>();
+    //   chargeDtationBloc.add(ChargestationsStarted());
+    // });
 
     super.initState();
   }
@@ -46,78 +46,82 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     final searchBloc = context.read<SearchStationBloc>();
-
+    final stationBlocState = context.read<ChargestationsBloc>().state;
+    if (stationBlocState is ChargestationsLoaded) {
+      stations = stationBlocState.stationslist;
+    }
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         foregroundColor: AppColors.blackColor,
         shadowColor: Colors.transparent,
       ),
-      body: BlocListener<ChargestationsBloc, ChargestationsState>(
-        listener: (context, state) {
-          if (state is ChargestationsLoaded) {
-            stations = state.stationslist;
-          }
-        },
-        child: BlocBuilder<SearchStationBloc, SearchStationState>(
-          builder: (context, state) {
-            return Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                  ),
-                  child: CustomTextField(
-                    textEditingController: _textController,
-                    focusNode: focus,
-                    onCancelTap: () => setState(() {
-                      _textController.clear();
-                      searchBloc.add(const SearchStationClearSearch());
-                    }),
-                    onChanged: (input) {
-                      searchBloc.add(SearchStationFindItem(
-                        searchString: input,
-                        stations: stations,
-                      ));
-                    },
-                  ),
+      body:
+          // BlocListener<ChargestationsBloc, ChargestationsState>(
+          //   listener: (context, state) {
+          //     if (state is ChargestationsLoaded) {
+          //       stations = state.stationslist;
+          //     }
+          //   },
+          // child:
+          BlocBuilder<SearchStationBloc, SearchStationState>(
+        builder: (context, state) {
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
                 ),
-                BlocBuilder<SearchStationBloc, SearchStationState>(
-                  builder: (context, searchState) {
-                    if (searchState is SearchStationLoading) {
-                      return const LoadingSpinner();
-                    } else if (searchState is SearchStationInitial) {
-                      return const SizedBox();
-                    } else if (searchState is SearchStationError) {
-                      return const Center(child: Text('error'));
-                    } else if (searchState is SearchStationFound) {
-                      return searchState.foundStations.isEmpty
-                          ? const SearchNoResultWidget()
-                          : Expanded(
-                              child: ListView.builder(
-                                itemCount: searchState.foundStations.length,
-                                itemBuilder: (context, index) =>
-                                    SearchResultItem(
-                                  onTap: () async {
-                                    Navigator.of(context).pop();
-                                    // if (widget.moveCameraTo != null) {
-                                    //   widget.moveCameraTo!(position);
-                                    // }
-                                  },
-                                  station: searchState.foundStations[index],
-                                ),
-                              ),
-                            );
-                    } else {
-                      return const SizedBox();
-                    }
+                child: CustomTextField(
+                  textEditingController: _textController,
+                  focusNode: focus,
+                  onCancelTap: () => setState(() {
+                    _textController.clear();
+                    searchBloc.add(const SearchStationClearSearch());
+                  }),
+                  onChanged: (input) {
+                    searchBloc.add(SearchStationFindItem(
+                      searchString: input,
+                      stations: stations,
+                    ));
                   },
                 ),
-              ],
-            );
-          },
-        ),
+              ),
+              BlocBuilder<SearchStationBloc, SearchStationState>(
+                builder: (context, searchState) {
+                  if (searchState is SearchStationLoading) {
+                    return const LoadingSpinner();
+                  } else if (searchState is SearchStationInitial) {
+                    return const SizedBox();
+                  } else if (searchState is SearchStationError) {
+                    return const Center(child: Text('error'));
+                  } else if (searchState is SearchStationFound) {
+                    return searchState.foundStations.isEmpty
+                        ? const SearchNoResultWidget()
+                        : Expanded(
+                            child: ListView.builder(
+                              itemCount: searchState.foundStations.length,
+                              itemBuilder: (context, index) => SearchResultItem(
+                                onTap: () async {
+                                  Navigator.of(context).pop();
+                                  // if (widget.moveCameraTo != null) {
+                                  //   widget.moveCameraTo!(position);
+                                  // }
+                                },
+                                station: searchState.foundStations[index],
+                              ),
+                            ),
+                          );
+                  } else {
+                    return const SizedBox();
+                  }
+                },
+              ),
+            ],
+          );
+        },
       ),
+      // ),
     );
   }
 }
