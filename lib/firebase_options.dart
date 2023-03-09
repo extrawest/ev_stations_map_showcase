@@ -70,7 +70,7 @@ class DefaultFirebaseOptions {
     messagingSenderId: '552264685697',
     projectId: 'volkhov-map',
     storageBucket: 'volkhov-map.appspot.com',
-    androidClientId: '552264685697-ps0o22nrnrbpgsiqppbganvbd2qkakut.apps.googleusercontent.com',
+    androidClientId: '552264685697-idikfmrflmphrvudlf9tchgrg7ishq8g.apps.googleusercontent.com',
     iosClientId: '552264685697-bludjsqoo8b0qifpvlsfq7gd1jph71p0.apps.googleusercontent.com',
     iosBundleId: 'com.extrawest.volkhovMapsApp',
   );
