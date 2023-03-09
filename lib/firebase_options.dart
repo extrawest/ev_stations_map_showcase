@@ -53,6 +53,7 @@ class DefaultFirebaseOptions {
     projectId: 'volkhov-map',
     authDomain: 'volkhov-map.firebaseapp.com',
     storageBucket: 'volkhov-map.appspot.com',
+    measurementId: 'G-3KWQE5ECGP',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
