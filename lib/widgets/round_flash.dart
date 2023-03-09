@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-// import 'package:flutter_svg/svg.dart';
-import 'package:volkhov_maps_app/theme/app_colors.dart';
-import 'package:volkhov_maps_app/theme/assets.dart';
+
+import '../theme/themes.dart';
 
 class RoundFlash extends StatelessWidget {
   final Color color;

@@ -54,8 +54,8 @@ Future<void> main() async {
     builder: (context) => app,
     isToolbarVisible: false,
     data: DevicePreviewData(
-      deviceIdentifier: Devices.android.onePlus8Pro.toString(),
-      isFrameVisible: false,
+      deviceIdentifier: Devices.ios.iPhone13.toString(),
+      isFrameVisible: true,
     ),
   ));
 }

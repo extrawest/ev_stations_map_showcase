@@ -1,62 +1,79 @@
-# Ruslan.Volkhov Maps App
+# Flutter Stations Map App
+
+[![Maintanence](https://img.shields.io/badge/Maintenance-yes%3F-blue.svg)]()
+[![Codemagic build status](https://api.codemagic.io/apps/63905b4f2551810eda63638f/63905b4f2551810eda63638e/status_badge.svg)](https://codemagic.io/app/63fc69846e27169aa2005e16/build/6405abad783b638b2c4582ce)
+[![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)]()
+![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)
+![GitHub release](https://img.shields.io/badge/release-v1.0.0-blue)
+[![View DEMO](https://img.shields.io/badge/VIEW-DEMO-lightgreen.svg)](https://volkhov-map.web.app)
+
+## Project info 
+- This project is a app that shows a map with Electric Charging Stations and their information. The app supports station markers clustering.
+- The app runs on Android, iOS and Web.
+- The app is built using Flutter 3.3.7 and Dart.
+- The app is built using the MVVM architecture.
+- The app is built using the BLoC pattern.
+
+## Demo
+[Stations Map App](https://volkhov-map.web.app)
 
 
-## CREATE CREDENTIALS FILES FOR DEVELOPMENT AND PRODUCTION MODE
+**To watch demo click the image:**
 
-Create `credentials_production.json` and `credentials_development.json` inside the `assets` folder.
-Do not add these files to GIT!
-Files should have the following structure:
+[![Watch the demo](https://gitlab.extrawest.com/i-training/flutter/ruslan.volkhov_maps_app/-/raw/8dde99e4509dea671e207c49e16004bc20398d6f/preview.jpg)](https://gitlab.extrawest.com/i-training/flutter/ruslan.volkhov_maps_app/-/blob/dev/video_2023-03-07_00-41-19.mp4)
 
-```json
-{
-  "appName": "",
-  "flavorName": "",
-  "apiDomain": ""
-}
-```
-Where:
-- `flavorName` could be 'prod' or 'dev' (depends on the environment)
-- Values for `appName` and `flavorName` should be according to your project respectively
-- Value for `apiDomain`, can be obtained on the backend
-
-## RUN THE APP IN DEVELOPMENT OR PRODUCTION MODE
-
-In order to run in production mode provide an additional `IS_PRODUCTION` argument to the run
-command:
-
+## How to run the app
+- **Clone the project.**
 ```shell
-flutter run --dart-define IS_PRODUCTION=true
+git clone https://gitlab.extrawest.com/i-training/flutter/ruslan.volkhov_maps_app.git
 ```
-
-Important! To create the production build of the app you should also provider an
-additional `--dart-define IS_PRODUCTION=true` argument:
-
+- **Open the project.**
 ```shell
-flutter build ipa --dart-define IS_PRODUCTION=true
+cd your_name_here
+```
+- **Get packages.**
+```shell
+flutter pub get
+```
+- **Configure firebase project with flutterfire.**
+```shell
+flutterfire configure
+```
+- **Run the app with your api key for the map as additional run argument.**
+```
+    flutter run --dart-define MAP_API_KEY="{YOUR_API_KEY_HERE}"
+```
+
+At this point you should be able to run the app on your device or emulator.
+
+## Firebase hosting
+
+1. In order to deploy this app to Firebase hosting, follow these commands
+
+- **Login to firebase.**
+```shell
+firebase login
+```
+- **Initialize firebase.**
+```shell
+firebase init
+```
+- **Choose account, then choose Hosting as an option.**
+- **Select Firebase project**
+- **Select public directory for your hosting**
+build/web (default)
+- **Configure as a single-page app**
+- **Build the project if you haven't yet**
+```shell
+flutter build web
+```
+- **Deploy to firebase.**
+```shell
+firebase deploy
 ```
 
 
-### Contributing
+Created by **Ruslan Volkhov**
 
-1. Fork it!
-1. Create your feature branch: `git checkout -b new-cool-tip`
-1. Commit your changes: `git commit -am 'Added new tip'`
-1. Push to the branch: `git push origin new-cool-tip`
-1. Submit a pull request.
+[Extrawest.com](https://www.extrawest.com), 2023
 
----
-Created by Extrawest Mobile Team
-[Extrawest.com](https://www.extrawest.com), 2022
----
-## Generate code
-fvm flutter pub run build_runner build --delete-conflicting-outputs
-
-##  Run App with arguments for using Google map:
-#   For Android:
-fvm flutter run --dart-define DEFINE_ANDROID_KEY=API_KEY_FOR_ANDROID
-
-#   For iOS:
-fvm flutter run --dart-define DEFINE_IOS_KEY=API_KEY_FOR_IOS
-
-#   For web:
-fvm flutter run --dart-define DEFINE_WEB_KEY=API_KEY_FOR_WEB

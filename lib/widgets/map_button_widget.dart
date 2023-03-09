@@ -5,7 +5,12 @@ import '../theme/themes.dart';
 class MapButton extends StatelessWidget {
   final String image;
   final Function() onTap;
-  const MapButton({super.key, required this.image, required this.onTap});
+
+  const MapButton({
+    super.key,
+    required this.image,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {

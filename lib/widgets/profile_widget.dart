@@ -40,7 +40,12 @@ class _ProfileWidgetState extends State<ProfileWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(top: 52, bottom: 158, left: 16, right: 16),
+      padding: const EdgeInsets.only(
+        top: 52,
+        bottom: 158,
+        left: 16,
+        right: 16,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

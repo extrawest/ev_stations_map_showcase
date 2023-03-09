@@ -11,22 +11,20 @@ import '../utils/utils.dart';
 
 class SearchResultItem extends StatelessWidget {
   final ChargestationsModel station;
+  final void Function() onTap;
   const SearchResultItem({
-    super.key,
+    Key? key,
     required this.station,
-  });
+    required this.onTap,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final jumpBloc = context.read<JumpToMarkerBloc>();
+
     return BlocBuilder<FavoritesBloc, FavoritesState>(
       builder: (context, state) {
         return GestureDetector(
-          onTap: () {
-            showStationInfo(
-              context: context,
-              onFavoriteTap: () {},
-            );
-          },
           child: Container(
               color: Colors.transparent,
               padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
@@ -60,9 +58,20 @@ class SearchResultItem extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 4),
-                      Container(
-                          padding: const EdgeInsets.all(5),
-                          child: SvgPicture.asset(rightSign)),
+                      GestureDetector(
+                        onTap: () {
+                          onTap();
+                          jumpBloc.add(JumpToMarkerWithCoordinates(
+                            LatLng(
+                              station.latitude ?? 0,
+                              station.longitude ?? 0,
+                            ),
+                          ));
+                        },
+                        child: Container(
+                            padding: const EdgeInsets.all(5),
+                            child: SvgPicture.asset(rightSign)),
+                      ),
                     ],
                   ),
                 ],
@@ -72,8 +81,10 @@ class SearchResultItem extends StatelessWidget {
     );
   }
 
-  void showStationInfo(
-      {required BuildContext context, required Function() onFavoriteTap}) {
+  void showStationInfo({
+    required BuildContext context,
+    required Function() onFavoriteTap,
+  }) {
     final status = getStatus(station.status);
     final stationPlace = Place(
       stationId: station.stationId,

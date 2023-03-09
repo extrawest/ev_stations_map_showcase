@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:volkhov_maps_app/theme/app_colors.dart';
 
 import '../logic/bloc/bloc.dart';
 import '../widgets/widgets.dart';
@@ -28,6 +29,7 @@ class AccountScreen extends StatelessWidget {
         }
       },
       child: Scaffold(
+        backgroundColor: AppColors.whiteColor,
         body: (authBloc.state is AuthAutorized)
             ? ProfileWidget(
                 onLogOut: () async {

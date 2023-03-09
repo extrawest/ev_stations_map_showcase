@@ -18,7 +18,6 @@ class FavoriteItemWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(
         top: 8,
-        // bottom: 34s,
         right: 16,
         left: 16,
       ),

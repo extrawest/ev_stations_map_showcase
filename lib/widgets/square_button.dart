@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:volkhov_maps_app/theme/app_colors.dart';
+
+import '../theme/themes.dart';
 
 class SquareButton extends StatelessWidget {
   final String asset;

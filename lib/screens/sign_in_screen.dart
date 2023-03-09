@@ -28,18 +28,23 @@ class SignInScreen extends StatelessWidget {
                     content: Text('Error: ${listenState.error}'),
                   ),
                 );
+            } else if (listenState is AuthAutorized) {
+              Navigator.of(context).pop();
             }
           },
-          child: SignUpWidget(
-            onTap: () async {
-              if (authBloc.state is AuthUnautorized) {
-                authBloc.add(AuthSignIn());
-              }
-              if (authBloc.state is AuthAutorized) {
-                context.read<FavoritesBloc>().add(FavoritesRead());
-                Navigator.of(context).pop();
-              }
-            },
+          child: Scaffold(
+            backgroundColor: AppColors.whiteColor,
+            body: SignUpWidget(
+              onTap: () async {
+                if (authBloc.state is AuthUnautorized) {
+                  authBloc.add(AuthSignIn());
+                }
+                if (authBloc.state is AuthAutorized) {
+                  context.read<FavoritesBloc>().add(FavoritesRead());
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
           ),
         ));
   }

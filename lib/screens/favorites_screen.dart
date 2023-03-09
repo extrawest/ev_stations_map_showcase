@@ -22,7 +22,10 @@ class FavoritesScreen extends StatelessWidget {
               const Align(
                 child: Padding(
                   padding: EdgeInsets.only(top: 52),
-                  child: Text('Favorites', style: TextStyles.headerTextStyle),
+                  child: Text(
+                    'Favorites',
+                    style: TextStyles.headerTextStyle,
+                  ),
                 ),
               ),
             ],
@@ -50,11 +53,18 @@ class FavoritesScreen extends StatelessWidget {
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (context, index) {
-                final favoriteItem = chargestationState.stationslist[index];
-
-                return FavoriteItemWidget(
-                  item: favoriteItem,
-                );
+                if (favoriteState is FavoritesLoaded) {
+                  final favoriteId = favoriteState.favoriteIds[index];
+                  final favoriteItem = chargestationState.stationslist
+                      .firstWhere((element) => element.stationId == favoriteId);
+                  return FavoriteItemWidget(
+                    item: favoriteItem,
+                  );
+                } else if (favoriteState is FavoritesError) {
+                  return Text('Favorites error: ${favoriteState.error}');
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
               },
               childCount: (favoriteState is FavoritesLoaded)
                   ? favoriteState.favoriteIds.length

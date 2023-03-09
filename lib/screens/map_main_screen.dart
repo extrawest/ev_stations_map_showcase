@@ -30,6 +30,7 @@ class _MapMainScreenState extends State<MapMainScreen> {
   Widget build(BuildContext context) {
     final favoritesBloc = context.read<FavoritesBloc>();
     final authState = context.watch<AuthBloc>().state;
+    final routingBloc = context.read<RoutingBloc>();
 
     return MaterialApp(
       home: Scaffold(
@@ -38,7 +39,6 @@ class _MapMainScreenState extends State<MapMainScreen> {
           physics: const NeverScrollableScrollPhysics(),
           controller: myPage,
           children: const [
-            MapScreen(),
             MapScreen(),
             FavoritesScreen(),
             WalletScreen(),
@@ -50,42 +50,36 @@ class _MapMainScreenState extends State<MapMainScreen> {
             primaryColor: Colors.transparent,
             splashColor: Colors.transparent,
           ),
-          child: BottomAppBar(
-            shape: const CircularNotchedRectangle(),
-            notchMargin: 14,
-            color: AppColors.whiteColor,
-            child: Container(
-              height: 70,
-              alignment: Alignment.center,
-              child: BottomTabBar(
-                tabBarItem: getBottomTabBarEnumItem(),
-                onTapMap: () {
-                  setState(() {
-                    currentTabIndex = 1;
-                    myPage.jumpToPage(currentTabIndex);
-                  });
-                },
-                onTapFavorites: () {
-                  setState(() {
-                    currentTabIndex = 2;
-                    if (authState is AuthAutorized) {
-                      favoritesBloc.add(FavoritesRead());
-                    }
-                    myPage.jumpToPage(currentTabIndex);
-                  });
-                },
-                onTapWallet: () {
-                  setState(() {
-                    currentTabIndex = 3;
-                    myPage.jumpToPage(currentTabIndex);
-                  });
-                },
-                onTapAccount: () {
-                  setState(() {
-                    currentTabIndex = 4;
-                    myPage.jumpToPage(currentTabIndex);
-                  });
-                },
+          child: BlocListener<RoutingBloc, RoutingState>(
+            listener: (context, state) {
+              if (state is RoutingLoaded) {
+                setState(() {
+                  currentTabIndex = state.pageIndex;
+                  if (currentTabIndex == 1 && authState is AuthAutorized) {
+                    favoritesBloc.add(FavoritesRead());
+                  }
+                  myPage.jumpToPage(currentTabIndex);
+                });
+              }
+            },
+            child: BottomAppBar(
+              shape: const CircularNotchedRectangle(),
+              notchMargin: 14,
+              color: AppColors.whiteColor,
+              child: Container(
+                height: 95,
+                alignment: Alignment.center,
+                child: BottomTabBar(
+                  tabBarItem: getBottomTabBarEnumItem(),
+                  onTapMap: () =>
+                      routingBloc.add(const RoutingTransition(pageIndex: 0)),
+                  onTapFavorites: () =>
+                      routingBloc.add(const RoutingTransition(pageIndex: 1)),
+                  onTapWallet: () =>
+                      routingBloc.add(const RoutingTransition(pageIndex: 2)),
+                  onTapAccount: () =>
+                      routingBloc.add(const RoutingTransition(pageIndex: 3)),
+                ),
               ),
             ),
           ),
@@ -96,9 +90,8 @@ class _MapMainScreenState extends State<MapMainScreen> {
           child: FittedBox(
             child: FloatingActionButton(
               backgroundColor: AppColors.whiteColor,
-              onPressed: () => setState(() {
-                Navigator.pushNamed(context, chargingScreenRoute);
-              }),
+              onPressed: () =>
+                  Navigator.pushNamed(context, chargingScreenRoute),
               child: SvgPicture.asset(greyFlash),
             ),
           ),
@@ -111,16 +104,16 @@ class _MapMainScreenState extends State<MapMainScreen> {
   BottomTabBarItem getBottomTabBarEnumItem() {
     BottomTabBarItem result;
     switch (currentTabIndex) {
-      case 2:
+      case 1:
         result = BottomTabBarItem.favorites;
         break;
-      case 3:
+      case 2:
         result = BottomTabBarItem.wallet;
         break;
-      case 4:
+      case 3:
         result = BottomTabBarItem.account;
         break;
-      case 5:
+      case 4:
         result = BottomTabBarItem.charging;
         break;
       default:

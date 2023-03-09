@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../common/common.dart';
 import '../logic/bloc/bloc.dart';
@@ -23,40 +25,63 @@ class BottomTabBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        BottomTabBarMenuItem(
-            onTapMap: onTapMap,
-            active: tabBarItem == BottomTabBarItem.map,
-            image: earth,
-            name: 'MAP'),
-        BottomTabBarMenuItem(
-          onTapMap: onTapFavorites,
-          active: tabBarItem == BottomTabBarItem.favorites,
-          image: greyStar,
-          name: 'FavoriteS'.toUpperCase(),
+        const SizedBox.shrink(),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            BottomTabBarMenuItem(
+                onTapMap: onTapMap,
+                active: tabBarItem == BottomTabBarItem.map,
+                image: earth,
+                name: 'MAP'),
+            BottomTabBarMenuItem(
+              onTapMap: onTapFavorites,
+              active: tabBarItem == BottomTabBarItem.favorites,
+              image: greyStar,
+              name: 'FavoriteS'.toUpperCase(),
+            ),
+            const SizedBox(
+              width: 30,
+            ),
+            BlocBuilder<WalletBloc, WalletState>(builder: (context, state) {
+              double balance = 0;
+              if (state is WalletLoaded) {
+                balance = state.walletData.balance;
+              }
+              return BottomTabBarMenuItem(
+                onTapMap: onTapWallet,
+                active: tabBarItem == BottomTabBarItem.wallet,
+                image: wallet,
+                name: '\$$balance'.toUpperCase(),
+              );
+            }),
+            BottomTabBarMenuItem(
+              onTapMap: onTapAccount,
+              active: tabBarItem == BottomTabBarItem.account,
+              image: roundPerson,
+              name: 'Account'.toUpperCase(),
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 25,
+          child: TextButton(
+            // style: TextButtonTheme(),
+            child: Text(
+              'Made by Extrawest',
+              style: TextStyles.smallTextStyle.copyWith(
+                  color: AppColors.activeBottomBarButton,
+                  fontWeight: FontWeight.w700,
+                  height: 0.7),
+            ),
+            onPressed: () => _launchURL(),
+          ),
         ),
         const SizedBox(
-          width: 30,
-        ),
-        BlocBuilder<WalletBloc, WalletState>(builder: (context, state) {
-          double balance = 0;
-          if (state is WalletLoaded) {
-            balance = state.walletData.balance;
-          }
-          return BottomTabBarMenuItem(
-            onTapMap: onTapWallet,
-            active: tabBarItem == BottomTabBarItem.wallet,
-            image: wallet,
-            name: '\$$balance'.toUpperCase(),
-          );
-        }),
-        BottomTabBarMenuItem(
-          onTapMap: onTapAccount,
-          active: tabBarItem == BottomTabBarItem.account,
-          image: roundPerson,
-          name: 'Account'.toUpperCase(),
+          height: 5,
         ),
       ],
     );
@@ -107,5 +132,18 @@ class BottomTabBarMenuItem extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> _launchURL() async {
+  const url = 'https://www.extrawest.com/';
+  final uri = Uri.parse(url);
+  if (await canLaunchUrl(uri)) {
+    await launchUrl(uri,
+        mode: kIsWeb
+            ? LaunchMode.externalApplication
+            : LaunchMode.platformDefault);
+  } else {
+    throw 'Could not launch $url';
   }
 }
