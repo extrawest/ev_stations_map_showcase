@@ -8,9 +8,9 @@
 [![View DEMO](https://img.shields.io/badge/VIEW-DEMO-lightgreen.svg)](https://volkhov-map.web.app)
 
 ## Project info 
-- This project is a app that shows a map with Electric Charging Stations and their information. The app supports station markers clustering.
+- This project is an app that shows a map with Electric Charging Stations and their information. The app supports station markers clustering.
 - The app runs on Android, iOS and Web.
-- The app is built using Flutter 3.3.7 and Dart.
+- The app is built using Flutter stable.
 - The app is built using the MVVM architecture.
 - The app is built using the BLoC pattern.
 
@@ -20,12 +20,12 @@
 
 **To watch demo click the image:**
 
-[![Watch the demo](https://gitlab.extrawest.com/i-training/flutter/ruslan.volkhov_maps_app/-/raw/8dde99e4509dea671e207c49e16004bc20398d6f/preview.jpg)](https://gitlab.extrawest.com/i-training/flutter/ruslan.volkhov_maps_app/-/blob/dev/video_2023-03-07_00-41-19.mp4)
+[![Watch the demo]()
 
 ## How to run the app
 - **Clone the project.**
 ```shell
-git clone https://gitlab.extrawest.com/i-training/flutter/ruslan.volkhov_maps_app.git
+git clone 
 ```
 - **Open the project.**
 ```shell
