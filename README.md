@@ -10,7 +10,7 @@
 ## Project info 
 - This project is an app that shows a map with Electric Charging Stations and their information. The app supports station markers clustering.
 - The app runs on Android, iOS and Web.
-- The pp is built using Flutter stable.
+- The app is built using Flutter stable and latest Dart version.
 - The app is built using the MVVM architecture.
 - The app is built using the BLoC pattern.
 
