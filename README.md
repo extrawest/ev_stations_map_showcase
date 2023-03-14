@@ -1,6 +1,6 @@
 # Flutter Stations Map App
 
-[![Maintanence](https://img.shields.io/badge/Maintenance-yes%3F-blue.svg)]()
+[![Maintanence](https://img.shields.io/badge/Maintenance-yes-blue.svg)]()
 [![Codemagic build status](https://api.codemagic.io/apps/63905b4f2551810eda63638f/63905b4f2551810eda63638e/status_badge.svg)](https://codemagic.io/app/63fc69846e27169aa2005e16/build/6405abad783b638b2c4582ce)
 [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)]()
 ![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)
@@ -10,7 +10,7 @@
 ## Project info 
 - This project is an app that shows a map with Electric Charging Stations and their information. The app supports station markers clustering.
 - The app runs on Android, iOS and Web.
-- The app is built using Flutter stable.
+- The pp is built using Flutter stable.
 - The app is built using the MVVM architecture.
 - The app is built using the BLoC pattern.
 
@@ -18,14 +18,13 @@
 [Stations Map App](https://volkhov-map.web.app)
 
 
-**To watch demo click the image:**
+https://user-images.githubusercontent.com/42183561/225020133-7fe7f918-8110-4b51-8c16-a4fac0bca132.mp4
 
-[![Watch the demo]()
 
 ## How to run the app
 - **Clone the project.**
 ```shell
-git clone 
+git clone https://github.com/extrawest/ev_stations_map_showcase.git
 ```
 - **Open the project.**
 ```shell
