@@ -18,7 +18,7 @@ const ukrainianLocale = Locale('uk', 'UA');
 bool isProduction = false;
 
 Future<void> main() async {
-  PlatformSelector().createScriptElement();
+  // PlatformSelector().createScriptElement();
 
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();

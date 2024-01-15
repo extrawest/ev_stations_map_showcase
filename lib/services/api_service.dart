@@ -5,7 +5,7 @@ import 'package:volkhov_maps_app/utils/logger.dart';
 import '../models/models.dart';
 
 const String postsPath = '/posts';
-const String stationslist = '/stationslist';
+const String stationslist = '/stations.json';
 const String walletData = '/wallet-info';
 
 class ApiService {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
 import 'themes.dart';
 
@@ -67,7 +67,7 @@ ThemeData darkTheme = ThemeData(
       const FloatingActionButtonThemeData(foregroundColor: Colors.black),
   dividerColor: Colors.black12,
   // or use string of the font in the assets 'SFUIDisplay'
-  fontFamily: GoogleFonts.roboto().fontFamily,
+  // fontFamily: GoogleFonts.roboto().fontFamily,
   textTheme: const TextTheme(
       displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
       titleLarge: TextStyle(fontSize: 22.0, fontStyle: FontStyle.italic),
@@ -82,7 +82,7 @@ ThemeData lightTheme = ThemeData(
       const FloatingActionButtonThemeData(foregroundColor: Colors.white),
   dividerColor: Colors.white54,
   // or use string of the font in the assets 'SFUIDisplay'
-  fontFamily: GoogleFonts.roboto().fontFamily,
+  // fontFamily: GoogleFonts.roboto().fontFamily,
   textTheme: const TextTheme(
     displayLarge: TextStyle(fontSize: 72.0, fontWeight: FontWeight.bold),
     titleLarge: TextStyle(fontSize: 22.0, fontStyle: FontStyle.italic),
