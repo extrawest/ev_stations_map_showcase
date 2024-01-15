@@ -5,8 +5,8 @@ import 'package:volkhov_maps_app/utils/logger.dart';
 import '../models/models.dart';
 
 const String postsPath = '/posts';
-const String stationslist = '/stations.json';
-const String walletData = '/wallet-info';
+const String stationsList = '/stations.json';
+const String walletData = '/wallet-info.json';
 
 class ApiService {
   late ApiClient _apiClient;
@@ -41,7 +41,7 @@ class ApiService {
 
   Future<List<ChargestationsModel>> fetchChargestations() async {
     try {
-      final response = await _apiClient.get(stationslist);
+      final response = await _apiClient.get(stationsList);
       return List<ChargestationsModel>.from(
           response.map((element) => ChargestationsModel.fromJson(element)));
     } catch (e) {
