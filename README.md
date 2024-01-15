@@ -6,7 +6,7 @@
 ![GitHub license](https://img.shields.io/github/license/Naereen/StrapDown.js.svg)
 ![GitHub release](https://img.shields.io/badge/release-v1.0.0-blue)
 ![Supported Platforms](https://img.shields.io/badge/Platform-Android%20|%20iOS%20|%20Web%20%20-blue.svg?logo=flutter)
-[![View DEMO](https://img.shields.io/badge/VIEW-DEMO-lightgreen.svg)](https://volkhov-map.web.app)
+[![View DEMO](https://img.shields.io/badge/VIEW-DEMO-lightgreen.svg)]([https://volkhov-map.web.app](https://65a54b6a0a990c199c1bdf7b--glittering-biscotti-471451.netlify.app/#/))
 
 ## Project info 
 - This project is an app that shows a map with Electric Charging Stations and their information. The app supports station markers clustering.
@@ -16,7 +16,7 @@
 - The app is built using the BLoC pattern.
 
 ## Demo
-[Stations Map App](https://volkhov-map.web.app)
+[Stations Map App](https://65a54b6a0a990c199c1bdf7b--glittering-biscotti-471451.netlify.app/#/)
 
 
 https://user-images.githubusercontent.com/42183561/225020133-7fe7f918-8110-4b51-8c16-a4fac0bca132.mp4
