@@ -12,7 +12,7 @@
         android:label="volkhov_maps_app"
         android:icon="@mipmap/ic_launcher">
         <meta-data android:name="com.google.android.geo.API_KEY"
-            android:value="${DEFINE_ANDROID_KEY}"/>
+            android:value="AIzaSyDEPicO6JK3TSlMl3AQajyKyQqwLO0FWUw"/>
             <!-- android:value="@string/android_key"/> -->
 
         <activity
